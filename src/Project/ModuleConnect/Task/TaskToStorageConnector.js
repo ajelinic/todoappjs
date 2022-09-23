@@ -1,0 +1,5 @@
+/**
+ * @TaskConnector
+ */
+
+export class TaskToStorageConnector {}

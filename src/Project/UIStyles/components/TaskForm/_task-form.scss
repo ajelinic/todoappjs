@@ -1,0 +1,17 @@
+@mixin task-form($color) {
+  #taskForm {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    background-color: $color;
+  }
+
+  .input {
+    &__add-task {
+      border: 1px solid $color-black;
+      border-bottom-left-radius: 10px;
+      border-top-left-radius: 10px;
+      border-right: none;
+    }
+  }
+}
