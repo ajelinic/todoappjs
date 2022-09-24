@@ -2,8 +2,8 @@
  * @TaskListHolder
  */
 
-import { TaskToTaskListConnector } from "../../../../ModuleConnect/TaskList/TaskToTaskListConnector/TaskToTaskListConnector.js";
-import { DomElementCreator } from "../../../Utils/DomElementCreate/DomElementCreator.js";
+import { TaskToTaskListConnector } from "../../../../../Share/TaskList/TaskToTaskListConnector/TaskToTaskListConnector.js";
+import { DomElementCreator } from "../../../../../Service/DomElementCreate/DomElementCreator.js";
 
 export class TaskListHolderCreator {
   constructor(baseElement) {

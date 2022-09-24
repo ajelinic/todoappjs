@@ -2,10 +2,10 @@
  * @TaskCreator
  */
 
-import { DateHandler } from "../../Utils/Date/DateHandler.js";
-import { DomElementCreator } from "../../Utils/DomElementCreate/DomElementCreator.js";
-import { TaskConfig } from "../TaskConfig.js";
-import { TaskFactory } from "../TaskFactory.js";
+import { DateHandler } from "../../../../Service/Date/DateHandler.js";
+import { DomElementCreator } from "../../../../Service/DomElementCreate/DomElementCreator.js";
+import { TaskConfig } from "../../TaskConfig.js";
+import { TaskFactory } from "../../TaskFactory.js";
 
 export class TaskCreator {
   constructor(holderElement, addButton, inputField) {

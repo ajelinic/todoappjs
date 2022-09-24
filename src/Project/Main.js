@@ -2,9 +2,9 @@
  * @MainClass
  */
 
-import { TaskListHolderController } from "./Modules/TaskList/Presentation/TaskListHolderController.js";
-import { TaskListHeaderController } from "./Modules/TaskList/Presentation/TaskListHeaderController.js";
-import { TaskListFooterController } from "./Modules/TaskList/Presentation/TaskListFooterController.js";
+import { TaskListHolderController } from "./Modules/TaskList/Communication/TaskListHolderController.js";
+import { TaskListHeaderController } from "./Modules/TaskList/Communication/TaskListHeaderController.js";
+import { TaskListFooterController } from "./Modules/TaskList/Communication/TaskListFooterController.js";
 
 export class Main {
   static init() {

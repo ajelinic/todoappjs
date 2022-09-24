@@ -2,14 +2,14 @@
  * @TaskFactory
  */
 
-import { TaskToTaskListConnector } from "../../ModuleConnect/TaskList/TaskToTaskListConnector/TaskToTaskListConnector.js";
-import { TaskCreator } from "./Creator/TaskCreator.js";
-import { TaskDeleter } from "./Deleter/TaskDeleter.js";
+import { TaskToTaskListConnector } from "../../Share/TaskList/TaskToTaskListConnector/TaskToTaskListConnector.js";
 import { TaskForm } from "./Form/TaskForm.js";
+import { TaskCreator } from "./Logic/Creator/TaskCreator.js";
+import { TaskDeleter } from "./Logic/Deleter/TaskDeleter.js";
+import { TaskHandler } from "./Logic/Handler/TaskHandler.js";
 import { TaskDependecyProvider } from "./TaskDependencyProvider.js";
-import { TaskHandler } from "./Handler/TaskHandler.js";
-import { TaskAddValidator } from "./Validator/TaskAddValidator.js";
-import { TaskDeleteValidator } from "./Validator/TaskDeleteValidator.js";
+import { TaskAddValidator } from "./Logic/Validator/TaskAddValidator.js";
+import { TaskDeleteValidator } from "./Logic/Validator/TaskDeleteValidator.js";
 
 export class TaskFactory {
   static createTaskCreator() {

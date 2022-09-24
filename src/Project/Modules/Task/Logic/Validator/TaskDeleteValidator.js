@@ -2,7 +2,7 @@
  * @TaskAddValidator
  */
 
-import { UtilsFactory } from "../../Utils/UtilsFactory.js";
+import { UtilsFactory } from "../../../../Service/UtilsFactory.js";
 
 export class TaskDeleteValidator {
   constructor(errorMessage, successMessage, warningMessage) {

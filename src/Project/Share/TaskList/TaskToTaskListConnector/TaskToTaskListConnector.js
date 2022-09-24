@@ -2,7 +2,7 @@
  * @TaskToTaskListConnector
  */
 
-import { TaskController } from "../../../Modules/Task/Presentation/TaskController.js";
+import { TaskController } from "../../../Modules/Task/Communication/TaskController.js";
 
 export class TaskToTaskListConnector extends TaskController {
   static connectTaskForm() {

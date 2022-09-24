@@ -2,8 +2,7 @@
  * @TaskDeleter
  */
 
-import { UtilsFactory } from "../../Utils/UtilsFactory.js";
-import { TaskFactory } from "../TaskFactory.js";
+import { TaskFactory } from "../../TaskFactory.js";
 
 export class TaskDeleter {
   constructor(holderElement, clearButton) {

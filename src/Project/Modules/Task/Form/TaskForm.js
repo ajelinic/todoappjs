@@ -2,7 +2,7 @@
  * @TaskForm
  */
 
-import { DomElementCreator } from "../../Utils/DomElementCreate/DomElementCreator.js";
+import { DomElementCreator } from "../../../Service/DomElementCreate/DomElementCreator.js";
 import { TaskConfig } from "../TaskConfig.js";
 
 export class TaskForm {
