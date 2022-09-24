@@ -1,1 +1,1 @@
-# https://ajelinic.github.io/todoappjs/
+https://ajelinic.github.io/todoappjs/
