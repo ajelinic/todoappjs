@@ -7,7 +7,7 @@ import { TaskCreator } from "./Creator/TaskCreator.js";
 import { TaskDeleter } from "./Deleter/TaskDeleter.js";
 import { TaskForm } from "./Form/TaskForm.js";
 import { TaskDependecyProvider } from "./TaskDependencyProvider.js";
-import { TaskHandler } from "./TaskHandler/TaskHandler.js";
+import { TaskHandler } from "./Handler/TaskHandler.js";
 import { TaskAddValidator } from "./Validator/TaskAddValidator.js";
 import { TaskDeleteValidator } from "./Validator/TaskDeleteValidator.js";
 
