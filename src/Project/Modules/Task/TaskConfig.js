@@ -2,50 +2,75 @@
  * TaskConfig
  */
 
+import { Getter } from "../../Service/Getter/Getter.js";
+import { messages } from "../../Share/Constants/MessageConstants.js";
+
 export class TaskConfig {
   static setAddButtonInnerText() {
-    return "+Task";
+    return "Add to list";
   }
 
   static setClearButtonInnerText() {
-    return "x";
+    return "Clear list";
   }
 
-  static setErrorMessageOnTaskAdd() {
-    return { type: "errorMessage", value: "Can't add empty task!" };
+  static getMessage(call) {
+    return Getter.get(messages, call);
   }
 
-  static setOnlyNumbersErrorMessageOnTaskAdd() {
-    return { type: "errorMessage", value: "Task can't be only numbers!" };
+  static isInputFieldEmpty() {
+    return "isInputFieldEmpty";
   }
 
-  static setSuccessMessageOnTaskAdd() {
-    return { type: "successMessage", value: "Task successfully added!" };
+  static numberInputed() {
+    return "numberInputed";
   }
 
-  static setErrorMessageOnTaskDelete() {
-    return {
-      type: "errorMessage",
-      value: "Please select tasks that are done to delete them from the list!",
-    };
+  static emptyTask() {
+    return "emptyTask";
   }
 
-  static getSuccessMessageOnTaskDelete() {
-    return { type: "successMessage", value: "Cleared done tasks! Well done!" };
+  static taskAdded() {
+    return "taskAdded";
   }
 
-  static getWarningMessageOnEmptyTaskList() {
-    return {
-      type: "warningMessage",
-      value: "No tasks to clear. Please add some tasks!",
-    };
+  static numberType() {
+    return "number";
   }
 
-  static getSuccessTypeMessage() {
+  static stringType() {
+    return "string";
+  }
+
+  static dueTime() {
+    return "dueTime";
+  }
+
+  static noDueTime() {
+    return "noDueTime";
+  }
+
+  static isPastTime() {
+    return "isPastTime";
+  }
+
+  static successMessage() {
     return "successMessage";
   }
 
-  static getErrorTypeMessage() {
+  static errorMessage() {
     return "errorMessage";
+  }
+
+  static numberRegex() {
+    return /^\d+$/;
+  }
+
+  static getCrossClass() {
+    return "cross";
+  }
+
+  static getHiddenClass() {
+    return "is--hidden";
   }
 }

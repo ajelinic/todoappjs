@@ -1,7 +1,6 @@
 /**
  * @TaskDependecyProvider
  */
-import { TaskConfig } from "./TaskConfig.js";
 
 export class TaskDependecyProvider {
   static queryAddTaskButton() {
@@ -20,28 +19,12 @@ export class TaskDependecyProvider {
     return document.querySelector("#taskList");
   }
 
-  static getErrorMessageOnTaskAdd() {
-    return TaskConfig.setErrorMessageOnTaskAdd();
+  static getDueTimeButton() {
+    return document.querySelector("#due-time");
   }
 
-  static getOnlyNumbersErrorMessageOnTaskAdd() {
-    return TaskConfig.setOnlyNumbersErrorMessageOnTaskAdd();
-  }
-
-  static getSuccessMessageOnTaskAdd() {
-    return TaskConfig.setSuccessMessageOnTaskAdd();
-  }
-
-  static getErrorMessageOnTaskDelete() {
-    return TaskConfig.setErrorMessageOnTaskDelete();
-  }
-
-  static getSuccessMessageOnTaskDelete() {
-    return TaskConfig.getSuccessMessageOnTaskDelete();
-  }
-
-  static getWarningMessageOnEmptyTaskList() {
-    return TaskConfig.getWarningMessageOnEmptyTaskList();
+  static getDueTimeInput() {
+    return document.querySelector("#due-time-input");
   }
 
   static getInputField() {

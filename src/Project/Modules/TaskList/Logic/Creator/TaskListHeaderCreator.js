@@ -2,8 +2,8 @@
  * @TaskListHeaderCreator
  */
 
-import { DateHandler } from "../../../../../Service/Date/DateHandler.js";
-import { DomElementCreator } from "../../../../../Service/DomElementCreate/DomElementCreator.js";
+import { DateHandler } from "../../../../Service/Date/DateHandler.js";
+import { DomElementCreator } from "../../../../Service/DomElementCreate/DomElementCreator.js";
 
 export class TaskListHeaderCreator {
   constructor(baseElement) {

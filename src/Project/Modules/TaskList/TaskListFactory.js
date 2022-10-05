@@ -2,9 +2,9 @@
  * @TaskList
  */
 
-import { TaskListHolderCreator } from "./Logic/Creator/TaskListHolder/TaskListHolderCreator.js";
-import { TaskListHeaderCreator } from "./Logic/Creator/TaskListHeader/TaskListHeaderCreator.js";
-import { TaskListFooterCreator } from "./Logic/Creator/TaskListFooter/TaskListFooterCreator.js";
+import { TaskListHolderCreator } from "./Logic/Creator/TaskListHolderCreator.js";
+import { TaskListHeaderCreator } from "./Logic/Creator/TaskListHeaderCreator.js";
+import { TaskListFooterCreator } from "./Logic/Creator/TaskListFooterCreator.js";
 import { TaskListDependecyProvider } from "./TaskListDependecyProvider.js";
 
 export class TaskListFactory {
