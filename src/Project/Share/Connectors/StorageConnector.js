@@ -12,7 +12,7 @@ export class StorageConnector {
   }
 
   static saveTaskToStorage(task) {
-    return StorageController.saveToStorage(task);
+    return StorageFactory.createStorageSaver().saveTaskToStorage(task);
   }
 
   static getTaskArrLength() {
