@@ -3,25 +3,26 @@
  */
 
 import { UtilsFactory } from "../../../../Service/UtilsFactory.js";
+import { TaskConfig } from "../../TaskConfig.js";
 
 export class TaskDeleteValidator {
-  constructor(errorMessage, successMessage, warningMessage) {
-    this.errorMessage = errorMessage;
-    this.successMessage = successMessage;
-    this.warningMessage = warningMessage;
+  constructor() {
+    this.taskClearError = "taskClearError";
+    this.taskClearSuccess = "taskClearSuccess";
+    this.emptyListWarning = "emptyListWarning";
   }
 
   validate(checked) {
     if (checked == false) {
-      return this.getMessage(this.errorMessage);
+      return this.getMessage(TaskConfig.getMessage(this.taskClearError));
     } else {
-      return this.getMessage(this.successMessage);
+      return this.getMessage(TaskConfig.getMessage(this.taskClearSuccess));
     }
   }
 
   emptyValue(value) {
     if (!value) {
-      return this.getMessage(this.warningMessage);
+      return this.getMessage(TaskConfig.getMessage(this.emptyListWarning));
     }
   }
 

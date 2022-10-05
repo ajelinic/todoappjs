@@ -11,8 +11,8 @@ export class TaskController {
   }
 
   static createTask() {
-    let taskCreator = TaskFactory.createTaskCreator();
-    return taskCreator.addTask();
+    let TaskFormHandler = TaskFactory.createTaskFormHandler();
+    return TaskFormHandler.addTask();
   }
 
   static deleteTask() {
@@ -23,5 +23,10 @@ export class TaskController {
   static handleTask() {
     let taskHandler = TaskFactory.createTaskHandler();
     return taskHandler.handleTask();
+  }
+
+  static hideDueButtonAndShowDateTimeInput() {
+    let TaskFormHandler = TaskFactory.createTaskFormHandler();
+    return TaskFormHandler.hideDueButtonAndShowDateTimeInput();
   }
 }

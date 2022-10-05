@@ -2,14 +2,12 @@
  * @MainClass
  */
 
-import { TaskListHolderController } from "./Modules/TaskList/Communication/TaskListHolderController.js";
-import { TaskListHeaderController } from "./Modules/TaskList/Communication/TaskListHeaderController.js";
-import { TaskListFooterController } from "./Modules/TaskList/Communication/TaskListFooterController.js";
+import { StorageConnector } from "./Share/Connectors/StorageConnector.js";
+import { TaskListConnector } from "./Share/Connectors/TaskListConnector.js";
 
 export class Main {
   static init() {
-    TaskListHeaderController.createView();
-    TaskListHolderController.createView();
-    TaskListFooterController.createView();
+    TaskListConnector.initTaskList();
+    StorageConnector.initStorage();
   }
 }

@@ -11,3 +11,11 @@
 @include task-form($color-white);
 @include button();
 @include notification();
+
+.is--hidden {
+  display: none;
+}
+
+.cross {
+  text-decoration: line-through;
+}

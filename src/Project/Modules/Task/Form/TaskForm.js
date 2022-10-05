@@ -9,6 +9,8 @@ export class TaskForm {
   buildForm() {
     const formElementsArray = [
       this.appendTaskInputField(),
+      this.appendDueTimeButton(),
+      this.appendDueTimeInput(),
       this.appendAddTaskButton(),
       this.appendClearTaskButton(),
     ];
@@ -24,16 +26,22 @@ export class TaskForm {
 
   appendAddTaskButton() {
     return DomElementCreator.createButtonElement(
-      "button",
       "add",
       TaskConfig.setAddButtonInnerText(),
       "button button--border button--color button--font"
     );
   }
 
+  appendDueTimeButton() {
+    return DomElementCreator.createButtonElement(
+      "due-time",
+      "+Due",
+      "button button--border button--color button--font"
+    );
+  }
+
   appendClearTaskButton() {
     return DomElementCreator.createButtonElement(
-      "button",
       "clear",
       TaskConfig.setClearButtonInnerText(),
       "button button--border button--color button--font"
@@ -42,12 +50,21 @@ export class TaskForm {
 
   appendTaskInputField() {
     return DomElementCreator.createInputElement(
-      "input",
       "text",
       "addTaskField",
       "addTaskField",
       "",
       "input input__add-task"
+    );
+  }
+
+  appendDueTimeInput() {
+    return DomElementCreator.createInputElement(
+      "datetime-local",
+      "due-time-input",
+      "due-time-input",
+      "",
+      "input is--hidden"
     );
   }
 }

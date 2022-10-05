@@ -2,7 +2,6 @@
  * @TaskFactory
  */
 
-import { TaskToTaskListConnector } from "../../Share/TaskList/TaskToTaskListConnector/TaskToTaskListConnector.js";
 import { TaskForm } from "./Form/TaskForm.js";
 import { TaskCreator } from "./Logic/Creator/TaskCreator.js";
 import { TaskDeleter } from "./Logic/Deleter/TaskDeleter.js";
@@ -10,13 +9,14 @@ import { TaskHandler } from "./Logic/Handler/TaskHandler.js";
 import { TaskDependecyProvider } from "./TaskDependencyProvider.js";
 import { TaskAddValidator } from "./Logic/Validator/TaskAddValidator.js";
 import { TaskDeleteValidator } from "./Logic/Validator/TaskDeleteValidator.js";
+import { TaskFormHandler } from "./Logic/Handler/TaskFormHandler.js";
 
 export class TaskFactory {
   static createTaskCreator() {
     return new TaskCreator(
       this.addHolderElement(),
-      this.selectAddTaskButton(),
-      this.addInputField()
+      this.addInputField(),
+      this.selectDueTimeInput()
     );
   }
 
@@ -32,27 +32,24 @@ export class TaskFactory {
   }
 
   static createTaskAddValidator() {
-    return new TaskAddValidator(
-      this.addErrorMessageOnTaskAdd(),
-      this.addSuccessMessageOnTaskAdd(),
-      this.addOnlyNumbersErrorMessageOnTaskAdd()
-    );
+    return new TaskAddValidator();
   }
 
   static createTaskDeleteValidator() {
-    return new TaskDeleteValidator(
-      this.addErrorMessageOnTaskDelete(),
-      this.addSuccessMessageOnTaskDelete(),
-      this.addWarningMessageOnEmptyTaskList()
-    );
+    return new TaskDeleteValidator();
   }
 
   static createTaskHandler() {
     return new TaskHandler(this.addHolderElement(), this.selectTaskCheckBox());
   }
 
-  static createFormConnector() {
-    return new TaskToTaskListConnector(this.createTaskForm());
+  static createTaskFormHandler() {
+    return new TaskFormHandler(
+      this.selectDueTimeButton(),
+      this.selectDueTimeInput(),
+      this.selectAddTaskButton(),
+      this.addInputField()
+    );
   }
 
   static selectAddTaskButton() {
@@ -71,28 +68,12 @@ export class TaskFactory {
     return TaskDependecyProvider.getHolderElement();
   }
 
-  static addErrorMessageOnTaskAdd() {
-    return TaskDependecyProvider.getErrorMessageOnTaskAdd();
+  static selectDueTimeButton() {
+    return TaskDependecyProvider.getDueTimeButton();
   }
 
-  static addOnlyNumbersErrorMessageOnTaskAdd() {
-    return TaskDependecyProvider.getOnlyNumbersErrorMessageOnTaskAdd();
-  }
-
-  static addSuccessMessageOnTaskAdd() {
-    return TaskDependecyProvider.getSuccessMessageOnTaskAdd();
-  }
-
-  static addErrorMessageOnTaskDelete() {
-    return TaskDependecyProvider.getErrorMessageOnTaskDelete();
-  }
-
-  static addSuccessMessageOnTaskDelete() {
-    return TaskDependecyProvider.getSuccessMessageOnTaskDelete();
-  }
-
-  static addWarningMessageOnEmptyTaskList() {
-    return TaskDependecyProvider.getWarningMessageOnEmptyTaskList();
+  static selectDueTimeInput() {
+    return TaskDependecyProvider.getDueTimeInput();
   }
 
   static addInputField() {

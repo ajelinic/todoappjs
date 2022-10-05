@@ -232,4 +232,11 @@ body {
     top: 0;
     opacity: 1;
   }
+}
+.is--hidden {
+  display: none;
+}
+
+.cross {
+  text-decoration: line-through;
 }/*# sourceMappingURL=style.css.map */

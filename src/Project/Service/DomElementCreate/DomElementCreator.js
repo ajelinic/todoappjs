@@ -11,21 +11,26 @@ export class DomElementCreator {
     return el;
   }
 
-  static createButtonElement(element, id, caption, cssClass) {
-    const button = document.createElement(element);
+  static createButtonElement(id, caption, cssClass) {
+    const buttonElement = "button";
+    const button = document.createElement(buttonElement);
     button.id = id;
     button.classList = cssClass;
     button.innerText = caption;
     return button;
   }
 
-  static createInputElement(element, type, id, name, value, cssClass) {
-    const input = document.createElement(element);
+  static createInputElement(type, id, name, value, cssClass, checked = null) {
+    const inputElement = "input";
+    const input = document.createElement(inputElement);
     input.type = type;
     input.id = id;
     input.name = name;
     input.value = value;
     input.classList = cssClass;
+    if (checked != null) {
+      input.checked = checked;
+    }
     return input;
   }
 }
