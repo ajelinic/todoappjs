@@ -1,5 +1,0 @@
-/**
- * @StorageDependencyProvider
- */
-
-export class StorageDependencyProvider {}

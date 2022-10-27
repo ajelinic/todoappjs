@@ -1,0 +1,5 @@
+/**
+ * @StorageDataProvider
+ */
+
+export class StorageDataProvider {}
