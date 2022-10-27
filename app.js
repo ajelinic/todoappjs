@@ -1,2 +1,2 @@
-import { Main } from "./src/Project/Main.js";
+import { Main } from "./src/Main.js";
 Main.init();
