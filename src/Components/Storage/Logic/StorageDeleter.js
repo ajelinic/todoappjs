@@ -8,6 +8,6 @@ export class StorageDeleter {
   }
 
   deleteTaskFromStorage(id) {
-    this.storageManager.deleteTaskFromStorage(id);
+    return this.storageManager.deleteTask(id);
   }
 }

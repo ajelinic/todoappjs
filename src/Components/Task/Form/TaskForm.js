@@ -3,16 +3,16 @@
  */
 
 import { DomElementCreator } from "../../../Utils/DomElementCreate/DomElementCreator.js";
-import { TaskConfig } from "../TaskConfig.js";
+import { Glossary } from "../../../Utils/Glossary/Glossary.js";
 
 export class TaskForm {
-  buildForm() {
+  async buildForm() {
     const formElementsArray = [
       this.appendTaskInputField(),
-      this.appendDueTimeButton(),
+      await this.appendDueTimeButton(),
       this.appendDueTimeInput(),
-      this.appendAddTaskButton(),
-      this.appendClearTaskButton(),
+      await this.appendAddTaskButton(),
+      await this.appendClearTaskButton(),
     ];
 
     let form = DomElementCreator.createHtmlElement("form", "taskForm", "form");
@@ -21,29 +21,29 @@ export class TaskForm {
       form.appendChild(formElementsArray[i]);
     }
 
-    return form;
+    return await form;
   }
 
-  appendAddTaskButton() {
+  async appendAddTaskButton() {
     return DomElementCreator.createButtonElement(
       "add",
-      TaskConfig.setAddButtonInnerText(),
+      await Glossary.getGlossaryData("todoapp.input.add"),
       "button button--border button--color button--font"
     );
   }
 
-  appendDueTimeButton() {
+  async appendDueTimeButton() {
     return DomElementCreator.createButtonElement(
       "due-time",
-      "+Due",
+      await Glossary.getGlossaryData("todoapp.input.due"),
       "button button--border button--color button--font"
     );
   }
 
-  appendClearTaskButton() {
+  async appendClearTaskButton() {
     return DomElementCreator.createButtonElement(
       "clear",
-      TaskConfig.setClearButtonInnerText(),
+      await Glossary.getGlossaryData("todoapp.clear.list"),
       "button button--border button--color button--font"
     );
   }

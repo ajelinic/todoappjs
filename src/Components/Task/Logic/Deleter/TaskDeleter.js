@@ -46,7 +46,9 @@ export class TaskDeleter {
     for (let i = taskCollection.length; i--; ) {
       let taskCheckboxes = taskCollection[i].children.done;
       if (taskCheckboxes.checked == true) {
-        TaskConnector.deleteFromStorage([i]);
+        TaskConnector.deleteFromStorage(
+          taskCheckboxes.parentElement.querySelector("#taskID").innerText
+        );
         taskCheckboxes.parentElement.remove();
       }
     }

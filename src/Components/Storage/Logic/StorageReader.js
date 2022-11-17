@@ -3,19 +3,24 @@
  */
 
 export class StorageReader {
-  constructor(storageRepository) {
-    this.storageRepository = storageRepository;
+  constructor(taskRepository, glossaryRepository) {
+    this.taskRepository = taskRepository;
+    this.glossaryRepository = glossaryRepository;
   }
 
-  getTaskArrayLength() {
-    this.storageRepository.getTaskArrayLength();
+  getLastTaskIdFromStorage() {
+    return this.taskRepository.getLastTaskId();
+  }
+
+  getDueTime(id) {
+    return this.taskRepository.getDueTime(id);
   }
 
   getTaskArrayFromStorage() {
-    return this.storageRepository.getTaskArrayFromStorage();
+    return this.taskRepository.getTaskArrayFromStorage();
   }
 
-  getDueTimeFromStorage(id) {
-    return this.storageRepository.getDueTimeFromStorage(id);
+  getGlossaryValue(key) {
+    return this.glossaryRepository.getGlossaryValue(key);
   }
 }

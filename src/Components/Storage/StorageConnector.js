@@ -3,34 +3,41 @@
  */
 
 import { StorageFactory } from "./StorageFactory.js";
-import { TaskConnector } from "../Task/TaskConnector.js";
 
 export class StorageConnector {
   static initStorage() {
     return StorageFactory.createStorage().initStorage();
   }
 
+  static importData() {
+    return StorageFactory.createStorageSaver().importData();
+  }
+
   static saveTaskToStorage(task) {
     return StorageFactory.createStorageSaver().saveTaskToStorage(task);
   }
 
-  static getTaskArrLength() {
-    return StorageFactory.createStorageRepository().getTaskArrayLength();
+  static getLastTaskId() {
+    return StorageFactory.createStorageReader().getLastTaskIdFromStorage();
+  }
+
+  static getDueTime(id) {
+    return StorageFactory.createStorageReader().getDueTime(id);
   }
 
   static deleteFromStorage(id) {
     return StorageFactory.createStorageDeleter().deleteTaskFromStorage(id);
   }
 
-  static updateTaskStatus(id, checked) {
-    return StorageFactory.createStorageUpdater().updateTaskStatus(id, checked);
+  static updateTaskStatus(item) {
+    return StorageFactory.createStorageUpdater().updateTaskStatus(item);
   }
 
-  static getTasksFromStorage(taskArr) {
-    return TaskConnector.getTasksFromStorage(taskArr);
+  static getTasksFromStorage() {
+    return StorageFactory.createStorageReader().getTaskArrayFromStorage();
   }
 
-  static getDueTimeFromStorage(id) {
-    return StorageFactory.createStorageReader().getDueTimeFromStorage(id);
+  static getGlossaryValue(key) {
+    return StorageFactory.createStorageReader().getGlossaryValue(key);
   }
 }

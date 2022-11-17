@@ -20,16 +20,4 @@ export class TaskListListener {
       }
     });
   }
-
-  static listenTaskAddToList() {
-    document.addEventListener("DOMContentLoaded", () => {
-      TaskListConnector.renderTask();
-    });
-  }
-
-  static listenTaskRemoveFromList() {
-    document.addEventListener("DOMContentLoaded", () => {
-      TaskListConnector.deleteTask();
-    });
-  }
 }

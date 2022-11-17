@@ -30,10 +30,6 @@ export class TaskListConnector {
     return TaskConnector.hideDueButtonAndShowDateTimeInput();
   }
 
-  static checkTaskDueTime() {
-    return TaskConnector.checkTaskDueTime();
-  }
-
   static getInputField() {
     return TaskConnector.getInputField();
   }

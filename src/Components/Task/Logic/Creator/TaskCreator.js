@@ -17,49 +17,55 @@ export class TaskCreator {
   }
 
   addTask() {
-    let task = this.getInputFieldValue();
-    if (task) {
-      let listElement = this.createListElement();
-      this.holderElement.appendChild(listElement);
-      Object.values(task).forEach((value) => {
-        if (
-          typeof value !== TaskConfig.numberType() &&
-          typeof value !== TaskConfig.stringType()
-        ) {
-          listElement.appendChild(value);
-        }
-      });
-      TaskConnector.saveTask(task);
-      this.inputField.value = "";
-      this.dueTimeInput.value = "";
-    }
+    let taskRes = this.getInputFieldValue();
+    taskRes.then((task) => {
+      if (task) {
+        let listElement = this.createListElement();
+        this.holderElement.appendChild(listElement);
+        Object.values(task).forEach((value) => {
+          if (
+            typeof value !== TaskConfig.numberType() &&
+            typeof value !== TaskConfig.stringType()
+          ) {
+            listElement.appendChild(value);
+          }
+        });
+        TaskConnector.saveTask(task);
+        this.inputField.value = "";
+        this.dueTimeInput.value = "";
+      }
+    });
   }
 
-  addTaskFromStorage(taskArr) {
+  addTaskFromStorage() {
     let task;
-    for (let i = 0; i < taskArr.length; i++) {
-      const taskFromStorage = taskArr[i];
-      task = this.setTaskToList(
-        taskFromStorage.taskValue,
-        taskFromStorage.dueTime,
-        taskFromStorage.timeAdded,
-        taskFromStorage.checked
-      );
-      let listElement = this.createListElement();
-      this.holderElement.appendChild(listElement);
-      Object.values(task).forEach((value) => {
-        if (
-          typeof value !== TaskConfig.numberType() &&
-          typeof value !== TaskConfig.stringType()
-        ) {
-          listElement.appendChild(value);
-          TaskFactory.createTaskHandler().handleTask();
-        }
-      });
-    }
+    let getTasks = TaskConnector.getTasksFromStorage();
+    getTasks.then((result) => {
+      for (let i = 0; i < result.length; i++) {
+        const taskFromStorage = result[i];
+        task = this.setTaskToList(
+          taskFromStorage.id,
+          taskFromStorage.taskValue,
+          taskFromStorage.dueTime,
+          taskFromStorage.timeAdded,
+          taskFromStorage.checked
+        );
+        let listElement = this.createListElement();
+        this.holderElement.appendChild(listElement);
+        Object.values(task).forEach((value) => {
+          if (
+            typeof value !== TaskConfig.numberType() &&
+            typeof value !== TaskConfig.stringType()
+          ) {
+            listElement.appendChild(value);
+            TaskFactory.createTaskHandler().handleTask();
+          }
+        });
+      }
+    });
   }
 
-  getInputFieldValue() {
+  async getInputFieldValue() {
     let request = TaskFactory.createTaskAddValidator();
     let response = request.validate(
       this.inputField.value,
@@ -73,7 +79,9 @@ export class TaskCreator {
           break;
         } else if (entry.type == TaskConfig.successMessage()) {
           this.getMessage(entry);
+          let id = await TaskConnector.getLastTaskId();
           return this.setTaskToList(
+            id,
             this.inputField.value,
             DateHandler.getDueTimeInMillis(this.dueTimeInput.value)
           );
@@ -82,18 +90,30 @@ export class TaskCreator {
     }
   }
 
-  setTaskToList(taskInputValue, dueTimeValue, addedAt = null, checked = false) {
+  setTaskToList(
+    id,
+    taskInputValue,
+    dueTimeValue,
+    addedAt = null,
+    checked = false
+  ) {
     let taskObject = {
+      taskID: DomElementCreator.createHtmlElement(
+        "span",
+        "taskID",
+        "taskID is--hidden",
+        id
+      ),
       taskValue: DomElementCreator.createHtmlElement(
         "span",
         "task",
-        "task",
+        "task--title",
         taskInputValue
       ),
       timeAdded: DomElementCreator.createHtmlElement(
         "span",
-        "time-added",
-        "time-added",
+        "timeAdded",
+        "timeAdded",
         addedAt ? addedAt : DateHandler.createTimeTaskAdded()
       ),
       checkbox: DomElementCreator.createInputElement(

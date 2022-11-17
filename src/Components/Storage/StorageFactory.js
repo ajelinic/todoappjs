@@ -7,40 +7,60 @@ import { StorageDeleter } from "./Logic/StorageDeleter.js";
 import { StorageReader } from "./Logic/StorageReader.js";
 import { StorageSaver } from "./Logic/StorageSaver.js";
 import { StorageUpdater } from "./Logic/StorageUpdater.js";
-import { StorageManager } from "./Queries/StorageManager.js";
-import { StorageRepository } from "./Queries/StorageRepository.js";
-import { StorageConfig } from "./StorageConfig.js";
+import { GlossaryStorageManager } from "./Queries/StorageQueries/GlossaryStorageManager.js";
+import { GlossaryStorageRepository } from "./Queries/StorageQueries/GlossaryStorageRepository.js";
+import { StorageQueryContainer } from "./Queries/StorageQueryContainer.js";
+import { TaskStorageManager } from "./Queries/TaskQueries/TaskStorageManager.js";
+import { TaskStorageRepository } from "./Queries/TaskQueries/TaskStorageRepository.js";
 
 export class StorageFactory {
   static createStorage() {
     return new StorageCreator();
   }
 
+  static createDatabase(name, version) {
+    return window.indexedDB.open(name, version);
+  }
+
+  static openDatabaseCon(name) {
+    return window.indexedDB.open(name);
+  }
+
   static createStorageSaver() {
-    return new StorageSaver(this.createStorageManager());
+    return new StorageSaver(
+      this.createTaskStorageManager(),
+      this.createGlossaryStorageManager()
+    );
   }
 
   static createStorageDeleter() {
-    return new StorageDeleter(this.createStorageManager());
+    return new StorageDeleter(this.createTaskStorageManager());
   }
 
   static createStorageUpdater() {
-    return new StorageUpdater(this.createStorageManager());
+    return new StorageUpdater(this.createTaskStorageManager());
   }
 
   static createStorageReader() {
-    return new StorageReader(this.createStorageRepository());
+    return new StorageReader(
+      this.createTaskStorageRepository(),
+      this.createGlossaryStorageRepository()
+    );
   }
 
-  static createStorageManager() {
-    return new StorageManager();
+  static createTaskStorageManager() {
+    return new TaskStorageManager(StorageQueryContainer);
   }
 
-  static createStorageRepository() {
-    return new StorageRepository();
+  static createTaskStorageRepository() {
+    return new TaskStorageRepository(StorageQueryContainer);
   }
 
-  static getTasksArray() {
-    return JSON.parse(localStorage.getItem(StorageConfig.setTasks()));
+  static createGlossaryStorageManager() {
+    return new GlossaryStorageManager(StorageQueryContainer);
+  }
+
+  static createGlossaryStorageRepository() {
+    return new GlossaryStorageRepository(StorageQueryContainer);
   }
 }

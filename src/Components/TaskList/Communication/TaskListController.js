@@ -1,15 +1,15 @@
 /**
- * @TaskListHeaderController
+ * @TaskListController
  */
 
 import { TaskListFactory } from "../TaskListFactory.js";
 
-export class TaskListHeaderController {
+export class TaskListController {
   static indexAction() {
     this.createView();
   }
 
   static createView() {
-    TaskListFactory.createTaskListHeader().taskListCreateHeader();
+    TaskListFactory.createTaskList().createTaskListContainer();
   }
 }

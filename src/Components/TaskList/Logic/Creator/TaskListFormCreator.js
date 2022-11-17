@@ -11,14 +11,16 @@ export class TaskFormCreator {
     this.baseElement = baseElement;
   }
 
-  taskListFormCreateHtml() {
+  async taskListFormCreateHtml() {
     let div = DomElementCreator.createHtmlElement(
-      "footer",
-      "footer",
-      "taskListFooter"
+      "div",
+      "form-container",
+      "form-container"
     );
     this.baseElement[0].appendChild(div);
-    div.appendChild(TaskListConnector.renderTaskForm());
+    div.appendChild(await TaskListConnector.renderTaskForm());
+    TaskListConnector.renderTask();
+    TaskListConnector.deleteTask();
     TaskListListener.preventKeyPressOnTaskCreate();
     TaskListConnector.hideDueButtonAndShowDateTimeInput();
   }

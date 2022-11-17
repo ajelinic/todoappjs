@@ -11,15 +11,19 @@ export class TaskHandler {
     this.checkboxCollection = checkboxCollection;
   }
 
-  handleTask() {
+  async handleTask() {
     for (let i = 0; i < this.checkboxCollection.length; i++) {
       if (this.checkboxCollection[i].checked == true) {
-        TaskConnector.updateTaskStatus([i], this.checkboxCollection[i].checked);
+        await TaskConnector.updateTaskStatus(
+          this.checkboxCollection[i].parentElement
+        );
         this.checkboxCollection[i].parentElement.classList.add(
           TaskConfig.getCrossClass()
         );
       } else if (this.checkboxCollection[i].checked == false) {
-        TaskConnector.updateTaskStatus([i], this.checkboxCollection[i].checked);
+        await TaskConnector.updateTaskStatus(
+          this.checkboxCollection[i].parentElement
+        );
         this.checkboxCollection[i].parentElement.classList.remove(
           TaskConfig.getCrossClass()
         );
@@ -34,17 +38,6 @@ export class TaskHandler {
     } else if (dueButton.classList.contains(TaskConfig.getHiddenClass())) {
       dueButton.classList.remove(TaskConfig.getHiddenClass());
       timeDueInput.classList.add(TaskConfig.getHiddenClass());
-    }
-  }
-
-  checkTaskDueTime() {
-    for (let i = 0; i < this.checkboxCollection.length; i++) {
-      let dueTime = TaskConnector.getDueTimeFromStorage([i]);
-      let currentDateInMillis = new Date().getTime();
-
-      if (currentDateInMillis > dueTime) {
-        this.checkboxCollection[i].parentElement.style.color = "red";
-      }
     }
   }
 }
