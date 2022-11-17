@@ -16,7 +16,7 @@ export class StorageConfig {
   }
 
   static pathToSchema() {
-    return "/src/Components/Storage/Schema/";
+    return "src/Components/Storage/Schema/";
   }
 
   static getGlossaryFile() {
