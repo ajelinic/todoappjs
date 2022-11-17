@@ -2,11 +2,30 @@
  * @StorageSaver
  */
 
+import { CsvParser } from "../../../Utils/FileParsers/CsvParser.js";
+import { StorageConfig } from "../StorageConfig.js";
+
 export class StorageSaver {
-  constructor(storageManager) {
-    this.storageManager = storageManager;
+  constructor(taskStorageManager, glossaryStorageManager) {
+    this.taskStorageManager = taskStorageManager;
+    this.glossaryStorageManager = glossaryStorageManager;
   }
+
   saveTaskToStorage(item) {
-    this.storageManager.saveTaskToStorage(item);
+    let storingItem = {};
+    storingItem["id"] = item.taskID.innerText;
+    storingItem["taskValue"] = item.taskValue.innerText;
+    storingItem["dueTime"] = item.dueTime;
+    storingItem["timeAdded"] = item.timeAdded.innerText;
+    storingItem["checked"] = item.checkbox.checked;
+    return this.taskStorageManager.saveTask(storingItem);
+  }
+
+  async importData() {
+    let glossaryArray = await CsvParser.parseDataFromCsv(
+      StorageConfig.pathToDataFile() + StorageConfig.getGlossaryFile()
+    );
+
+    this.glossaryStorageManager.importGlossaryData(glossaryArray);
   }
 }

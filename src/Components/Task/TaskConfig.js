@@ -3,7 +3,7 @@
  */
 
 import { Getter } from "../../Utils/Getter/Getter.js";
-import { messages } from "./Constants/MessageConstants.js";
+import { messages } from "../../Utils/Messages/TaskMessages.js";
 
 export class TaskConfig {
   static setAddButtonInnerText() {

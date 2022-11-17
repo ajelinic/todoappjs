@@ -1,0 +1,35 @@
+<dataTables>
+    <dataTable>
+        <dataTableName>tasks</dataTableName>
+        <keyPath>id</keyPath>
+        <indexes>
+            <index>id</index>
+            <index>dueTime</index>
+        </indexes>
+    </dataTable>
+    <dataTable>
+        <dataTableName>statistics</dataTableName>
+        <keyPath>id</keyPath>
+        <indexes>
+            <index>id</index>
+        </indexes>
+    </dataTable>
+    <dataTable>
+        <dataTableName>tasks_archive</dataTableName>
+        <keyPath>id</keyPath>
+        <indexes>
+            <index>id</index>
+        </indexes>
+    </dataTable>
+    <dataTable>
+        <dataTableName>glossary</dataTableName>
+        <keyPath>textKey</keyPath>
+    </dataTable>
+    <dataTable>
+        <dataTableName>user</dataTableName>
+        <keyPath>id</keyPath>
+        <indexes>
+            <index>id</index>
+        </indexes>
+    </dataTable>
+</dataTables>

@@ -42,15 +42,19 @@ export class TaskConnector {
     return StorageConnector.deleteFromStorage(id);
   }
 
-  static getTasksFromStorage(taskArr) {
-    return TaskFactory.createTaskCreator().addTaskFromStorage(taskArr);
+  static getTasksFromStorage() {
+    return StorageConnector.getTasksFromStorage();
   }
 
-  static updateTaskStatus(id, checked) {
-    return StorageConnector.updateTaskStatus(id, checked);
+  static renderTasksFromStorage() {
+    return TaskFactory.createTaskCreator().addTaskFromStorage();
   }
 
-  static getDueTimeFromStorage(id) {
-    return StorageConnector.getDueTimeFromStorage(id);
+  static updateTaskStatus(item) {
+    return StorageConnector.updateTaskStatus(item);
+  }
+
+  static getLastTaskId() {
+    return StorageConnector.getLastTaskId();
   }
 }

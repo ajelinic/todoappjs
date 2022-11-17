@@ -2,14 +2,14 @@
  * @TaskList
  */
 
-import { TaskListHolderCreator } from "./Logic/Creator/TaskListHolderCreator.js";
+import { TaskListCreator } from "./Logic/Creator/TaskListCreator.js";
 import { TaskListHeaderCreator } from "./Logic/Creator/TaskListHeaderCreator.js";
 import { TaskFormCreator } from "./Logic/Creator/TaskListFormCreator.js";
 import { TaskListDataProvider } from "./TaskListDataProvider.js";
 
 export class TaskListFactory {
-  static createTaskListHolder() {
-    return new TaskListHolderCreator(this.addBaseElement());
+  static createTaskList() {
+    return new TaskListCreator(this.addMainContainer());
   }
 
   static createTaskListHeader() {
@@ -22,5 +22,9 @@ export class TaskListFactory {
 
   static addBaseElement() {
     return TaskListDataProvider.getBaseElement();
+  }
+
+  static addMainContainer() {
+    return TaskListDataProvider.getMainContainer();
   }
 }

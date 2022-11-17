@@ -4,30 +4,31 @@
 
 import { DateHandler } from "../../../../Utils/Date/DateHandler.js";
 import { DomElementCreator } from "../../../../Utils/DomElementCreate/DomElementCreator.js";
+import { Glossary } from "../../../../Utils/Glossary/Glossary.js";
 
 export class TaskListHeaderCreator {
   constructor(baseElement) {
     this.baseElement = baseElement;
   }
 
-  taskListCreateMain() {
+  async taskListCreateHeader() {
     let header = DomElementCreator.createHtmlElement(
       "header",
       "header",
       "header header--title"
     );
     this.baseElement[0].appendChild(header);
-    header.appendChild(this.taskListHeaderCreateTitle());
+    header.appendChild(await this.taskListHeaderCreateTitle());
     header.appendChild(this.taskListCreateClock());
   }
 
-  taskListHeaderCreateTitle() {
+  async taskListHeaderCreateTitle() {
     let div = DomElementCreator.createHtmlElement(
       "div",
       "title",
       "title title--font"
     );
-    div.innerText = "To-Do App";
+    div.innerText = await Glossary.getGlossaryData("todoapp.title");
     return div;
   }
 

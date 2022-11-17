@@ -14,6 +14,10 @@ export class UtilsFactory {
     return new Date();
   }
 
+  static createXMLHttpRequest() {
+    return new XMLHttpRequest();
+  }
+
   static getBaseElement() {
     return UtilsDataProvider.setBaseElement();
   }
