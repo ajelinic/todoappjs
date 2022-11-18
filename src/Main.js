@@ -10,7 +10,12 @@ import { TaskListConnector } from "./Components/TaskList/TaskListConnector.js";
 export class Main {
   static init() {
     StorageConnector.initStorage();
-    StorageConnector.importData();
+    StorageConnector.importData().then(() => {
+      this.buildFronted();
+    });
+  }
+
+  static buildFronted() {
     TaskListConnector.initTaskList();
     InfoBarConnector.initInfoBar();
     TaskConnector.renderTasksFromStorage();

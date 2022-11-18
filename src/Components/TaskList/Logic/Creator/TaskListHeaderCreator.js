@@ -29,6 +29,7 @@ export class TaskListHeaderCreator {
       "title title--font"
     );
     div.innerText = await Glossary.getGlossaryData("todoapp.title");
+    debugger;
     return div;
   }
 

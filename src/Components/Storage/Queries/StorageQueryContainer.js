@@ -7,7 +7,7 @@ import { StorageFactory } from "../StorageFactory.js";
 
 export class StorageQueryContainer {
   static async openDatabase() {
-    let openConnection = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       StorageFactory.openDatabaseCon(StorageConfig.getDBName()).onerror = (
         event
       ) => {
@@ -20,7 +20,6 @@ export class StorageQueryContainer {
         resolve(event.target.result);
       };
     });
-    return openConnection;
   }
 
   static async openKeyCursor(database, store, mode = "readonly") {
