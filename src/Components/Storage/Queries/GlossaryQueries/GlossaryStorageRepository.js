@@ -15,7 +15,6 @@ export class GlossaryStorageRepository {
     );
 
     if (glossaryValue) {
-      console.log(glossaryValue.text);
       return await glossaryValue.text;
     }
   }

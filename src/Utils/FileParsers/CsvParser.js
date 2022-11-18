@@ -22,7 +22,7 @@ export class CsvParser {
     }
   }
 
-  static csvToArray(data, delimiter = "|") {
+  static csvToArray(data, delimiter = ",") {
     const headers = data.slice(0, data.indexOf("\r")).split(delimiter);
     const rows = data.slice(data.indexOf("\n") + 1).split("\n");
 
