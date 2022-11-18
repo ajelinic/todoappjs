@@ -1,5 +1,5 @@
-textKey|text
-todoapp.title|To-Do App
-todoapp.clear.list|Clear list
-todoapp.input.add|Add to list
-todoapp.input.due|+Due
+textKey,text
+todoapp.title,To-Do App
+todoapp.clear.list,Clear list
+todoapp.input.add,Add to list
+todoapp.input.due,+Due
