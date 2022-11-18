@@ -23,17 +23,22 @@ export class CsvParser {
   }
 
   static csvToArray(data, delimiter = ",") {
-    const headers = data.slice(0, data.indexOf("\r")).split(delimiter);
-    const rows = data.slice(data.indexOf("\n") + 1).split("\n");
+    let splited = data.split(/\r\n|\n/);
+    let header, row;
+    let glossaryArr = [];
+    header = splited[0].split(delimiter);
 
-    const glossaryArr = rows.map(function (row) {
-      const values = row.split(delimiter);
-      const el = headers.reduce(function (object, header, index) {
-        object[header] = values[index];
-        return object;
-      }, {});
-      return el;
-    });
+    for (let i = 1; i < splited.length; i++) {
+      row = splited[i].split(delimiter);
+      if (row.length == header.length) {
+        let glossaryObj = {};
+        for (let j = 0; j < header.length; j++) {
+          glossaryObj[header[j]] = row[j];
+        }
+        glossaryArr.push(glossaryObj);
+      }
+    }
+
     return glossaryArr;
   }
 }
