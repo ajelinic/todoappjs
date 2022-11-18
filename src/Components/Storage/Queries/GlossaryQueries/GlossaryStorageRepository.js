@@ -10,7 +10,7 @@ export class GlossaryStorageRepository {
     let database = await this.queryContainer.openDatabase();
     let glossaryValue = await this.queryContainer.readData(
       key,
-      database,
+      await database,
       "glossary"
     );
 

@@ -54,6 +54,12 @@ export class StorageCreator {
     request.onsuccess = (event) => {
       dB = event.target.result;
     };
+
+    let createDB = new Promise((resolve, reject) => {
+      resolve(request);
+    });
+
+    return await createDB;
   }
 
   getDataTablesArray(schemeData) {
