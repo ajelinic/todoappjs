@@ -6,14 +6,6 @@ import { Getter } from "../../Utils/Getter/Getter.js";
 import { messages } from "../../Utils/Messages/TaskMessages.js";
 
 export class TaskConfig {
-  static setAddButtonInnerText() {
-    return "Add to list";
-  }
-
-  static setClearButtonInnerText() {
-    return "Clear list";
-  }
-
   static getMessage(call) {
     return Getter.get(messages, call);
   }
