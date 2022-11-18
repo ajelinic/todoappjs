@@ -3,23 +3,24 @@
  */
 
 import { StorageCreator } from "./Logic/StorageCreator.js";
+import { StorageDBInitiator } from "./Logic/StorageDBInitiator.js";
 import { StorageDeleter } from "./Logic/StorageDeleter.js";
 import { StorageReader } from "./Logic/StorageReader.js";
 import { StorageSaver } from "./Logic/StorageSaver.js";
 import { StorageUpdater } from "./Logic/StorageUpdater.js";
-import { GlossaryStorageManager } from "./Queries/StorageQueries/GlossaryStorageManager.js";
-import { GlossaryStorageRepository } from "./Queries/StorageQueries/GlossaryStorageRepository.js";
+import { GlossaryStorageManager } from "./Queries/GlossaryQueries/GlossaryStorageManager.js";
+import { GlossaryStorageRepository } from "./Queries/GlossaryQueries/GlossaryStorageRepository.js";
 import { StorageQueryContainer } from "./Queries/StorageQueryContainer.js";
 import { TaskStorageManager } from "./Queries/TaskQueries/TaskStorageManager.js";
 import { TaskStorageRepository } from "./Queries/TaskQueries/TaskStorageRepository.js";
 
 export class StorageFactory {
-  static createStorage() {
-    return new StorageCreator();
+  static createDBInitiator() {
+    return new StorageDBInitiator(this.createStorage());
   }
 
-  static createDatabase(name, version) {
-    return window.indexedDB.open(name, version);
+  static createStorage() {
+    return new StorageCreator();
   }
 
   static openDatabaseCon(name) {

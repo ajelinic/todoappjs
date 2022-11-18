@@ -15,7 +15,8 @@ export class GlossaryStorageRepository {
     );
 
     if (glossaryValue) {
-      return glossaryValue.text;
+      console.log(glossaryValue.text);
+      return await glossaryValue.text;
     }
   }
 }

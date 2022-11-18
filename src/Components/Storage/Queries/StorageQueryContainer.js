@@ -20,8 +20,7 @@ export class StorageQueryContainer {
         resolve(event.target.result);
       };
     });
-
-    return await openConnection;
+    return openConnection;
   }
 
   static async openKeyCursor(database, store, mode = "readonly") {

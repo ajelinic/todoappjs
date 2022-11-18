@@ -8,7 +8,11 @@ import { StorageFactory } from "../StorageFactory.js";
 
 export class StorageCreator {
   async initStorage() {
-    const request = StorageFactory.createDatabase(StorageConfig.getDBName(), 1);
+    let request = await StorageFactory.createDBInitiator().initDatabase(
+      StorageConfig.getDBName(),
+      1
+    );
+
     let dB;
     let dataTablesArray;
 
@@ -18,7 +22,7 @@ export class StorageCreator {
 
     request.onerror = (event) => {
       //TODO: Implement error handling
-      console.log(`Error: ${event.target.result}`);
+      alert(`Error: ${event.target.error}`);
     };
 
     request.onupgradeneeded = (event) => {
