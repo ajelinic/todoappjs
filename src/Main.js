@@ -11,13 +11,9 @@ export class Main {
   static init() {
     StorageConnector.initStorage();
     StorageConnector.importData().then(() => {
-      this.buildFronted();
+      TaskListConnector.initTaskList();
+      InfoBarConnector.initInfoBar();
+      TaskConnector.renderTasksFromStorage();
     });
-  }
-
-  static buildFronted() {
-    TaskListConnector.initTaskList();
-    InfoBarConnector.initInfoBar();
-    TaskConnector.renderTasksFromStorage();
   }
 }
