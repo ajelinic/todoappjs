@@ -1,0 +1,16 @@
+@mixin task() {
+  .task {
+    display: flex;
+    justify-content: space-between;
+    align-self: flex-end;
+    flex-flow: row;
+    border: rem(1) solid $color-border;
+    box-shadow: 0 rem(2) rem(4) 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    margin: rem(5);
+    border-radius: rem(4);
+    max-width: rem(300);
+    width: rem(300);
+    padding: rem(16);
+  }
+}

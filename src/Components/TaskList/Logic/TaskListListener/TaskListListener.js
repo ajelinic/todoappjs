@@ -13,7 +13,7 @@ export class TaskListListener {
 
   static preventKeyPressOnTaskCreate() {
     let input = TaskListConnector.getInputField();
-    input.addEventListener("keydown", function (event) {
+    input.addEventListener("keydown", (event) => {
       if (event.keyCode === 13) {
         event.preventDefault();
         return;

@@ -2,37 +2,38 @@
  * @InfoBarCreator
  */
 
-import { DomElementCreator } from "../../../../Utils/DomElementCreate/DomElementCreator.js";
-
 export class InfoBarCreator {
-  constructor(containerElement) {
+  constructor(containerElement, dateTimeHandler, domElementCreator) {
     this.containerElement = containerElement;
+    this.dateTimeHandler = dateTimeHandler;
+    this.domElementCreator = domElementCreator;
   }
 
   infoBarCreateHtml() {
-    let infoBar = DomElementCreator.createHtmlElement(
+    let infoBar = this.domElementCreator.createHtmlElement(
       "div",
       "info-bar",
-      "info-bar-container"
+      "info-bar info-bar-container"
     );
     this.containerElement.appendChild(infoBar);
+    infoBar.appendChild(this.dateTimeHandler.createClock());
     infoBar.appendChild(this.createAPIInfoContainer());
     infoBar.appendChild(this.createTaskInfoContainer());
   }
 
   createAPIInfoContainer() {
-    return DomElementCreator.createHtmlElement(
+    return this.domElementCreator.createHtmlElement(
       "div",
       "api-info-container",
-      "api-info-container"
+      "info-bar__api-info-container"
     );
   }
 
   createTaskInfoContainer() {
-    return DomElementCreator.createHtmlElement(
+    return this.domElementCreator.createHtmlElement(
       "div",
       "task-info-container",
-      "task-info-container"
+      "info-bar__task-info-container"
     );
   }
 }

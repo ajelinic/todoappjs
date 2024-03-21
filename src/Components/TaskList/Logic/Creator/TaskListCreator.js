@@ -2,28 +2,27 @@
  * @TaskListCreator
  */
 
-import { DomElementCreator } from "../../../../Utils/DomElementCreate/DomElementCreator.js";
-import { TaskListListener } from "../TaskListListener/TaskListListener.js";
-
 export class TaskListCreator {
-  constructor(containerElement) {
-    this.containerElement = containerElement;
+  constructor(domElementCreator, taskListDataProvider, taskListListener) {
+    this.domElementCreator = domElementCreator;
+    this.taskListDataProvider = taskListDataProvider;
+    this.taskListListener = taskListListener;
   }
 
   createTaskListContainer() {
-    const taskListContainer = DomElementCreator.createHtmlElement(
+    const taskListContainer = this.domElementCreator.createHtmlElement(
       "div",
       "task-list-container",
       "task-list-container"
     );
-    this.containerElement.appendChild(taskListContainer);
+    this.createContainer().appendChild(taskListContainer);
     taskListContainer.appendChild(this.taskListCreateHtml());
   }
 
   taskListCreateHtml() {
-    const taskList = DomElementCreator.createHtmlElement(
+    const taskList = this.domElementCreator.createHtmlElement(
       "div",
-      "task-list",
+      "task-list-holder",
       "task-list-holder"
     );
     taskList.appendChild(this.createTaskListHolder());
@@ -31,12 +30,21 @@ export class TaskListCreator {
   }
 
   createTaskListHolder() {
-    let taskUl = DomElementCreator.createHtmlElement(
+    let taskUl = this.domElementCreator.createHtmlElement(
       "ul",
-      "taskList",
+      "task-list",
       "task-list task-list__content"
     );
-    TaskListListener.listenTaskCheckDone(taskUl);
+    this.taskListListener.listenTaskCheckDone(taskUl);
     return taskUl;
+  }
+
+  createContainer() {
+    let mainContainer = this.domElementCreator.createHtmlElement(
+      "div",
+      "content-container",
+      "content-container"
+    );
+    return this.taskListDataProvider.baseElement.appendChild(mainContainer);
   }
 }

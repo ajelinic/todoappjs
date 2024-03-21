@@ -1,0 +1,12 @@
+@mixin infobar() {
+  .info-bar {
+    display: flex;
+    flex-flow: column;
+    flex: 3;
+    border-left: rem(1) solid $color-border;
+    transition: 0.3s;
+    margin-left: rem(10);
+    height: 80vh;
+    width: rem(300);
+  }
+}

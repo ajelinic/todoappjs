@@ -2,26 +2,30 @@
  * @TaskFormCreator
  */
 
-import { DomElementCreator } from "../../../../Utils/DomElementCreate/DomElementCreator.js";
-import { TaskListConnector } from "../../TaskListConnector.js";
-import { TaskListListener } from "../TaskListListener/TaskListListener.js";
-
 export class TaskFormCreator {
-  constructor(baseElement) {
-    this.baseElement = baseElement;
+  constructor(
+    domElementCreator,
+    taskListDataProvider,
+    taskListListener,
+    taskListConnector
+  ) {
+    this.domElementCreator = domElementCreator;
+    this.taskListDataProvider = taskListDataProvider;
+    this.taskListListener = taskListListener;
+    this.taskListConnector = taskListConnector;
   }
 
   async taskListFormCreateHtml() {
-    let div = DomElementCreator.createHtmlElement(
+    let div = this.domElementCreator.createHtmlElement(
       "div",
       "form-container",
       "form-container"
     );
-    this.baseElement[0].appendChild(div);
-    div.appendChild(await TaskListConnector.renderTaskForm());
-    TaskListConnector.renderTask();
-    TaskListConnector.deleteTask();
-    TaskListListener.preventKeyPressOnTaskCreate();
-    TaskListConnector.hideDueButtonAndShowDateTimeInput();
+    this.taskListDataProvider.baseElement.appendChild(div);
+    div.appendChild(await this.taskListConnector.renderTaskForm());
+    this.taskListConnector.renderTask();
+    this.taskListConnector.deleteTask();
+    this.taskListListener.preventKeyPressOnTaskCreate();
+    this.taskListConnector.hideDueButtonAndShowDateTimeInput();
   }
 }

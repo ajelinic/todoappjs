@@ -3,7 +3,7 @@
  */
 
 export class UtilsDataProvider {
-  static setBaseElement() {
+  static get baseElement() {
     return document.querySelector("body");
   }
 }

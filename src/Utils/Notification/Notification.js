@@ -6,9 +6,10 @@ import { NotificationCreateHandler } from "./NotificationCreateHandler.js";
 import { NotificationPublishHandler } from "./NotificationPublishHandler.js";
 
 export class Notification {
-  constructor(element) {
-    this.element = element;
+  constructor(utilsDataProvider) {
+    this.utilsDataProvider = utilsDataProvider;
   }
+
   createTaskNotification(message) {
     return this.showNotification(
       NotificationCreateHandler.handleNotificationCreation(message)
@@ -17,7 +18,7 @@ export class Notification {
 
   showNotification(message) {
     return NotificationPublishHandler.addNotificationToHeader(
-      this.element,
+      this.utilsDataProvider.baseElement,
       message
     );
   }

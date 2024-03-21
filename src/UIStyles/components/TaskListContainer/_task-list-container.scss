@@ -1,0 +1,7 @@
+@mixin task-list-container() {
+  .task-list-container {
+    display: flex;
+    justify-content: flex-end;
+    flex: 5;
+  }
+}

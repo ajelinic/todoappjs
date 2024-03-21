@@ -2,45 +2,31 @@
  * @TaskListHeaderCreator
  */
 
-import { DateHandler } from "../../../../Utils/Date/DateHandler.js";
-import { DomElementCreator } from "../../../../Utils/DomElementCreate/DomElementCreator.js";
-import { Glossary } from "../../../../Utils/Glossary/Glossary.js";
-
 export class TaskListHeaderCreator {
-  constructor(baseElement) {
-    this.baseElement = baseElement;
+  constructor(dateHandler, domElementCreator, taskListDataProvider, glossary) {
+    this.dateHandler = dateHandler;
+    this.domElementCreator = domElementCreator;
+    this.taskListDataProvider = taskListDataProvider;
+    this.glossary = glossary;
   }
 
   async taskListCreateHeader() {
-    let header = DomElementCreator.createHtmlElement(
+    let header = this.domElementCreator.createHtmlElement(
       "header",
       "header",
-      "header header--title"
+      "header"
     );
-    this.baseElement[0].appendChild(header);
+    this.taskListDataProvider.baseElement.appendChild(header);
     header.appendChild(await this.taskListHeaderCreateTitle());
-    header.appendChild(this.taskListCreateClock());
   }
 
   async taskListHeaderCreateTitle() {
-    let div = DomElementCreator.createHtmlElement(
+    let div = this.domElementCreator.createHtmlElement(
       "div",
-      "title",
-      "title title--font"
+      "header-title",
+      "header__title--font"
     );
-    div.innerText = await Glossary.getGlossaryData("todoapp.title");
+    div.innerText = await this.glossary.getGlossaryData("todoapp.title");
     return div;
-  }
-
-  taskListCreateClock() {
-    let clockDiv = DomElementCreator.createHtmlElement(
-      "div",
-      "clock",
-      "clock clock--position"
-    );
-    setInterval(function () {
-      clockDiv.innerHTML = DateHandler.clock();
-    }, 1000);
-    return clockDiv;
   }
 }

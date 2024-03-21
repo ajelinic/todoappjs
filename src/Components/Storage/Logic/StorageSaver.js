@@ -26,9 +26,6 @@ export class StorageSaver {
       StorageConfig.pathToDataFile() + StorageConfig.getGlossaryFile()
     );
 
-    let startImport =
-      this.glossaryStorageManager.importGlossaryData(glossaryArray);
-
-    return startImport;
+    return this.glossaryStorageManager.importGlossaryData(glossaryArray);
   }
 }

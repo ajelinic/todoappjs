@@ -2,42 +2,40 @@
  * @TaskHandler
  */
 
-import { TaskConnector } from "../../TaskConnector.js";
-import { TaskConfig } from "../../TaskConfig.js";
-
 export class TaskHandler {
-  constructor(holderElement, checkboxCollection) {
-    this.holderElement = holderElement;
-    this.checkboxCollection = checkboxCollection;
+  constructor(taskDataProvider, taskConnector, taskConfig) {
+    this.taskDataProvider = taskDataProvider;
+    this.taskConnector = taskConnector;
+    this.taskConfig = taskConfig;
   }
 
   async handleTask() {
-    for (let i = 0; i < this.checkboxCollection.length; i++) {
-      if (this.checkboxCollection[i].checked == true) {
-        await TaskConnector.updateTaskStatus(
-          this.checkboxCollection[i].parentElement
+    for (let i = 0; i < this.taskDataProvider.taskCheckBoxes.length; i++) {
+      if (this.taskDataProvider.taskCheckBoxes[i].checked == true) {
+        await this.taskConnector.updateTaskStatus(
+          this.taskDataProvider.taskCheckBoxes[i].parentElement
         );
-        this.checkboxCollection[i].parentElement.classList.add(
-          TaskConfig.getCrossClass()
+        this.taskDataProvider.taskCheckBoxes[i].parentElement.classList.add(
+          this.taskConfig.getCrossClass()
         );
-      } else if (this.checkboxCollection[i].checked == false) {
-        await TaskConnector.updateTaskStatus(
-          this.checkboxCollection[i].parentElement
+      } else if (this.taskDataProvider.taskCheckBoxes[i].checked == false) {
+        await this.taskConnector.updateTaskStatus(
+          this.taskDataProvider.taskCheckBoxes[i].parentElement
         );
-        this.checkboxCollection[i].parentElement.classList.remove(
-          TaskConfig.getCrossClass()
+        this.taskDataProvider.taskCheckBoxes[i].parentElement.classList.remove(
+          this.taskConfig.getCrossClass()
         );
       }
     }
   }
 
-  static handleTaskDueTime(dueButton, timeDueInput) {
-    if (timeDueInput.classList.contains(TaskConfig.getHiddenClass())) {
-      dueButton.classList.add(TaskConfig.getHiddenClass());
-      timeDueInput.classList.remove(TaskConfig.getHiddenClass());
-    } else if (dueButton.classList.contains(TaskConfig.getHiddenClass())) {
-      dueButton.classList.remove(TaskConfig.getHiddenClass());
-      timeDueInput.classList.add(TaskConfig.getHiddenClass());
+  handleTaskDueTime(dueButton, timeDueInput) {
+    if (timeDueInput.classList.contains(this.taskConfig.hiddenClass)) {
+      dueButton.classList.add(this.taskConfig.hiddenClass);
+      timeDueInput.classList.remove(this.taskConfig.hiddenClass);
+    } else if (dueButton.classList.contains(this.taskConfig.hiddenClass)) {
+      dueButton.classList.remove(this.taskConfig.hiddenClass);
+      timeDueInput.classList.add(this.taskConfig.hiddenClass);
     }
   }
 }

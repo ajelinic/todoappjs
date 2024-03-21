@@ -25,6 +25,10 @@ export class StorageConnector {
     return StorageFactory.createStorageReader().getDueTime(id);
   }
 
+  static getLastEnteredTask() {
+    return StorageFactory.createStorageReader().getLastEnteredTask();
+  }
+
   static deleteFromStorage(id) {
     return StorageFactory.createStorageDeleter().deleteTaskFromStorage(id);
   }

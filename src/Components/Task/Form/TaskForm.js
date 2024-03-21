@@ -2,10 +2,12 @@
  * @TaskForm
  */
 
-import { DomElementCreator } from "../../../Utils/DomElementCreate/DomElementCreator.js";
-import { Glossary } from "../../../Utils/Glossary/Glossary.js";
-
 export class TaskForm {
+  constructor(glossary, domElementCreator) {
+    this.glossary = glossary;
+    this.domElementCreator = domElementCreator;
+  }
+
   async buildForm() {
     const formElementsArray = [
       this.appendTaskInputField(),
@@ -15,7 +17,11 @@ export class TaskForm {
       await this.appendClearTaskButton(),
     ];
 
-    let form = DomElementCreator.createHtmlElement("form", "taskForm", "form");
+    let form = this.domElementCreator.createHtmlElement(
+      "form",
+      "taskForm",
+      "form"
+    );
 
     for (let i = 0; i < formElementsArray.length; i++) {
       form.appendChild(formElementsArray[i]);
@@ -25,31 +31,31 @@ export class TaskForm {
   }
 
   async appendAddTaskButton() {
-    return DomElementCreator.createButtonElement(
+    return this.domElementCreator.createButtonElement(
       "add",
-      await Glossary.getGlossaryData("todoapp.input.add"),
+      await this.glossary.getGlossaryData("todoapp.input.add"),
       "button button--border button--color button--font"
     );
   }
 
   async appendDueTimeButton() {
-    return DomElementCreator.createButtonElement(
+    return this.domElementCreator.createButtonElement(
       "due-time",
-      await Glossary.getGlossaryData("todoapp.input.due"),
+      await this.glossary.getGlossaryData("todoapp.input.due"),
       "button button--border button--color button--font"
     );
   }
 
   async appendClearTaskButton() {
-    return DomElementCreator.createButtonElement(
+    return this.domElementCreator.createButtonElement(
       "clear",
-      await Glossary.getGlossaryData("todoapp.clear.list"),
+      await this.glossary.getGlossaryData("todoapp.clear.list"),
       "button button--border button--color button--font"
     );
   }
 
   appendTaskInputField() {
-    return DomElementCreator.createInputElement(
+    return this.domElementCreator.createInputElement(
       "text",
       "addTaskField",
       "addTaskField",
@@ -59,7 +65,7 @@ export class TaskForm {
   }
 
   appendDueTimeInput() {
-    return DomElementCreator.createInputElement(
+    return this.domElementCreator.createInputElement(
       "datetime-local",
       "due-time-input",
       "due-time-input",

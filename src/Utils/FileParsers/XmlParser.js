@@ -2,13 +2,15 @@
  * @XmlParser
  */
 
-import { UtilsFactory } from "../UtilsFactory.js";
-
 export class XmlParser {
-  static parseDataFromXml(xml) {
-    let xmlHttp = UtilsFactory.createXMLHttpRequest();
-    xmlHttp.open("GET", xml, false);
-    xmlHttp.send();
-    return xmlHttp.responseXML;
+  static async parseDataFromXml(xml) {
+    return await fetch(xml)
+      .then((response) => response.text())
+      .then((data) => {
+        const parser = new DOMParser();
+        const xmlData = parser.parseFromString(data, "application/xml");
+        return xmlData;
+      })
+      .catch(console.error);
   }
 }

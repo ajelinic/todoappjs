@@ -2,18 +2,25 @@
  * @TaskCreator
  */
 
-import { DateHandler } from "../../../../Utils/Date/DateHandler.js";
-import { DomElementCreator } from "../../../../Utils/DomElementCreate/DomElementCreator.js";
-import { UtilsFactory } from "../../../../Utils/UtilsFactory.js";
-import { TaskConnector } from "../../TaskConnector.js";
-import { TaskConfig } from "../../TaskConfig.js";
-import { TaskFactory } from "../../TaskFactory.js";
-
 export class TaskCreator {
-  constructor(holderElement, inputField, dueTimeInput) {
-    this.holderElement = holderElement;
-    this.inputField = inputField;
-    this.dueTimeInput = dueTimeInput;
+  constructor(
+    dateHandler,
+    domElementCreator,
+    notification,
+    taskConnector,
+    taskConfig,
+    taskHandler,
+    taskDataProvider,
+    taskAddValidator
+  ) {
+    this.dateHandler = dateHandler;
+    this.domElementCreator = domElementCreator;
+    this.notification = notification;
+    this.taskConnector = taskConnector;
+    this.taskConfig = taskConfig;
+    this.taskHandler = taskHandler;
+    this.taskDataProvider = taskDataProvider;
+    this.taskAddValidator = taskAddValidator;
   }
 
   addTask() {
@@ -21,44 +28,44 @@ export class TaskCreator {
     taskRes.then((task) => {
       if (task) {
         let listElement = this.createListElement();
-        this.holderElement.appendChild(listElement);
+        this.taskDataProvider.holderElement.appendChild(listElement);
         Object.values(task).forEach((value) => {
           if (
-            typeof value !== TaskConfig.numberType() &&
-            typeof value !== TaskConfig.stringType()
+            !Number.isInteger(value) &&
+            typeof value !== this.taskConfig.stringType()
           ) {
             listElement.appendChild(value);
           }
         });
-        TaskConnector.saveTask(task);
-        this.inputField.value = "";
-        this.dueTimeInput.value = "";
+        this.taskConnector.saveTask(task);
+        this.taskConnector.renderTaskInfoToInfoTaskBar();
+        this.taskDataProvider.inputField.value = "";
+        this.taskDataProvider.dueTimeInput.value = "";
       }
     });
   }
 
   addTaskFromStorage() {
     let task;
-    let getTasks = TaskConnector.getTasksFromStorage();
+    let getTasks = this.taskConnector.getTasksFromStorage();
     getTasks.then((result) => {
       for (let i = 0; i < result.length; i++) {
-        const taskFromStorage = result[i];
         task = this.setTaskToList(
-          taskFromStorage.id,
-          taskFromStorage.taskValue,
-          taskFromStorage.dueTime,
-          taskFromStorage.timeAdded,
-          taskFromStorage.checked
+          result[i].id,
+          result[i].taskValue,
+          result[i].dueTime,
+          result[i].timeAdded,
+          result[i].checked
         );
         let listElement = this.createListElement();
-        this.holderElement.appendChild(listElement);
+        this.taskDataProvider.holderElement.appendChild(listElement);
         Object.values(task).forEach((value) => {
           if (
-            typeof value !== TaskConfig.numberType() &&
-            typeof value !== TaskConfig.stringType()
+            !Number.isInteger(value) &&
+            typeof value !== this.taskConfig.stringType()
           ) {
             listElement.appendChild(value);
-            TaskFactory.createTaskHandler().handleTask();
+            this.taskHandler.handleTask();
           }
         });
       }
@@ -66,24 +73,25 @@ export class TaskCreator {
   }
 
   async getInputFieldValue() {
-    let request = TaskFactory.createTaskAddValidator();
-    let response = request.validate(
-      this.inputField.value,
-      this.dueTimeInput.value
+    let request = this.taskAddValidator.validate(
+      this.taskDataProvider.inputField.value,
+      this.taskDataProvider.dueTimeInput.value
     );
 
-    for (let entry of response) {
+    for (let entry of request) {
       if (entry) {
-        if (entry.type == TaskConfig.errorMessage()) {
+        if (entry.type == this.taskConfig.errorMessage()) {
           this.getMessage(entry);
           break;
-        } else if (entry.type == TaskConfig.successMessage()) {
+        } else if (entry.type == this.taskConfig.successMessage()) {
           this.getMessage(entry);
-          let id = await TaskConnector.getLastTaskId();
+          let id = await this.taskConnector.getLastTaskId();
           return this.setTaskToList(
             id,
-            this.inputField.value,
-            DateHandler.getDueTimeInMillis(this.dueTimeInput.value)
+            this.taskDataProvider.inputField.value,
+            this.dateHandler.getTimeInMillis(
+              this.taskDataProvider.dueTimeInput.value
+            )
           );
         }
       }
@@ -98,25 +106,25 @@ export class TaskCreator {
     checked = false
   ) {
     let taskObject = {
-      taskID: DomElementCreator.createHtmlElement(
+      taskID: this.domElementCreator.createHtmlElement(
         "span",
         "taskID",
         "taskID is--hidden",
         id
       ),
-      taskValue: DomElementCreator.createHtmlElement(
+      taskValue: this.domElementCreator.createHtmlElement(
         "span",
         "task",
         "task--title",
         taskInputValue
       ),
-      timeAdded: DomElementCreator.createHtmlElement(
+      timeAdded: this.domElementCreator.createHtmlElement(
         "span",
         "timeAdded",
-        "timeAdded",
-        addedAt ? addedAt : DateHandler.createTimeTaskAdded()
+        "task--time-added",
+        addedAt ? addedAt : this.dateHandler.createTimeTaskAdded()
       ),
-      checkbox: DomElementCreator.createInputElement(
+      checkbox: this.domElementCreator.createInputElement(
         "checkbox",
         "checkbox",
         "done",
@@ -124,23 +132,18 @@ export class TaskCreator {
         "",
         checked
       ),
-      dueTime: dueTimeValue ? dueTimeValue : TaskConfig.noDueTime(),
+      dueTime: dueTimeValue ? dueTimeValue : this.taskConfig.noDueTime(),
     };
 
     return taskObject;
   }
 
   createListElement() {
-    return DomElementCreator.createHtmlElement(
-      "li",
-      "taskItem",
-      "task task-list"
-    );
+    return this.domElementCreator.createHtmlElement("li", "taskItem", "task");
   }
 
   getMessage(message) {
-    let createMessage = UtilsFactory.createNotificationUtil();
-    createMessage.createTaskNotification(message);
+    this.notification.createTaskNotification(message);
     return message.type;
   }
 }

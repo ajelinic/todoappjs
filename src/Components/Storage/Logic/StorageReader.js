@@ -16,6 +16,10 @@ export class StorageReader {
     return this.taskRepository.getDueTime(id);
   }
 
+  getLastEnteredTask() {
+    return this.taskRepository.getLastEnteredTask();
+  }
+
   getTaskArrayFromStorage() {
     return this.taskRepository.getTaskArrayFromStorage();
   }

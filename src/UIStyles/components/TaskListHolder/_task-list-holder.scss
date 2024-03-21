@@ -1,10 +1,12 @@
-@mixin task-list-holder($color) {
+@mixin task-list-holder() {
   .task-list-holder {
     display: flex;
     flex-flow: column;
     align-items: center;
-    background-color: $color;
-    height: 400px;
+    background-color: $color-white;
     overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

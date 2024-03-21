@@ -10,6 +10,18 @@ export class TaskConfig {
     return Getter.get(messages, call);
   }
 
+  static get taskClearError() {
+    return "taskClearError";
+  }
+
+  static get taskClearSuccess() {
+    return "taskClearSuccess";
+  }
+
+  static get emptyListWarning() {
+    return "emptyListWarning";
+  }
+
   static isInputFieldEmpty() {
     return "isInputFieldEmpty";
   }
@@ -24,10 +36,6 @@ export class TaskConfig {
 
   static taskAdded() {
     return "taskAdded";
-  }
-
-  static numberType() {
-    return "number";
   }
 
   static stringType() {
@@ -62,7 +70,7 @@ export class TaskConfig {
     return "cross";
   }
 
-  static getHiddenClass() {
+  static get hiddenClass() {
     return "is--hidden";
   }
 }

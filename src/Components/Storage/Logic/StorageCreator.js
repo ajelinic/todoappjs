@@ -14,10 +14,10 @@ export class StorageCreator {
     );
 
     let dB;
-    let dataTablesArray;
-
-    let schemeData = XmlParser.parseDataFromXml(
-      StorageConfig.pathToSchema() + StorageConfig.getSchema()
+    let dataTablesArray = this.getDataTablesArray(
+      await XmlParser.parseDataFromXml(
+        StorageConfig.pathToSchema() + StorageConfig.getSchema()
+      )
     );
 
     request.onerror = (event) => {
@@ -27,8 +27,6 @@ export class StorageCreator {
 
     request.onupgradeneeded = (event) => {
       dB = event.target.result;
-
-      dataTablesArray = this.getDataTablesArray(schemeData);
 
       for (let i = 0; i < dataTablesArray.length; i++) {
         let store;

@@ -3,8 +3,6 @@
  */
 
 import { TaskConfig } from "../../../Task/TaskConfig.js";
-import { StorageConfig } from "../../StorageConfig.js";
-import { StorageFactory } from "../../StorageFactory.js";
 
 export class TaskStorageRepository {
   constructor(queryContainer) {
@@ -13,15 +11,14 @@ export class TaskStorageRepository {
 
   async getLastTaskId() {
     let database = await this.queryContainer.openDatabase();
-    let cursor = await this.queryContainer.openCursor(
+    let indexArray = await this.queryContainer.getAllKeysByIndex(
       database,
       "tasks",
-      null,
-      "prev"
+      "idX"
     );
 
-    if (cursor) {
-      return Number(cursor.value.id) + 1;
+    if (indexArray.length > 0) {
+      return Math.max(...indexArray) + 1;
     } else {
       return 1;
     }
@@ -36,6 +33,16 @@ export class TaskStorageRepository {
     } else {
       return TaskConfig.noDueTime();
     }
+  }
+
+  async getLastEnteredTask() {
+    let database = await this.queryContainer.openDatabase();
+    return await this.queryContainer.openCursor(
+      database,
+      "tasks",
+      null,
+      "prev"
+    );
   }
 
   async getTaskArrayFromStorage() {
