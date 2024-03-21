@@ -2,29 +2,22 @@
  * @TaskDeleter
  */
 
-import { TaskConnector } from "../../TaskConnector.js";
-import { TaskFactory } from "../../TaskFactory.js";
-
 export class TaskDeleter {
-  constructor(holderElement, clearButton) {
-    this.holderElement = holderElement;
-    this.clearButton = clearButton;
+  constructor(taskConnector, taskDataProvider, taskDeleteValidator) {
+    this.taskConnector = taskConnector;
+    this.taskDataProvider = taskDataProvider;
+    this.taskDeleteValidator = taskDeleteValidator;
   }
 
   deleteTask() {
-    this.clearButton.addEventListener("click", (e) => {
+    this.taskDataProvider.clearButton.addEventListener("click", (e) => {
       e.preventDefault();
-      this.checkIfSelectedTasks(this.getTaskCollection());
+      this.checkIfSelectedTasks(this.taskDataProvider.holderElement.children);
     });
-  }
-
-  getTaskCollection() {
-    return this.holderElement.children;
   }
 
   checkIfSelectedTasks(taskCollection) {
     let checkedTasks = true;
-    let request = TaskFactory.createTaskDeleteValidator();
     if (taskCollection.length > 0) {
       for (let i = 0; i < taskCollection.length; i++) {
         let taskCheckboxes = taskCollection[i].children.done;
@@ -36,9 +29,9 @@ export class TaskDeleter {
           checkedTasks = taskCheckboxes.checked;
         }
       }
-      return request.validate(checkedTasks);
+      return this.taskDeleteValidator.validate(checkedTasks);
     } else {
-      request.emptyValue(taskCollection.length);
+      this.taskDeleteValidator.emptyValue(taskCollection.length);
     }
   }
 
@@ -46,7 +39,7 @@ export class TaskDeleter {
     for (let i = taskCollection.length; i--; ) {
       let taskCheckboxes = taskCollection[i].children.done;
       if (taskCheckboxes.checked == true) {
-        TaskConnector.deleteFromStorage(
+        this.taskConnector.deleteFromStorage(
           taskCheckboxes.parentElement.querySelector("#taskID").innerText
         );
         taskCheckboxes.parentElement.remove();

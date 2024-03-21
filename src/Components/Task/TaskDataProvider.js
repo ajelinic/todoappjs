@@ -3,31 +3,31 @@
  */
 
 export class TaskDataProvider {
-  static queryAddTaskButton() {
+  static get addTaskButton() {
     return document.querySelector("#add");
   }
 
-  static queryDeleteTaskButton() {
+  static get clearButton() {
     return document.querySelector("#clear");
   }
 
-  static queryTaskCheckBox() {
+  static get taskCheckBoxes() {
     return document.querySelectorAll("input[name=done]");
   }
 
-  static getHolderElement() {
-    return document.querySelector("#taskList");
+  static get holderElement() {
+    return document.querySelector("#task-list");
   }
 
-  static getDueTimeButton() {
+  static get dueTimeButton() {
     return document.querySelector("#due-time");
   }
 
-  static getDueTimeInput() {
+  static get dueTimeInput() {
     return document.querySelector("#due-time-input");
   }
 
-  static getInputField() {
+  static get inputField() {
     return document.querySelector("input[name = 'addTaskField'");
   }
 }

@@ -2,34 +2,32 @@
  * @TaskFormHandler
  */
 
-import { TaskHandler } from "./TaskHandler.js";
-import { TaskListener } from "../TaskListener/TaskListener.js";
-
 export class TaskFormHandler {
-  constructor(dueButton, timeDueInput, addTaskButton, inputValue) {
-    this.dueButton = dueButton;
-    this.addTaskButton = addTaskButton;
-    this.timeDueInput = timeDueInput;
-    this.inputValue = inputValue;
+  constructor(
+    taskDataProvider,
+    taskHandler,
+    taskDueTimeListener,
+    taskListener
+  ) {
+    this.taskDataProvider = taskDataProvider;
+    this.taskHandler = taskHandler;
+    this.taskDueTimeListener = taskDueTimeListener;
+    this.taskListener = taskListener;
   }
 
   addTask() {
-    TaskListener.listenIfAddToListIsClicked(
-      this.addTaskButton,
-      this.timeDueInput,
-      this.inputValue
+    this.taskListener.listenIfAddToListIsClicked(
+      this.taskDataProvider.addTaskButton,
+      this.taskDataProvider.dueTimeInput,
+      this.taskDataProvider.inputField
     );
   }
 
   hideDueButtonAndShowDateTimeInput() {
-    TaskListener.listenIfDueButtonIsClicked(
-      this.dueButton,
-      this.timeDueInput,
-      this.inputValue
+    this.taskDueTimeListener.listenIfDueButtonIsClicked(
+      this.taskDataProvider.dueTimeButton,
+      this.taskDataProvider.dueTimeInput,
+      this.taskDataProvider.inputField
     );
-  }
-
-  showDueButtonAndShowDateTimeInput() {
-    TaskHandler.handleTaskDueTime(this.dueButton, this.timeDueInput);
   }
 }

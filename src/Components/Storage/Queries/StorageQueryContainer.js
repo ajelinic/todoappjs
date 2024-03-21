@@ -88,6 +88,39 @@ export class StorageQueryContainer {
     });
   }
 
+  static async countData(database, store, mode = "readwrite") {
+    return new Promise((resolve, reject) => {
+      database.transaction(store, mode).objectStore(store).count().onsuccess = (
+        event
+      ) => {
+        resolve(event.target.result);
+      };
+    });
+  }
+
+  static async getAllKeysByIndex(database, store, index, mode = "readwrite") {
+    let getAllKeysByIndex = new Promise((resolve, reject) => {
+      database
+        .transaction(store, mode)
+        .objectStore(store)
+        .index(index)
+        .getAllKeys().onsuccess = (event) => {
+        resolve(event.target.result);
+      };
+
+      database
+        .transaction(store, mode)
+        .objectStore(store)
+        .index(index)
+        .getAllKeys().onerror = (event) => {
+        reject(event.target.result);
+      };
+    });
+
+    console.log(getAllKeysByIndex);
+    return await getAllKeysByIndex;
+  }
+
   static async readData(entity, database, store, mode = "readonly") {
     return new Promise((resolve, reject) => {
       database

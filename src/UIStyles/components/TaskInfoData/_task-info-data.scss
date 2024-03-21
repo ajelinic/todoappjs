@@ -1,0 +1,21 @@
+@mixin task-info-data() {
+  .task-info-data {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    overflow: auto;
+    margin-top: rem(16);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &__task {
+      display: flex;
+      justify-content: center;
+      padding: rem(16) 0;
+      width: 100%;
+      border-top: rem(1) solid $color-border;
+    }
+  }
+}

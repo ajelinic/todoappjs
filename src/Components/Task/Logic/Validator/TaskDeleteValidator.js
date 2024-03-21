@@ -2,33 +2,34 @@
  * @TaskAddValidator
  */
 
-import { UtilsFactory } from "../../../../Utils/UtilsFactory.js";
-import { TaskConfig } from "../../TaskConfig.js";
-
 export class TaskDeleteValidator {
-  constructor() {
-    this.taskClearError = "taskClearError";
-    this.taskClearSuccess = "taskClearSuccess";
-    this.emptyListWarning = "emptyListWarning";
+  constructor(notification, taskConfig) {
+    this.taskConfig = taskConfig;
+    this.notification = notification;
   }
 
   validate(checked) {
     if (checked == false) {
-      return this.getMessage(TaskConfig.getMessage(this.taskClearError));
+      return this.getMessage(
+        this.taskConfig.getMessage(this.taskConfig.taskClearError)
+      );
     } else {
-      return this.getMessage(TaskConfig.getMessage(this.taskClearSuccess));
+      return this.getMessage(
+        this.taskConfig.getMessage(this.taskConfig.taskClearSuccess)
+      );
     }
   }
 
   emptyValue(value) {
     if (!value) {
-      return this.getMessage(TaskConfig.getMessage(this.emptyListWarning));
+      return this.getMessage(
+        this.taskConfig.getMessage(this.taskConfig.emptyListWarning)
+      );
     }
   }
 
   getMessage(message) {
-    let createMessage = UtilsFactory.createNotificationUtil();
-    createMessage.createTaskNotification(message);
+    this.notification.createTaskNotification(message);
     return message.type;
   }
 }

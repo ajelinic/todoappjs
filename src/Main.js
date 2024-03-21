@@ -12,8 +12,9 @@ export class Main {
     StorageConnector.initStorage();
     StorageConnector.importData().then(() => {
       TaskListConnector.initTaskList();
-      InfoBarConnector.initInfoBar();
       TaskConnector.renderTasksFromStorage();
+      InfoBarConnector.initInfoBar();
+      InfoBarConnector.renderTaskInfo();
     });
   }
 }

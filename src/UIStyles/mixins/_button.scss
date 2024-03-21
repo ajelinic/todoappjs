@@ -1,17 +1,17 @@
 @mixin button() {
   .button {
-    padding: 1.2px 6px;
+    padding: rem(1.2) rem(6);
 
     &--border {
-      border: 1px solid $color-black;
+      border: rem(1) solid $color-black;
 
       &:not(:last-child) {
         border-right: none;
       }
 
       &:last-child {
-        border-bottom-right-radius: 10px;
-        border-top-right-radius: 10px;
+        border-bottom-right-radius: rem(10);
+        border-top-right-radius: rem(10);
       }
     }
   }

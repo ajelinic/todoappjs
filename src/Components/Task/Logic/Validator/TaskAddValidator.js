@@ -2,11 +2,11 @@
  * @TaskAddValidator
  */
 
-import { DateHandler } from "../../../../Utils/Date/DateHandler.js";
-import { TaskConfig } from "../../TaskConfig.js";
-
 export class TaskAddValidator {
-  constructor() {}
+  constructor(dateHandler, taskConfig) {
+    this.dateHandler = dateHandler;
+    this.taskConfig = taskConfig;
+  }
 
   validate(taskValue, dueTimeValue) {
     let dueTimeValidationMessage = this.validateDueTime(dueTimeValue);
@@ -21,21 +21,21 @@ export class TaskAddValidator {
   validateTask(task) {
     switch (task) {
       case "":
-        return TaskConfig.getMessage(TaskConfig.emptyTask());
-      case String(task.match(TaskConfig.numberRegex())):
-        return TaskConfig.getMessage(TaskConfig.numberInputed());
+        return this.taskConfig.getMessage(this.taskConfig.emptyTask());
+      case String(task.match(this.taskConfig.numberRegex())):
+        return this.taskConfig.getMessage(this.taskConfig.numberInputed());
       default:
-        return TaskConfig.getMessage(TaskConfig.taskAdded());
+        return this.taskConfig.getMessage(this.taskConfig.taskAdded());
     }
   }
 
   validateDueTime(dueTimeValue) {
     if (dueTimeValue !== "") {
-      let dueTimeInMillis = DateHandler.getDueTimeInMillis(dueTimeValue);
-      let currentDateInMillis = new Date().getTime();
+      let dueTimeInMillis = this.dateHandler.getTimeInMillis(dueTimeValue);
+      let currentDateInMillis = this.dateHandler.getCurrentTime();
 
       if (currentDateInMillis > dueTimeInMillis) {
-        return TaskConfig.getMessage(TaskConfig.isPastTime());
+        return this.taskConfig.getMessage(this.taskConfig.isPastTime());
       } else {
         return;
       }

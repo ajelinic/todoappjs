@@ -4,6 +4,7 @@
 
 import { IndexController } from "./Communication/IndexController.js";
 import { TaskConnector } from "../Task/TaskConnector.js";
+import { TaskListFactory } from "./TaskListFactory.js";
 
 export class TaskListConnector {
   static initTaskList() {
@@ -32,5 +33,9 @@ export class TaskListConnector {
 
   static getInputField() {
     return TaskConnector.getInputField();
+  }
+
+  static createNotification() {
+    return TaskListFactory.createNotification();
   }
 }

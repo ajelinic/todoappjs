@@ -3,3 +3,8 @@ todoapp.title,To-Do App
 todoapp.clear.list,Clear list
 todoapp.input.add,Add to list
 todoapp.input.due,+Due
+task.info.id.text,Task with id
+task.info.title.text,with value
+task.info.duetime.text,has to be done by
+task.info.noduetime.text,.
+task.info.addedat.text,added at

@@ -10,73 +10,88 @@ import { TaskDataProvider } from "./TaskDataProvider.js";
 import { TaskAddValidator } from "./Logic/Validator/TaskAddValidator.js";
 import { TaskDeleteValidator } from "./Logic/Validator/TaskDeleteValidator.js";
 import { TaskFormHandler } from "./Logic/Handler/TaskFormHandler.js";
+import { Glossary } from "../../Utils/Glossary/Glossary.js";
+import { DomElementCreator } from "../../Utils/DomElementCreate/DomElementCreator.js";
+import { DateTimeHandler } from "../../Utils/DateTimeHandle/DateTimeHandler.js";
+import { TaskConnector } from "./TaskConnector.js";
+import { TaskConfig } from "./TaskConfig.js";
+import { TaskSubmitListener } from "./Logic/TaskSubmitListener/TaskSubmitListener.js";
+import { UtilsConnector } from "../../Utils/UtilsConnector.js";
+import { TaskDueTimeSubmitListener } from "./Logic/TaskSubmitListener/TaskDueTimeSubmitListener.js";
 
 export class TaskFactory {
   static createTaskCreator() {
     return new TaskCreator(
-      this.addHolderElement(),
-      this.addInputField(),
-      this.selectDueTimeInput()
+      DateTimeHandler,
+      DomElementCreator,
+      this.getNotificationDependency(),
+      TaskConnector,
+      TaskConfig,
+      this.createTaskHandler(),
+      TaskDataProvider,
+      this.createTaskAddValidator()
     );
   }
 
   static createTaskDeleter() {
     return new TaskDeleter(
-      this.addHolderElement(),
-      this.selectClearTaskButton()
+      TaskConnector,
+      TaskDataProvider,
+      this.createTaskDeleteValidator()
     );
   }
 
   static createTaskForm() {
-    return new TaskForm();
+    return new TaskForm(Glossary, DomElementCreator);
   }
 
   static createTaskAddValidator() {
-    return new TaskAddValidator();
+    return new TaskAddValidator(DateTimeHandler, TaskConfig);
   }
 
   static createTaskDeleteValidator() {
-    return new TaskDeleteValidator();
+    return new TaskDeleteValidator(
+      this.getNotificationDependency(),
+      TaskConfig
+    );
   }
 
   static createTaskHandler() {
-    return new TaskHandler(this.addHolderElement(), this.selectTaskCheckBox());
+    return new TaskHandler(TaskDataProvider, TaskConnector, TaskConfig);
   }
 
   static createTaskFormHandler() {
     return new TaskFormHandler(
-      this.selectDueTimeButton(),
-      this.selectDueTimeInput(),
-      this.selectAddTaskButton(),
-      this.addInputField()
+      TaskDataProvider,
+      this.createTaskHandler(),
+      this.createTaskDueTimeSubmitListener(),
+      this.createTaskSubmitListener()
     );
   }
 
-  static selectAddTaskButton() {
-    return TaskDataProvider.queryAddTaskButton();
+  static createTaskSubmitListener() {
+    return new TaskSubmitListener(
+      TaskDataProvider,
+      this.getNotificationDependency(),
+      TaskConfig,
+      this.createTaskHandler(),
+      this.createTaskCreator()
+    );
   }
 
-  static selectTaskCheckBox() {
-    return TaskDataProvider.queryTaskCheckBox();
+  static createTaskDueTimeSubmitListener() {
+    return new TaskDueTimeSubmitListener(
+      this.getNotificationDependency(),
+      TaskConfig,
+      this.createTaskHandler()
+    );
   }
 
-  static selectClearTaskButton() {
-    return TaskDataProvider.queryDeleteTaskButton();
+  static getNotificationDependency() {
+    return UtilsConnector.createNotification();
   }
 
-  static addHolderElement() {
-    return TaskDataProvider.getHolderElement();
-  }
-
-  static selectDueTimeButton() {
-    return TaskDataProvider.getDueTimeButton();
-  }
-
-  static selectDueTimeInput() {
-    return TaskDataProvider.getDueTimeInput();
-  }
-
-  static addInputField() {
-    return TaskDataProvider.getInputField();
+  static getTaskCreatorPlugins() {
+    return [];
   }
 }

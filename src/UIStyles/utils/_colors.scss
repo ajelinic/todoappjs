@@ -1,9 +1,30 @@
+//clear sky color scheme
+
 $color-black: #000;
 $color-white: #fff;
+$color-gradient-1: #005c97;
+$color-gradient-2: #363795;
+
+$shadow: rgba(0, 0, 0, 0.2);
 
 $color-button-background: #f8f8f8;
-$color-border: #ebebeb;
+$color-border: #a3dcff;
 
 $color-success: rgb(0, 170, 0);
 $color-error: rgb(238, 1, 1);
 $color-warning: rgb(238, 143, 1);
+
+$linear-gradient-clear-sky: linear-gradient(
+  to right,
+  $color-gradient-2,
+  $color-gradient-1
+); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+$linear-gradient-clear-sky-webkit: -webkit-linear-gradient(
+  to right,
+  $color-gradient-2,
+  $color-gradient-1
+); /* Chrome 10-25, Safari 5.1-6 */
+
+$fallback: $color-gradient-1;

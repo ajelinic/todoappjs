@@ -1,0 +1,33 @@
+@import "../../utils/colors";
+@import "../../utils/reset";
+@import "../../utils/rem-calc";
+@import "../../utils/helpers";
+@import "../../components/TaskList/task-list";
+@import "../../components/TaskForm/task-form";
+@import "../../components/TaskListHolder/task-list-holder";
+@import "../../components/TaskListContainer/task-list-container";
+@import "../../components/Task/task";
+@import "../../components/InfoBar/infobar";
+@import "../../components/Header/header";
+@import "../../components/TaskInfoData/task-info-data";
+@import "../../mixins/button";
+@import "../../mixins/notification";
+
+@include task-list();
+@include task-list-holder();
+@include task-form();
+@include button();
+@include notification();
+@include task();
+@include task-list-container();
+@include infobar();
+@include header();
+@include task-info-data();
+
+.is--hidden {
+  display: none;
+}
+
+.cross {
+  text-decoration: line-through;
+}

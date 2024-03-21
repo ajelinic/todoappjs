@@ -2,7 +2,9 @@
  * @TaskConnector
  */
 
+import { InfoBarConnector } from "../InfoBar/InfoBarConnector.js";
 import { StorageConnector } from "../Storage/StorageConnector.js";
+import { TaskDataProvider } from "./TaskDataProvider.js";
 import { TaskFactory } from "./TaskFactory.js";
 
 export class TaskConnector {
@@ -31,7 +33,7 @@ export class TaskConnector {
   }
 
   static getInputField() {
-    return TaskFactory.addInputField();
+    return TaskDataProvider.inputField;
   }
 
   static saveTask(task) {
@@ -56,5 +58,9 @@ export class TaskConnector {
 
   static getLastTaskId() {
     return StorageConnector.getLastTaskId();
+  }
+
+  static renderTaskInfoToInfoTaskBar() {
+    return InfoBarConnector.renderLastEnteredTaskInfo();
   }
 }

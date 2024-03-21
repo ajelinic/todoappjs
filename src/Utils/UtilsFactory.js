@@ -7,7 +7,7 @@ import { UtilsDataProvider } from "./UtilsDataProvider.js";
 
 export class UtilsFactory {
   static createNotificationUtil() {
-    return new Notification(this.getBaseElement());
+    return new Notification(UtilsDataProvider);
   }
 
   static createDateTime() {
@@ -16,9 +16,5 @@ export class UtilsFactory {
 
   static createXMLHttpRequest() {
     return new XMLHttpRequest();
-  }
-
-  static getBaseElement() {
-    return UtilsDataProvider.setBaseElement();
   }
 }
