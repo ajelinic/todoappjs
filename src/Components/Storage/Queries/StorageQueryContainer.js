@@ -117,7 +117,6 @@ export class StorageQueryContainer {
       };
     });
 
-    console.log(getAllKeysByIndex);
     return await getAllKeysByIndex;
   }
 
