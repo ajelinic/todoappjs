@@ -2,7 +2,7 @@
 
 export const _containerMixin = {
   createContainer() {
-    return new Set();
+    return new Map();
   },
   setContainer(container, key, value) {
     return (container[key] = value);

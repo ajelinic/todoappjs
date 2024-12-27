@@ -1,7 +1,7 @@
 /** _getAppNamespaceMixin */
 
-import { ApplicationConfig } from "../ApplicationConfig.js";
-import { APP_NAMESPACE } from "../ApplicationConstants.js";
+import { ApplicationConfig } from "../Application/ApplicationConfig.js";
+import { APP_NAMESPACE } from "../Application/ApplicationConstants.js";
 
 export const _getAppNamespaceMixin = {
   getAppNamespace() {

@@ -9,11 +9,7 @@ export class AbstractFactory {
     }
   }
 
-  createContainer() {
-    return new Set();
-  }
-
-  getProvidedDependency(key) {
-    throw new Error(`Dependency not found: ${key}`);
+  static getProvidedDependency(key) {
+    return this.prototype.getProvidedDependency(key);
   }
 }

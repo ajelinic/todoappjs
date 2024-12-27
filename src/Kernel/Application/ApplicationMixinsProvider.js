@@ -2,16 +2,18 @@
  * @ApplicationMixinsProvider
  */
 
-import { MixinRegistrator } from "./Mixins/MixinRegistrator.js";
-import { AbstractConfig } from "../Kernel/AbstractConfig.js";
-import { AbstractFactory } from "../Kernel/AbstractFactory.js";
-import { AbstractClassResolver } from "../Kernel/AbstractClassResolver.js";
+import { MixinRegistrator } from "../Mixins/MixinRegistrator.js";
+import { AbstractConfig } from "../AbstractConfig.js";
+import { AbstractFactory } from "../AbstractFactory.js";
+import { AbstractClassResolver } from "../AbstractClassResolver.js";
+import { AbstractDependencyProvider } from "../AbstractDependencyProvider.js";
 
 export class ApplicationMixinsProvider {
   static applicableClasses = {
     AbstractConfig: AbstractConfig,
     AbstractFactory: AbstractFactory,
     AbstractClassResolver: AbstractClassResolver,
+    AbstractDependencyProvider: AbstractDependencyProvider,
   };
 
   static applyMixins() {

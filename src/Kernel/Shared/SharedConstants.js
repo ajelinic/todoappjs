@@ -1,8 +1,8 @@
 /**
- * @KernelConstants
+ * @SharedConstants
  */
 
-export class KernelConstans {
+export class SharedConstants {
   static getClassNameSuffixs() {
     return {
       factory: "Factory",

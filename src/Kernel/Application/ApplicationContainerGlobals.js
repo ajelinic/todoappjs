@@ -3,10 +3,6 @@
 export class ApplicationContainerGlobals {
   static containerGlobals = {};
 
-  static getContainerGlobals() {
-    return { ...this.containerGlobals };
-  }
-
   static set(id, value) {
     this.containerGlobals[id] = value;
   }

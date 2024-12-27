@@ -2,7 +2,7 @@
  * AbstractConfig
  */
 
-import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Application/ApplicationConstants.js";
+import { ABSTRACT_CLASS_ERROR_MESSAGE } from "./Application/ApplicationConstants.js";
 
 export class AbstractConfig {
   constructor() {
