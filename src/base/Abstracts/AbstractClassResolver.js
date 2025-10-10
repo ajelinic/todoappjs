@@ -1,5 +1,5 @@
-import { ABSTRACT_CLASS_ERROR_MESSAGE } from "./Application/ApplicationConstants.js";
-import { ApplicationContainerGlobals } from "./Application/ApplicationContainerGlobals.js";
+import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Shared/AppCoreConstants.js";
+import { SharedConfig } from "../Shared/SharedConfig.js";
 
 export class AbstractClassResolver {
   constructor() {
@@ -20,7 +20,7 @@ export class AbstractClassResolver {
 
     const container = this.createContainer();
     container.set(this.BUNDLE_KEY, this.resolvePath(bundles));
-    
+
     return container;
   }
 
@@ -35,16 +35,20 @@ export class AbstractClassResolver {
   }
 
   static createContainer() {
-    return this.prototype.createContainer();
+    return new Map();
   }
 
   static setContainer(id, value) {
-    ApplicationContainerGlobals.set(id, value);
+    this.createContainer().set(id, value);
   }
 
   static getClassNameSuffix() {
     throw new Error(
       "Method 'getClassNameSuffix' must be implemented by concrete resolver classes."
     );
+  }
+
+  static getHost() {
+    return SharedConfig.getHost();
   }
 }

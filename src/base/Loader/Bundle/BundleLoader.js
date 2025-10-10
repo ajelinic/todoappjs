@@ -1,24 +1,16 @@
 /**
- * @ApplicationLoader
+ * @BundleLoader
  */
 
-import { SharedConfig } from "../Shared/SharedConfig.js";
-import { SharedConstants } from "../Shared/SharedConstants.js";
-import { ApplicationDependencyProvider } from "./ApplicationDependencyProvider.js";
-import { ApplicationMixinsProvider } from "./ApplicationMixinsProvider.js";
-import { ApplicationFactory } from "./ApplicationFactory.js";
+import { AppCoreFactory } from "../../AppCoreFactory.js";
+import { SharedConfig } from "../../Shared/SharedConfig.js";
+import { SharedConstants } from "../../Shared/SharedConstants.js";
 
-export class ApplicationLoader {
+export class BundleLoader {
   static KEY_SUFFIX = "_BUNDLES";
   static BUNDLE_LIST = {};
 
-  static init() {
-    ApplicationMixinsProvider.applyMixins();
-    ApplicationDependencyProvider.setDependencies();
-    this.load();
-  }
-
-  static load() {
+  static loadBundles() {
     const bundles = SharedConfig.getRegisteredBundles();
     const bundleLayers = this.getBundleLayers();
 
@@ -30,7 +22,7 @@ export class ApplicationLoader {
       }
     }
 
-    let resolverPlugins = ApplicationFactory.getApplicationResolverPlugins();
+    let resolverPlugins = AppCoreFactory.getBundleResolverPlugins();
 
     resolverPlugins.forEach((plugin) => {
       let resolvedClasses = plugin.resolve(this.BUNDLE_LIST);

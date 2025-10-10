@@ -2,12 +2,12 @@
  * AbstractConfig
  */
 
-import { ABSTRACT_CLASS_ERROR_MESSAGE } from "./Application/ApplicationConstants.js";
+import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Shared/AppCoreConstants.js";
 
 export class AbstractConfig {
   constructor() {
     if (this.constructor === AbstractConfig) {
-      throw new Error(ABSTRACT_CLASS_ERROR_MESSAGE);
+      throw new TypeError(ABSTRACT_CLASS_ERROR_MESSAGE);
     }
   }
 

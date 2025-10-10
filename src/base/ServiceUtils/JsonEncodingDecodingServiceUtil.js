@@ -1,8 +1,8 @@
 /**
- * @JsonEncodingDecodingUtil
+ * @JsonEncodingDecodingServiceUtil
  */
 
-export class JsonEncodingDecodingUtil {
+export class JsonEncodingDecodingServiceUtil {
   static jsonDecode(value) {
     return JSON.parse(value);
   }

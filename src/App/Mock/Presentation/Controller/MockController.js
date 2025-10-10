@@ -5,5 +5,3 @@ export class MockController {
     return MockPresentationFactory.test();
   }
 }
-
-MockController.indexAction();

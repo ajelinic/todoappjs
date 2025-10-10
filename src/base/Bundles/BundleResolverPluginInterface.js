@@ -1,6 +1,6 @@
-/** ApplicationResolverPluginInterface */
+/** BundleResolverPluginInterface */
 
-export const ApplicationResolverPluginInterface = (plugin) => {
+export const BundleResolverPluginInterface = (plugin) => {
   if (!plugin.resolve) {
     throw new Error("Plugin must include resolve method");
   }

@@ -1,7 +1,9 @@
-import { AbstractFactory } from "../../../Kernel/AbstractFactory.js";
+import { AbstractFactory } from "../../../base/Abstracts/AbstractFactory.js";
 
 export class MockPresentationFactory extends AbstractFactory {
   static test() {
-    console.log("?");
+    console.log("radiiiiiiiiii");
   }
 }
+
+MockPresentationFactory.test();
