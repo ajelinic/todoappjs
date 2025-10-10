@@ -12,6 +12,7 @@ export class StorageCreator {
       StorageConfig.getDBName(),
       1
     );
+    console.log(request);
 
     let dB;
     let dataTablesArray = this.getDataTablesArray(
@@ -27,30 +28,12 @@ export class StorageCreator {
 
     request.onupgradeneeded = (event) => {
       dB = event.target.result;
-
-      for (let i = 0; i < dataTablesArray.length; i++) {
-        let store;
-        if (
-          !dB.objectStoreNames.contains(
-            dataTablesArray[i].getElementsByTagName("dataTableName")[0]
-              .innerHTML
-          )
-        ) {
-          store = dB.createObjectStore(
-            dataTablesArray[i].getElementsByTagName("dataTableName")[0]
-              .innerHTML,
-            {
-              keyPath:
-                dataTablesArray[i].getElementsByTagName("keyPath")[0].innerHTML,
-            }
-          );
-          this.createIndexes(store, dataTablesArray[i].children);
-        }
-      }
+      this.createStores(dB, dataTablesArray);
     };
 
     request.onsuccess = (event) => {
       dB = event.target.result;
+      this.createStores(dB, dataTablesArray);
     };
 
     let createDB = new Promise((resolve, reject) => {
@@ -62,6 +45,26 @@ export class StorageCreator {
 
   getDataTablesArray(schemeData) {
     return schemeData.querySelectorAll("dataTable");
+  }
+
+  async createStores(dB, dataTablesArray) {
+    for (let i = 0; i < dataTablesArray.length; i++) {
+      let store;
+      if (
+        !dB.objectStoreNames.contains(
+          dataTablesArray[i].getElementsByTagName("dataTableName")[0].innerHTML
+        )
+      ) {
+        store = dB.createObjectStore(
+          dataTablesArray[i].getElementsByTagName("dataTableName")[0].innerHTML,
+          {
+            keyPath:
+              dataTablesArray[i].getElementsByTagName("keyPath")[0].innerHTML,
+          }
+        );
+        this.createIndexes(store, dataTablesArray[i].children);
+      }
+    }
   }
 
   async createIndexes(store, dataTableParams) {

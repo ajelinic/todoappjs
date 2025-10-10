@@ -9,12 +9,13 @@ import { TaskListConnector } from "./Components/TaskList/TaskListConnector.js";
 
 export class Main {
   static init() {
-    StorageConnector.initStorage();
-    StorageConnector.importData().then(() => {
-      TaskListConnector.initTaskList();
-      TaskConnector.renderTasksFromStorage();
-      InfoBarConnector.initInfoBar();
-      InfoBarConnector.renderTaskInfo();
+    StorageConnector.initStorage().then(() => {
+      StorageConnector.importData().then(() => {
+        TaskListConnector.initTaskList();
+        TaskConnector.renderTasksFromStorage();
+        InfoBarConnector.initInfoBar();
+        InfoBarConnector.renderTaskInfo();
+      });
     });
   }
 }
