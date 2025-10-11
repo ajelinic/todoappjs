@@ -1,5 +1,6 @@
 /**
  * @StorageFactory
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { StorageCreator } from "./Logic/StorageCreator.js";

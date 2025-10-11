@@ -1,5 +1,6 @@
 /**
  * @StorageQueryContainer
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { StorageConfig } from "../StorageConfig.js";

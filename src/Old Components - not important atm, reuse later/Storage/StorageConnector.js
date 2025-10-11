@@ -1,5 +1,6 @@
 /**
  * @StorageConnector
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { StorageFactory } from "./StorageFactory.js";

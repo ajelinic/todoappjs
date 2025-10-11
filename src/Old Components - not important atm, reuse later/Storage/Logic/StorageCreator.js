@@ -1,8 +1,9 @@
 /**
  * @StorageCreator
+ * @deprecated Will be removed/changed in future releases
  */
 
-import { XmlParser } from "../../../Utils/FileParsers/XmlParser.js";
+import { XmlParser } from "../../Utils/FileParsers/XmlParser.js";
 import { StorageConfig } from "../StorageConfig.js";
 import { StorageFactory } from "../StorageFactory.js";
 

@@ -1,8 +1,9 @@
 /**
  * @StorageSaver
+ * @deprecated Will be removed/changed in future releases
  */
 
-import { CsvParser } from "../../../Utils/FileParsers/CsvParser.js";
+import { CsvParser } from "../../Utils/FileParsers/CsvParser.js";
 import { StorageConfig } from "../StorageConfig.js";
 
 export class StorageSaver {

@@ -1,5 +1,6 @@
 /**
  * @InfoBarConnector
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { StorageConnector } from "../Storage/StorageConnector.js";

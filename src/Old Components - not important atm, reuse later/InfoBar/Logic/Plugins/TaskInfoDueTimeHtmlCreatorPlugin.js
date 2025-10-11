@@ -1,5 +1,6 @@
 /**
  * @TaskInfoDueTimeHtmlCreatorPlugin
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { InfoBarFactory } from "../../InfoBarFactory.js";

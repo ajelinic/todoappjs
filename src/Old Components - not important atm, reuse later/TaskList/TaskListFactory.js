@@ -1,16 +1,17 @@
 /**
  * @TaskList
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { TaskListCreator } from "./Logic/Creator/TaskListCreator.js";
 import { TaskListHeaderCreator } from "./Logic/Creator/TaskListHeaderCreator.js";
 import { TaskFormCreator } from "./Logic/Creator/TaskListFormCreator.js";
 import { TaskListDataProvider } from "./TaskListDataProvider.js";
-import { DomElementCreator } from "../../Utils/DomElementCreate/DomElementCreator.js";
-import { Glossary } from "../../Utils/Glossary/Glossary.js";
+import { DomElementCreator } from "../Utils/DomElementCreate/DomElementCreator.js";
+import { Glossary } from "../Utils/Glossary/Glossary.js";
 import { TaskListListener } from "./Logic/TaskListListener/TaskListListener.js";
 import { TaskListConnector } from "./TaskListConnector.js";
-import { DateTimeHandler } from "../../Utils/DateTimeHandle/DateTimeHandler.js";
+import { DateTimeHandler } from "../Utils/DateTimeHandle/DateTimeHandler.js";
 
 export class TaskListFactory {
   static createTaskList() {

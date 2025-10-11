@@ -1,5 +1,6 @@
 /**
  * @TaskFactory
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { TaskForm } from "./Form/TaskForm.js";
@@ -10,13 +11,13 @@ import { TaskDataProvider } from "./TaskDataProvider.js";
 import { TaskAddValidator } from "./Logic/Validator/TaskAddValidator.js";
 import { TaskDeleteValidator } from "./Logic/Validator/TaskDeleteValidator.js";
 import { TaskFormHandler } from "./Logic/Handler/TaskFormHandler.js";
-import { Glossary } from "../../Utils/Glossary/Glossary.js";
-import { DomElementCreator } from "../../Utils/DomElementCreate/DomElementCreator.js";
-import { DateTimeHandler } from "../../Utils/DateTimeHandle/DateTimeHandler.js";
+import { Glossary } from "../Utils/Glossary/Glossary.js";
+import { DomElementCreator } from "../Utils/DomElementCreate/DomElementCreator.js";
+import { DateTimeHandler } from "../Utils/DateTimeHandle/DateTimeHandler.js";
 import { TaskConnector } from "./TaskConnector.js";
 import { TaskConfig } from "./TaskConfig.js";
 import { TaskSubmitListener } from "./Logic/TaskSubmitListener/TaskSubmitListener.js";
-import { UtilsConnector } from "../../Utils/UtilsConnector.js";
+import { UtilsConnector } from "../Utils/UtilsConnector.js";
 import { TaskDueTimeSubmitListener } from "./Logic/TaskSubmitListener/TaskDueTimeSubmitListener.js";
 
 export class TaskFactory {
