@@ -6,4 +6,3 @@ export class MockPresentationFactory extends AbstractFactory {
   }
 }
 
-MockPresentationFactory.test();

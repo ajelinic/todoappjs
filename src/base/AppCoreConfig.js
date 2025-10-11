@@ -2,7 +2,7 @@
  * @AppCoreConfig
  */
 
-import * as obj from "../data/config/config_default.js";
+import * as obj from "/data/config/config_default.js";
 
 export class AppCoreConfig {
   static get(key = null) {

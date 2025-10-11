@@ -8,6 +8,8 @@ import { AbstractConfig } from "../Abstracts/AbstractConfig.js";
 import { AbstractFactory } from "../Abstracts/AbstractFactory.js";
 import { AbstractClassResolver } from "../Abstracts/AbstractClassResolver.js";
 import { AbstractDependencyProvider } from "../Abstracts/AbstractDependencyProvider.js";
+import { AbstractController } from "../Abstracts/AbstractController.js";
+import { _viewMixin } from "./_viewMixin.js";
 
 export class MixinLoader {
   static applicableClasses = {
@@ -15,6 +17,7 @@ export class MixinLoader {
     AbstractFactory: AbstractFactory,
     AbstractClassResolver: AbstractClassResolver,
     AbstractDependencyProvider: AbstractDependencyProvider,
+    AbstractController: AbstractController,
   };
 
   static registerMixins() {
@@ -23,6 +26,7 @@ export class MixinLoader {
       AbstractFactory: [],
       AbstractClassResolver: [_getAppNamespaceMixin],
       AbstractDependencyProvider: [],
+      AbstractController: [_viewMixin],
     };
   }
 

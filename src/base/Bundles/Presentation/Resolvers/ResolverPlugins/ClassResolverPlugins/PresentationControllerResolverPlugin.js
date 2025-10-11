@@ -1,6 +1,6 @@
 /** PresentationFactoryResolverPlugin */
 
-import { PresentationControllerResolver } from "../PresentationControllerResolver.js";
+import { PresentationControllerResolver } from "../../ClassResolvers/PresentationControllerResolver.js";
 
 export class PresentationControllerResolverPlugin {
   resolve(bundles) {

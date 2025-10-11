@@ -14,4 +14,13 @@ export class AppCoreFactory extends AbstractFactory {
       AppCoreDependencyProvider.BUNDLE_RESOLVER_PLUGINS
     );
   }
+
+  /**
+   * @returns array<ActionResolverPluginInterface>
+   */
+  static getCallableResolverPlugins() {
+    return AppCoreDependencyProvider.getProvidedDependency(
+      AppCoreDependencyProvider.ACTION_RESOLVER_PLUGINS
+    );
+  }
 }
