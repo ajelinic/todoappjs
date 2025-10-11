@@ -2,14 +2,14 @@
  * @MixinLoader
  */
 
-import { _getConfigMixin } from "./_getConfigMixin.js";
-import { _getAppNamespaceMixin } from "./_getAppNamespaceMixin.js";
+import { getConfigMixin } from "./getConfigMixin.js";
+import { getAppNamespaceMixin } from "./getAppNamespaceMixin.js";
 import { AbstractConfig } from "../Abstracts/AbstractConfig.js";
 import { AbstractFactory } from "../Abstracts/AbstractFactory.js";
 import { AbstractClassResolver } from "../Abstracts/AbstractClassResolver.js";
 import { AbstractDependencyProvider } from "../Abstracts/AbstractDependencyProvider.js";
 import { AbstractController } from "../Abstracts/AbstractController.js";
-import { _viewMixin } from "./_viewMixin.js";
+import { createViewMixin } from "./createViewMixin.js";
 
 export class MixinLoader {
   static applicableClasses = {
@@ -22,11 +22,11 @@ export class MixinLoader {
 
   static registerMixins() {
     return {
-      AbstractConfig: [_getConfigMixin],
+      AbstractConfig: [getConfigMixin],
       AbstractFactory: [],
-      AbstractClassResolver: [_getAppNamespaceMixin],
+      AbstractClassResolver: [getAppNamespaceMixin],
       AbstractDependencyProvider: [],
-      AbstractController: [_viewMixin],
+      AbstractController: [createViewMixin],
     };
   }
 
