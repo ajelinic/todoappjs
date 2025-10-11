@@ -9,6 +9,8 @@ export class AbstractDependencyProvider {
     }
   }
 
+  static container = new Map();
+
   static provideDependencies() {
     throw new Error(
       "Method 'provideDependencies' must be implemented by concrete dependency provider classes."
@@ -21,11 +23,6 @@ export class AbstractDependencyProvider {
   }
 
   static setProvidedDependencies() {
-    let container = this.createContainerGlobal();
-    return this.provideDependencies(container);
-  }
-
-  static createContainerGlobal() {
-    return new Map();
+    return this.provideDependencies(this.container);
   }
 }

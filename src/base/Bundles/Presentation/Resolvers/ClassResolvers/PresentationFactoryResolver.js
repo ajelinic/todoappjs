@@ -1,10 +1,10 @@
 /** PresentationFactoryResolver */
 
-import { AbstractClassResolver } from "../../../Abstracts/AbstractClassResolver.js";
-import { SharedConstants } from "../../../Shared/SharedConstants.js";
+import { AbstractClassResolver } from "../../../../Abstracts/AbstractClassResolver.js";
+import { SharedConstants } from "../../../../Shared/SharedConstants.js";
 
-export class PresentationControllerResolver extends AbstractClassResolver {
-  static CLASS_SUFFIX_KEY = "controller";
+export class PresentationFactoryResolver extends AbstractClassResolver {
+  static CLASS_SUFFIX_KEY = "factory";
   static BUNDLE_KEY = "presentation";
   static resolvedPaths = [];
 
@@ -13,7 +13,7 @@ export class PresentationControllerResolver extends AbstractClassResolver {
 
     layerBundles.forEach((layerBundle) => {
       this.resolvedPaths.push(
-        `${this.getHost()}src/${this.getAppNamespace()}/${layerBundle}/Presentation/Controller/${layerBundle}${this.getClassNameSuffix()}.js`
+        `${this.getHost()}src/${this.getAppNamespace()}/${layerBundle}/Presentation/${layerBundle}Presentation${this.getClassNameSuffix()}.js`
       );
     });
 

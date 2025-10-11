@@ -2,7 +2,7 @@
  * @Glossary
  */
 
-import { StorageConnector } from "../../Components/Storage/StorageConnector.js";
+import { StorageConnector } from "../../Old Components - not important atm, reuse later/Storage/StorageConnector.js";
 
 export class Glossary {
   static async getGlossaryData(key) {
