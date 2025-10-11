@@ -1,6 +1,6 @@
 import { ViewResolver } from "../Bundles/Presentation/Resolvers/ViewResolver/ViewResolver.js";
 
-export const _viewMixin = {
+export const createViewMixin = {
   async view(component, data, mountSelector = "#app") {
     const mountPoint = document.querySelector(mountSelector);
     if (!mountPoint) {

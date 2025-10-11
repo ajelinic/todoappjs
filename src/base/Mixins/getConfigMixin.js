@@ -2,7 +2,7 @@
 
 import { AppCoreConfig } from "../AppCoreConfig.js";
 
-export const _getConfigMixin = {
+export const getConfigMixin = {
   getConfig() {
     return AppCoreConfig;
   },
