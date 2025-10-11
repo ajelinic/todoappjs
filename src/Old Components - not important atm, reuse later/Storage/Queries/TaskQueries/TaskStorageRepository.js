@@ -1,5 +1,6 @@
 /**
  * @TaskStorageRepository
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { TaskConfig } from "../../../Task/TaskConfig.js";

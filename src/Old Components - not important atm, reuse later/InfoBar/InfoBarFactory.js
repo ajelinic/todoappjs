@@ -1,10 +1,11 @@
 /**
  * @InfoBarFactory
+ * @deprecated Will be removed/changed in future releases
  */
 
-import { DateTimeHandler } from "../../Utils/DateTimeHandle/DateTimeHandler.js";
-import { DomElementCreator } from "../../Utils/DomElementCreate/DomElementCreator.js";
-import { Glossary } from "../../Utils/Glossary/Glossary.js";
+import { DateTimeHandler } from "../Utils/DateTimeHandle/DateTimeHandler.js";
+import { DomElementCreator } from "../Utils/DomElementCreate/DomElementCreator.js";
+import { Glossary } from "../Utils/Glossary/Glossary.js";
 import { InfoBarConnector } from "./InfoBarConnector.js";
 import { InfoBarDataProvider } from "./InfoBarDataProvider.js";
 import { InfoBarCreator } from "./Logic/Creator/InfoBarCreator.js";

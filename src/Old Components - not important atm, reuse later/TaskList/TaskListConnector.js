@@ -1,5 +1,6 @@
 /**
  * @TaskListConnector
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { IndexController } from "./Communication/IndexController.js";

@@ -1,5 +1,6 @@
 /**
  * @TaskHandler
+ * @deprecated Will be removed/changed in future releases
  */
 
 export class TaskHandler {

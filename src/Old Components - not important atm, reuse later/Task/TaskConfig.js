@@ -1,9 +1,10 @@
 /**
  * TaskConfig
+ * @deprecated Will be removed/changed in future releases
  */
 
-import { Getter } from "../../Utils/Getter/Getter.js";
-import { messages } from "../../Utils/Messages/TaskMessages.js";
+import { Getter } from "../Utils/Getter/Getter.js";
+import { messages } from "../Utils/Messages/TaskMessages.js";
 
 export class TaskConfig {
   static getMessage(call) {

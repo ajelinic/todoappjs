@@ -1,3 +1,7 @@
+/**
+ * @deprecated Will be removed/changed in future releases
+ */
+
 export let messages = {
   emptyTask: function () {
     return { type: "errorMessage", value: "Can't add empty task!" };

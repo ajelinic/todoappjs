@@ -1,5 +1,6 @@
 /**
  * @TaskConnector
+ * @deprecated Will be removed/changed in future releases
  */
 
 import { InfoBarConnector } from "../InfoBar/InfoBarConnector.js";
