@@ -1,15 +1,15 @@
 /**
  * @AppCoreLoader
  */
-import { MixinLoader } from "../Mixins/MixinLoader.js";
+import { AppCoreFactory } from "../AppCoreFactory.js";
+import { MixinRegistry } from "../Mixins/MixinRegistry.js";
 import { ActionLoader } from "./ActionLoader/ActionLoader.js";
-import { BundleLoader } from "./Bundle/BundleLoader.js";
 
 export class AppCoreLoader {
   static init() {
-    MixinLoader.loadMixins();
-    BundleLoader.loadBundles();
-    ActionLoader.callActions();
+    AppCoreFactory.createMixinRegistry().loadMixins();
+    AppCoreFactory.createBundleLoader().loadBundles();
+    AppCoreFactory.createActionLoader().callActions();
     console.log("loading...");
   }
 }

@@ -1,6 +1,6 @@
 /** _getConfigMixin */
 
-import { AppCoreConfig } from "../AppCoreConfig.js";
+import { AppCoreConfig } from "../../AppCoreConfig.js";
 
 export const getConfigMixin = {
   getConfig() {

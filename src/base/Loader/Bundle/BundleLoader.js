@@ -2,42 +2,37 @@
  * @BundleLoader
  */
 
-import { AppCoreFactory } from "../../AppCoreFactory.js";
-import { SharedConfig } from "../../Shared/SharedConfig.js";
-import { SharedConstants } from "../../Shared/SharedConstants.js";
-
 export class BundleLoader {
-  static KEY_SUFFIX = "_BUNDLES";
-  static BUNDLE_LIST = {};
+  constructor(sharedConfig, sharedConstants, resolverPlugins = [], keySuffix) {
+    this.sharedConfig = sharedConfig;
+    this.sharedConstants = sharedConstants;
+    this.resolverPlugins = resolverPlugins;
+    this.keySuffix = keySuffix;
+    this.bundleList = {};
+  }
 
-  static loadBundles() {
-    const bundles = SharedConfig.getRegisteredBundles();
-    const bundleLayers = this.getBundleLayers();
+  loadBundles() {
+    const bundles = this.sharedConfig.getRegisteredBundles();
+    const bundleLayers = this.sharedConstants.getBundleLayers();
 
     for (const key in bundleLayers) {
-      const bundleKey = key.toUpperCase() + this.KEY_SUFFIX;
+      const bundleKey = key.toUpperCase() + this.keySuffix;
 
       if (bundleKey in bundles) {
-        this.BUNDLE_LIST[key] = bundles[bundleKey];
+        this.bundleList[key] = bundles[bundleKey];
       }
     }
 
-    let resolverPlugins = AppCoreFactory.getBundleResolverPlugins();
+    this.resolverPlugins.forEach((plugin) => {
+      let resolvedClasses = plugin.resolve(this.bundleList);
 
-    resolverPlugins.forEach((plugin) => {
-      let resolvedClasses = plugin.resolve(this.BUNDLE_LIST);
-
-      resolvedClasses.forEach((value) => {
+      resolvedClasses.forEach(async (value) => {
         try {
-          import(value);
+          await import(value);
         } catch (e) {
-          console.log(e);
+          console.error("Error importing bundle:", value, e);
         }
       });
     });
-  }
-
-  static getBundleLayers() {
-    return SharedConstants.getBundleLayers();
   }
 }

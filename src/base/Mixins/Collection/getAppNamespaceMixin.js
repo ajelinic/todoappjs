@@ -1,7 +1,7 @@
 /** _getAppNamespaceMixin */
 
-import { APP_NAMESPACE } from "../Shared/AppCoreConstants.js";
-import { AppCoreConfig } from "../AppCoreConfig.js";
+import { APP_NAMESPACE } from "../../Shared/AppCoreConstants.js";
+import { AppCoreConfig } from "../../AppCoreConfig.js";
 
 export const getAppNamespaceMixin = {
   getAppNamespace() {
