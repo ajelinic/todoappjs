@@ -3,6 +3,6 @@ import { AbstractController } from "../../../../base/Abstracts/AbstractControlle
 export class MockController extends AbstractController {
   static viewAction() {
     const data = { name: "World" };
-    this.view("hello-world", data);
+    this.view("hello-world", data, ".header-container");
   }
 }
