@@ -4,12 +4,16 @@ import { AbstractClassResolver } from "../../../../Abstracts/AbstractClassResolv
 import { SharedConstants } from "../../../../Shared/SharedConstants.js";
 
 export class PresentationFactoryResolver extends AbstractClassResolver {
-  static CLASS_SUFFIX_KEY = "factory";
-  static BUNDLE_KEY = "presentation";
-  static resolvedPaths = [];
+  constructor(sharedConstants, bundleKey) {
+    super();
+    this.sharedConstants = sharedConstants;
+    this.bundleKey = bundleKey;
+    this.CLASS_SUFFIX_KEY = "factory";
+    this.resolvedPaths = [];
+  }
 
-  static resolvePath(bundles) {
-    let layerBundles = bundles[this.BUNDLE_KEY];
+  resolvePath(bundles) {
+    let layerBundles = bundles[this.bundleKey];
 
     layerBundles.forEach((layerBundle) => {
       this.resolvedPaths.push(
@@ -20,7 +24,7 @@ export class PresentationFactoryResolver extends AbstractClassResolver {
     return this.resolvedPaths;
   }
 
-  static getClassNameSuffix() {
+  getClassNameSuffix() {
     let suffixes = SharedConstants.getClassNameSuffixs();
 
     return suffixes[this.CLASS_SUFFIX_KEY];

@@ -1,9 +1,11 @@
 /** PresentationFactoryResolverPlugin */
 
-import { PresentationFactoryResolver } from "../../ClassResolvers/PresentationFactoryResolver.js";
+import { PresentationBundleFactory } from "../../../PresentationBundleFactory.js";
 
 export class PresentationFactoryResolverPlugin {
   resolve(bundles) {
-    return PresentationFactoryResolver.resolve(bundles);
+    return PresentationBundleFactory.createPresentationFactoryResolver().resolve(
+      bundles
+    );
   }
 }

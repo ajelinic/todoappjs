@@ -1,9 +1,11 @@
 /** PresentationFactoryResolverPlugin */
 
-import { ControllerActionsResolver } from "../../ActionResolver/ControllerActionsResolver.js";
+import { PresentationBundleFactory } from "../../../PresentationBundleFactory.js";
 
 export class ActionResolverPlugin {
   callActions(bundles) {
-    return ControllerActionsResolver.resolvePath(bundles);
+    return PresentationBundleFactory.createControllerActionsResolver().resolvePath(
+      bundles
+    );
   }
 }

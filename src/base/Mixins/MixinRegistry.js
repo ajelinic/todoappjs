@@ -1,26 +1,28 @@
 /**
- * @MixinLoader
+ * @MixinRegistry
  */
 
-import { getConfigMixin } from "./getConfigMixin.js";
-import { getAppNamespaceMixin } from "./getAppNamespaceMixin.js";
+import { getConfigMixin } from "./Collection/getConfigMixin.js";
+import { getAppNamespaceMixin } from "./Collection/getAppNamespaceMixin.js";
 import { AbstractConfig } from "../Abstracts/AbstractConfig.js";
 import { AbstractFactory } from "../Abstracts/AbstractFactory.js";
 import { AbstractClassResolver } from "../Abstracts/AbstractClassResolver.js";
 import { AbstractDependencyProvider } from "../Abstracts/AbstractDependencyProvider.js";
 import { AbstractController } from "../Abstracts/AbstractController.js";
-import { createViewMixin } from "./createViewMixin.js";
+import { createViewMixin } from "./Collection/createViewMixin.js";
 
-export class MixinLoader {
-  static applicableClasses = {
-    AbstractConfig: AbstractConfig,
-    AbstractFactory: AbstractFactory,
-    AbstractClassResolver: AbstractClassResolver,
-    AbstractDependencyProvider: AbstractDependencyProvider,
-    AbstractController: AbstractController,
-  };
+export class MixinRegistry {
+  constructor() {
+    this.applicableClasses = {
+      AbstractConfig: AbstractConfig,
+      AbstractFactory: AbstractFactory,
+      AbstractClassResolver: AbstractClassResolver,
+      AbstractDependencyProvider: AbstractDependencyProvider,
+      AbstractController: AbstractController,
+    };
+  }
 
-  static registerMixins() {
+  registerMixins() {
     return {
       AbstractConfig: [getConfigMixin],
       AbstractFactory: [],
@@ -30,7 +32,7 @@ export class MixinLoader {
     };
   }
 
-  static loadMixins() {
+  loadMixins() {
     for (const [key, mixins] of Object.entries(this.registerMixins())) {
       mixins.forEach((mixin) => {
         if (Object.keys(mixin).length > 0)

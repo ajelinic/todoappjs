@@ -3,7 +3,7 @@
  */
 
 import { AbstractDependencyProvider } from "./Abstracts/AbstractDependencyProvider.js";
-import { BundleResolverPluginInterface } from "./Bundles/BundleResolverPluginInterface.js";
+import { BundleResolverPluginInterface } from "./Bundles/Presentation/Resolvers/ResolverPlugins/ClassResolverPlugins/BundleResolverPluginInterface.js";
 import { PresentationFactoryResolverPlugin } from "./Bundles/Presentation/Resolvers/ResolverPlugins/ClassResolverPlugins/PresentationFactoryResolverPlugin.js";
 import { PresentationControllerResolverPlugin } from "./Bundles/Presentation/Resolvers/ResolverPlugins/ClassResolverPlugins/PresentationControllerResolverPlugin.js";
 import { ActionResolverPluginInterface } from "./Bundles/Presentation/Resolvers/ResolverPlugins/ActionResolverPlugin/ActionResolverPluginInterface.js";

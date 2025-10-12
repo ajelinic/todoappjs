@@ -8,47 +8,38 @@ export class AbstractClassResolver {
     }
   }
 
-  static CLASS_SUFFIX_KEY;
-  static BUNDLE_KEY;
-
-  static resolve(bundles) {
-    if (this.BUNDLE_KEY === undefined) {
-      throw new Error(
-        "BUNDLE_KEY is not defined in concrete resolver classes."
-      );
-    }
-
+  resolve(bundles) {
     const container = this.createContainer();
-    container.set(this.BUNDLE_KEY, this.resolvePath(bundles));
+    container.set(this.bundleKey, this.resolvePath(bundles));
 
     return container;
   }
 
-  static resolvePath([]) {
+  resolvePath([]) {
     throw new Error(
       "Method 'resolvePath' must be implemented by concrete resolver classes."
     );
   }
 
-  static getAppNamespace() {
+  getAppNamespace() {
     return this.prototype.getAppNamespace();
   }
 
-  static createContainer() {
+  createContainer() {
     return new Map();
   }
 
-  static setContainer(id, value) {
+  setContainer(id, value) {
     this.createContainer().set(id, value);
   }
 
-  static getClassNameSuffix() {
+  getClassNameSuffix() {
     throw new Error(
       "Method 'getClassNameSuffix' must be implemented by concrete resolver classes."
     );
   }
 
-  static getHost() {
+  getHost() {
     return SharedConfig.getHost();
   }
 }

@@ -7,25 +7,28 @@ import { SharedConfig } from "../../Shared/SharedConfig.js";
 import { SharedConstants } from "../../Shared/SharedConstants.js";
 
 export class ActionLoader {
-  static KEY_SUFFIX = "_BUNDLES";
-  static BUNDLE_LIST = {};
+  constructor(sharedConfig, sharedConstants, resolverPlugins = [], keySuffix) {
+    this.sharedConfig = sharedConfig;
+    this.sharedConstants = sharedConstants;
+    this.resolverPlugins = resolverPlugins;
+    this.keySuffix = keySuffix;
+    this.bundleList = {};
+  }
 
-  static callActions() {
-    const bundles = SharedConfig.getRegisteredBundles();
-    const bundleLayers = this.getBundleLayers();
+  callActions() {
+    const bundles = this.sharedConfig.getRegisteredBundles();
+    const bundleLayers = this.sharedConstants.getBundleLayers();
 
     for (const key in bundleLayers) {
-      const bundleKey = key.toUpperCase() + this.KEY_SUFFIX;
+      const bundleKey = key.toUpperCase() + this.keySuffix;
 
       if (bundleKey in bundles) {
-        this.BUNDLE_LIST[key] = bundles[bundleKey];
+        this.bundleList[key] = bundles[bundleKey];
       }
     }
 
-    let resolverPlugins = AppCoreFactory.getCallableResolverPlugins();
-
-    resolverPlugins.forEach((plugin) => {
-      let resolvedClasses = plugin.callActions(this.BUNDLE_LIST);
+    this.resolverPlugins.forEach((plugin) => {
+      let resolvedClasses = plugin.callActions(this.bundleList);
 
       resolvedClasses.forEach(async (value) => {
         try {
@@ -37,9 +40,5 @@ export class ActionLoader {
         }
       });
     });
-  }
-
-  static getBundleLayers() {
-    return SharedConstants.getBundleLayers();
   }
 }
