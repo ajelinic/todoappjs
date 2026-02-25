@@ -1,5 +1,5 @@
 import { AbstractController } from "../../../../base/Abstracts/AbstractController.js";
-import "/src/App/View/components/views/mock/mock-page/mock-page.js";
+import "../../../View/components/views/mock/mock-page/mock-page.js";
 import { MockPageDataProvider } from "../DataProvider/MockPageDataProvider.js";
 
 /**
