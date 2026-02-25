@@ -1,14 +1,12 @@
-/** AbstractPlugin */
-
 import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Shared/AppCoreConstants.js";
 
 /**
- * @class AbstractPlugin
- * @description AbstractPlugin
+ * @class AbstractClientFactory
+ * @description AbstractClientFactory
  */
-export class AbstractPlugin {
+export class AbstractClientFactory {
   constructor() {
-    if (this.constructor === AbstractPlugin) {
+    if (new.target === AbstractClientFactory) {
       throw new TypeError(ABSTRACT_CLASS_ERROR_MESSAGE);
     }
   }

@@ -21,7 +21,7 @@ export class PresentationControllerResolver extends AbstractClassResolver {
 
     layerBundles.forEach((layerBundle) => {
       this.resolvedPaths.push(
-        `src/${this.getAppNamespace()}/${layerBundle}/Presentation/Controller/${layerBundle}${this.getClassNameSuffix()}.js`
+        `src/${this.getAppNamespace()}/Presentation/${layerBundle}/Controller/${layerBundle}${this.getClassNameSuffix()}.js`
       );
     });
 

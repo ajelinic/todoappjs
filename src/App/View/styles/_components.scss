@@ -11,3 +11,4 @@
 @import "#{view-component-style('organisms', 'footer')}";
 
 @import "#{view-component-style('layouts', 'main')}";
+@import "#{view-component-style-by-path('views/mock/mock-page/mock-page')}";
