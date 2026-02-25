@@ -8,6 +8,10 @@ import { PresentationControllerResolver } from "./Resolvers/ClassResolvers/Prese
 import { PresentationFactoryResolver } from "./Resolvers/ClassResolvers/PresentationFactoryResolver.js";
 import { ControllerActionsResolver } from "./Resolvers/ActionResolver/ControllerActionsResolver.js";
 
+/**
+ * @class PresentationBundleFactory
+ * @description PresentationBundleFactory
+ */
 export class PresentationBundleFactory extends AbstractFactory {
   /**
    * @var string

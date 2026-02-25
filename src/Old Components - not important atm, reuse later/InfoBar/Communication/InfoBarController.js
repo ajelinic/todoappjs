@@ -5,6 +5,10 @@
 
 import { InfoBarFactory } from "../InfoBarFactory.js";
 
+/**
+ * @class InfoBarController
+ * @description InfoBarController
+ */
 export class InfoBarController {
   static indexAction() {
     this.createView();

@@ -11,6 +11,10 @@ import { AbstractDependencyProvider } from "../Abstracts/AbstractDependencyProvi
 import { AbstractController } from "../Abstracts/AbstractController.js";
 import { createViewMixin } from "./Collection/createViewMixin.js";
 
+/**
+ * @class MixinRegistry
+ * @description MixinRegistry
+ */
 export class MixinRegistry {
   constructor() {
     this.applicableClasses = {

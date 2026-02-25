@@ -1,6 +1,10 @@
 import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Shared/AppCoreConstants.js";
 import { SharedConfig } from "../Shared/SharedConfig.js";
 
+/**
+ * @class AbstractClassResolver
+ * @description AbstractClassResolver
+ */
 export class AbstractClassResolver {
   constructor() {
     if (this.constructor === AbstractClassResolver) {

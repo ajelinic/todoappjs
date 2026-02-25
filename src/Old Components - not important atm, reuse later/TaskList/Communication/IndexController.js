@@ -7,6 +7,10 @@ import { TaskListFactory } from "../TaskListFactory.js";
 import { TaskListHeaderController } from "./TaskListHeaderController.js";
 import { TaskListController } from "./TaskListController.js";
 
+/**
+ * @class IndexController
+ * @description IndexController
+ */
 export class IndexController {
   static indexAction() {
     this.init();

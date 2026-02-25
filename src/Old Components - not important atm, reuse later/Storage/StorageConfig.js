@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class StorageConfig
+ * @description StorageConfig
+ */
 export class StorageConfig {
   static setStatistics() {
     return "statistics";

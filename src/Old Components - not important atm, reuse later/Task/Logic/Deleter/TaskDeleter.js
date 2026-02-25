@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskDeleter
+ * @description TaskDeleter
+ */
 export class TaskDeleter {
   constructor(taskConnector, taskDataProvider, taskDeleteValidator) {
     this.taskConnector = taskConnector;

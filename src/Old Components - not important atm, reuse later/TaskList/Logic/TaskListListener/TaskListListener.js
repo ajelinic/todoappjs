@@ -5,6 +5,10 @@
 
 import { TaskListConnector } from "../../TaskListConnector.js";
 
+/**
+ * @class TaskListListener
+ * @description TaskListListener
+ */
 export class TaskListListener {
   static listenTaskCheckDone(taskList) {
     taskList.addEventListener("change", () => {

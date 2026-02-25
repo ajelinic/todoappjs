@@ -2,6 +2,10 @@
  * @JsonEncodingDecodingServiceUtil
  */
 
+/**
+ * @class JsonEncodingDecodingServiceUtil
+ * @description JsonEncodingDecodingServiceUtil
+ */
 export class JsonEncodingDecodingServiceUtil {
   static jsonDecode(value) {
     return JSON.parse(value);

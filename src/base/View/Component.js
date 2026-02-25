@@ -1,4 +1,15 @@
-export class Component extends HTMLElement {
+/**
+ * @class Component
+ * @description Base class for all UI components.
+ */
+
+import { TemplateHTMLElement } from "./TemplateHTMLElement.js";
+
+/**
+ * @class Component
+ * @description Component
+ */
+export class Component extends TemplateHTMLElement {
   constructor() {
     super();
     if (new.target === Component) {
@@ -7,12 +18,6 @@ export class Component extends HTMLElement {
       );
     }
 
-    const disableShadow = this.constructor.disableShadow || false;
-    console.log(disableShadow);
-
-    if (!disableShadow) {
-      this.attachShadow({ mode: "open" });
-    }
     this._data = {};
     this._isMounted = false;
   }
@@ -44,7 +49,7 @@ export class Component extends HTMLElement {
     return this._data;
   }
 
-  render() {
+  async render() {
     throw new Error(
       `${this.constructor.name}: render() must be implemented in subclass`
     );
@@ -81,10 +86,6 @@ export class Component extends HTMLElement {
   }
 
   updateView(html) {
-    if (this.shadowRoot) {
-      return (this.shadowRoot.innerHTML = html.trim());
-    }
-
     return (this.innerHTML = html.trim());
   }
 }

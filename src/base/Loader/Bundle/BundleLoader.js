@@ -2,6 +2,10 @@
  * @BundleLoader
  */
 
+/**
+ * @class BundleLoader
+ * @description BundleLoader
+ */
 export class BundleLoader {
   constructor(sharedConfig, sharedConstants, resolverPlugins = [], keySuffix) {
     this.sharedConfig = sharedConfig;

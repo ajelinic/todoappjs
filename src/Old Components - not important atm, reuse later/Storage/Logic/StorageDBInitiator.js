@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class StorageDBInitiator
+ * @description StorageDBInitiator
+ */
 export class StorageDBInitiator {
   constructor(storageCreator) {
     this.storageCreator = storageCreator;

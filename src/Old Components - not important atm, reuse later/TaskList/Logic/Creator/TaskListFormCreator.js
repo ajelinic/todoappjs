@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskFormCreator
+ * @description TaskFormCreator
+ */
 export class TaskFormCreator {
   constructor(
     domElementCreator,

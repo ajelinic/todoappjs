@@ -3,6 +3,10 @@
 import { AbstractClassResolver } from "../../../../Abstracts/AbstractClassResolver.js";
 import { SharedConstants } from "../../../../Shared/SharedConstants.js";
 
+/**
+ * @class ControllerActionsResolver
+ * @description ControllerActionsResolver
+ */
 export class ControllerActionsResolver extends AbstractClassResolver {
   constructor(sharedConstants, bundleKey) {
     super();
@@ -17,7 +21,7 @@ export class ControllerActionsResolver extends AbstractClassResolver {
 
     layerBundles.forEach((layerBundle) => {
       this.resolvedPaths.push(
-        `${this.getHost()}src/${this.getAppNamespace()}/${layerBundle}/Presentation/ActionPlugin/${layerBundle}${this.getClassNameSuffix()}.js`
+        `/src/${this.getAppNamespace()}/${layerBundle}/Presentation/ActionPlugin/${layerBundle}${this.getClassNameSuffix()}.js`
       );
     });
 

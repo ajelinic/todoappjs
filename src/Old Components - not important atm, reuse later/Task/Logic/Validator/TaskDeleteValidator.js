@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskDeleteValidator
+ * @description TaskDeleteValidator
+ */
 export class TaskDeleteValidator {
   constructor(notification, taskConfig) {
     this.taskConfig = taskConfig;

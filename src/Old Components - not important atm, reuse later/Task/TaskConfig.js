@@ -6,6 +6,10 @@
 import { Getter } from "../Utils/Getter/Getter.js";
 import { messages } from "../Utils/Messages/TaskMessages.js";
 
+/**
+ * @class TaskConfig
+ * @description TaskConfig
+ */
 export class TaskConfig {
   static getMessage(call) {
     return Getter.get(messages, call);

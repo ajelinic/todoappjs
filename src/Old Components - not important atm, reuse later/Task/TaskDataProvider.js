@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskDataProvider
+ * @description TaskDataProvider
+ */
 export class TaskDataProvider {
   static get addTaskButton() {
     return document.querySelector("#add");

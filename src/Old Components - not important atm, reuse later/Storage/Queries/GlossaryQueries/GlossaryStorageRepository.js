@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class GlossaryStorageRepository
+ * @description GlossaryStorageRepository
+ */
 export class GlossaryStorageRepository {
   constructor(queryContainer) {
     this.queryContainer = queryContainer;

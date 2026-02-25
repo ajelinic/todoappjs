@@ -2,6 +2,10 @@
  * @FetcherServiceUtil
  */
 
+/**
+ * @class FetcherServiceUtil
+ * @description FetcherServiceUtil
+ */
 export class FetcherServiceUtil {
   static async fetch(request) {
     const response = await fetch(request);

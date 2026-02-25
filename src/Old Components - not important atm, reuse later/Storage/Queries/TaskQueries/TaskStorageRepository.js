@@ -5,6 +5,10 @@
 
 import { TaskConfig } from "../../../Task/TaskConfig.js";
 
+/**
+ * @class TaskStorageRepository
+ * @description TaskStorageRepository
+ */
 export class TaskStorageRepository {
   constructor(queryContainer) {
     this.queryContainer = queryContainer;

@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskCreator
+ * @description TaskCreator
+ */
 export class TaskCreator {
   constructor(
     dateHandler,

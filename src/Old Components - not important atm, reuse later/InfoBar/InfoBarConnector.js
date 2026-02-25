@@ -7,6 +7,10 @@ import { StorageConnector } from "../Storage/StorageConnector.js";
 import { InfoBarController } from "./Communication/InfoBarController.js";
 import { InfoBarFactory } from "./InfoBarFactory.js";
 
+/**
+ * @class InfoBarConnector
+ * @description InfoBarConnector
+ */
 export class InfoBarConnector {
   static initInfoBar() {
     InfoBarController.indexAction();

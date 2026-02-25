@@ -2,6 +2,10 @@
  * @SharedConstants
  */
 
+/**
+ * @class SharedConstants
+ * @description SharedConstants
+ */
 export class SharedConstants {
   static getClassNameSuffixs() {
     return {

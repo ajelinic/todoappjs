@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskListCreator
+ * @description TaskListCreator
+ */
 export class TaskListCreator {
   constructor(domElementCreator, taskListDataProvider, taskListListener) {
     this.domElementCreator = domElementCreator;

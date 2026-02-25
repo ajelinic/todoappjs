@@ -5,6 +5,10 @@
 
 import { DomElementCreator } from "../DomElementCreate/DomElementCreator.js";
 
+/**
+ * @class NotificationCreateHandler
+ * @description NotificationCreateHandler
+ */
 export class NotificationCreateHandler {
   static handleNotificationCreation(message) {
     return this.createNotificationHtml(message);

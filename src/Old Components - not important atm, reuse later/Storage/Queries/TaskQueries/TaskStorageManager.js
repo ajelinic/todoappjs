@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskStorageManager
+ * @description TaskStorageManager
+ */
 export class TaskStorageManager {
   constructor(queryContainer) {
     this.queryContainer = queryContainer;

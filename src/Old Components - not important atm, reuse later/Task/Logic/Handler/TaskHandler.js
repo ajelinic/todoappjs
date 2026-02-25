@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskHandler
+ * @description TaskHandler
+ */
 export class TaskHandler {
   constructor(taskDataProvider, taskConnector, taskConfig) {
     this.taskDataProvider = taskDataProvider;

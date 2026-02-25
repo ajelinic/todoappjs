@@ -8,6 +8,10 @@ import { StorageConnector } from "../Storage/StorageConnector.js";
 import { TaskDataProvider } from "./TaskDataProvider.js";
 import { TaskFactory } from "./TaskFactory.js";
 
+/**
+ * @class TaskConnector
+ * @description TaskConnector
+ */
 export class TaskConnector {
   static renderTaskForm() {
     return TaskFactory.createTaskForm().buildForm();

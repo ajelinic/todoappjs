@@ -6,6 +6,10 @@
 import { DomElementCreator } from "../DomElementCreate/DomElementCreator.js";
 import { UtilsConfig } from "../UtilsConfig.js";
 
+/**
+ * @class NotificationPublishHandler
+ * @description NotificationPublishHandler
+ */
 export class NotificationPublishHandler {
   static addNotificationToHeader(element, message) {
     const notificationDiv = DomElementCreator.createHtmlElement(

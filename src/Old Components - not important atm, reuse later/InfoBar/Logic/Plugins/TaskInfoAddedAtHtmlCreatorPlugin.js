@@ -5,6 +5,10 @@
 
 import { InfoBarFactory } from "../../InfoBarFactory.js";
 
+/**
+ * @class TaskInfoAddedAtHtmlCreatorPlugin
+ * @description TaskInfoAddedAtHtmlCreatorPlugin
+ */
 export class TaskInfoAddedAtHtmlCreatorPlugin {
   static execute(data) {
     return this.createHtmlTemplate(data);

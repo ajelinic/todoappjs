@@ -4,6 +4,10 @@
 
 import * as obj from "../../data/config/config_default.js";
 
+/**
+ * @class AppCoreConfig
+ * @description AppCoreConfig
+ */
 export class AppCoreConfig {
   static get(key = null) {
     if (key === null) {
