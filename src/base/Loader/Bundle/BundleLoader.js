@@ -34,11 +34,13 @@ export class BundleLoader {
       const resolvedPaths = this.normalizeResolvedClasses(resolvedClasses);
 
       return resolvedPaths.map(async (value) => {
+        const moduleUrl = this.resolveModuleUrl(value);
+
         try {
-          const importedModule = await import(value);
+          const importedModule = await import(moduleUrl);
           await this.executeControllerIndexAction(importedModule);
         } catch (e) {
-          console.error("Error importing bundle:", value, e);
+          console.error("Error importing bundle:", moduleUrl, e);
         }
       });
     });
@@ -78,6 +80,22 @@ export class BundleLoader {
     }
 
     return [];
+  }
+
+  resolveModuleUrl(modulePath) {
+    if (typeof modulePath !== "string" || modulePath.length === 0) {
+      return modulePath;
+    }
+
+    if (/^(https?:)?\/\//.test(modulePath)) {
+      return modulePath;
+    }
+
+    const normalizedPath = modulePath.startsWith("/src/")
+      ? modulePath.slice(1)
+      : modulePath;
+
+    return new URL(normalizedPath, document.baseURI).href;
   }
 
   async executeControllerIndexAction(importedModule) {

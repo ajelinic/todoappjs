@@ -1,5 +1,5 @@
-import { Component } from "/src/base/View/Component.js";
-import { defineComponent } from "/src/base/View/Helpers/defineComponent.js";
+import { Component } from "../../../../../base/View/Component.js";
+import { defineComponent } from "../../../../../base/View/Helpers/defineComponent.js";
 
 /**
  * @class FooterMetaMolecule

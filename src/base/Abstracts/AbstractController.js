@@ -131,8 +131,24 @@ export class AbstractController {
 
   async ensureMainLayoutComponents() {
     await Promise.all([
-      import("/src/App/View/components/organisms/header/header.js"),
-      import("/src/App/View/components/organisms/footer/footer.js"),
+      import(
+        this.resolveModuleUrl("src/App/View/components/organisms/header/header.js")
+      ),
+      import(
+        this.resolveModuleUrl("src/App/View/components/organisms/footer/footer.js")
+      ),
     ]);
+  }
+
+  resolveModuleUrl(modulePath) {
+    if (typeof modulePath !== "string" || modulePath.length === 0) {
+      return modulePath;
+    }
+
+    const normalizedPath = modulePath.startsWith("/src/")
+      ? modulePath.slice(1)
+      : modulePath;
+
+    return new URL(normalizedPath, document.baseURI).href;
   }
 }
