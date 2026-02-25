@@ -145,10 +145,19 @@ export class AbstractController {
       return modulePath;
     }
 
-    const normalizedPath = modulePath.startsWith("/src/")
-      ? modulePath.slice(1)
-      : modulePath;
+    const normalizedPath = modulePath.replace(/^\/+/, "");
 
-    return new URL(normalizedPath, document.baseURI).href;
+    return new URL(normalizedPath, this.getAppBaseUrl()).href;
+  }
+
+  getAppBaseUrl() {
+    const srcMarker = "/src/";
+    const srcMarkerPosition = import.meta.url.indexOf(srcMarker);
+
+    if (srcMarkerPosition >= 0) {
+      return import.meta.url.slice(0, srcMarkerPosition + 1);
+    }
+
+    return new URL("./", document.baseURI).href;
   }
 }
