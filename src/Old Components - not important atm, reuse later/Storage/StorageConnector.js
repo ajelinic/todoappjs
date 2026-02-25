@@ -5,6 +5,10 @@
 
 import { StorageFactory } from "./StorageFactory.js";
 
+/**
+ * @class StorageConnector
+ * @description StorageConnector
+ */
 export class StorageConnector {
   static initStorage() {
     return StorageFactory.createStorage().initStorage();

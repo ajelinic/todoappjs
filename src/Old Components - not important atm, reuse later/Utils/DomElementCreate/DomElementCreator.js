@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class DomElementCreator
+ * @description DomElementCreator
+ */
 export class DomElementCreator {
   static createHtmlElement(element, id, cssClass, text = null) {
     const el = document.createElement(element);

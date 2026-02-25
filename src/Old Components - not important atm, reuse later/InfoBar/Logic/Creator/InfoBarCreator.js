@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class InfoBarCreator
+ * @description InfoBarCreator
+ */
 export class InfoBarCreator {
   constructor(containerElement, dateTimeHandler, domElementCreator) {
     this.containerElement = containerElement;

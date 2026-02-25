@@ -6,6 +6,10 @@
 import { Notification } from "./Notification/Notification.js";
 import { UtilsDataProvider } from "./UtilsDataProvider.js";
 
+/**
+ * @class UtilsFactory
+ * @description UtilsFactory
+ */
 export class UtilsFactory {
   static createNotificationUtil() {
     return new Notification(UtilsDataProvider);

@@ -2,10 +2,10 @@
  * @ActionLoader
  */
 
-import { AppCoreFactory } from "../../AppCoreFactory.js";
-import { SharedConfig } from "../../Shared/SharedConfig.js";
-import { SharedConstants } from "../../Shared/SharedConstants.js";
-
+/**
+ * @class ActionLoader
+ * @description ActionLoader
+ */
 export class ActionLoader {
   constructor(sharedConfig, sharedConstants, resolverPlugins = [], keySuffix) {
     this.sharedConfig = sharedConfig;

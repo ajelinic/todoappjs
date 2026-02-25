@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class Getter
+ * @description Getter
+ */
 export class Getter {
   static get(obj, call) {
     let props = Object.getOwnPropertyNames(obj).filter(

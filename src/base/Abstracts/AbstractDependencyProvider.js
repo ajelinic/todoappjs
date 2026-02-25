@@ -2,6 +2,10 @@
  * AbstractDependencyProvider
  */
 
+/**
+ * @class AbstractDependencyProvider
+ * @description AbstractDependencyProvider
+ */
 export class AbstractDependencyProvider {
   constructor() {
     if (this.constructor === AbstractDependencyProvider) {

@@ -7,6 +7,10 @@ import { IndexController } from "./Communication/IndexController.js";
 import { TaskConnector } from "../Task/TaskConnector.js";
 import { TaskListFactory } from "./TaskListFactory.js";
 
+/**
+ * @class TaskListConnector
+ * @description TaskListConnector
+ */
 export class TaskListConnector {
   static initTaskList() {
     IndexController.indexAction();

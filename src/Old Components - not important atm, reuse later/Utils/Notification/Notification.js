@@ -6,6 +6,10 @@
 import { NotificationCreateHandler } from "./NotificationCreateHandler.js";
 import { NotificationPublishHandler } from "./NotificationPublishHandler.js";
 
+/**
+ * @class Notification
+ * @description Notification
+ */
 export class Notification {
   constructor(utilsDataProvider) {
     this.utilsDataProvider = utilsDataProvider;

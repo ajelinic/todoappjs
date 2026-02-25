@@ -15,6 +15,10 @@ import { TaskInfoDueTimeHtmlCreatorPlugin } from "./Logic/Plugins/TaskInfoDueTim
 import { TaskInfoIdHtmlCreatorPlugin } from "./Logic/Plugins/TaskInfoIdHtmlCreatorPlugin.js";
 import { TaskInfoTitleHtmlCreatorPlugin } from "./Logic/Plugins/TaskInfoTitleHtmlCreatorPlugin.js";
 
+/**
+ * @class InfoBarFactory
+ * @description InfoBarFactory
+ */
 export class InfoBarFactory {
   static createInfoBarCreator() {
     return new InfoBarCreator(

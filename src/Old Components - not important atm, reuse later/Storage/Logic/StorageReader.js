@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class StorageReader
+ * @description StorageReader
+ */
 export class StorageReader {
   constructor(taskRepository, glossaryRepository) {
     this.taskRepository = taskRepository;

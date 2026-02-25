@@ -5,6 +5,10 @@
 
 import { TaskListFactory } from "../TaskListFactory.js";
 
+/**
+ * @class TaskListHeaderController
+ * @description TaskListHeaderController
+ */
 export class TaskListHeaderController {
   static createView() {
     TaskListFactory.createTaskListHeader().taskListCreateHeader();

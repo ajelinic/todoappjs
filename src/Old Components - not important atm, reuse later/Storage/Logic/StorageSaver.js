@@ -6,6 +6,10 @@
 import { CsvParser } from "../../Utils/FileParsers/CsvParser.js";
 import { StorageConfig } from "../StorageConfig.js";
 
+/**
+ * @class StorageSaver
+ * @description StorageSaver
+ */
 export class StorageSaver {
   constructor(taskStorageManager, glossaryStorageManager) {
     this.taskStorageManager = taskStorageManager;

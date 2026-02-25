@@ -5,6 +5,10 @@
 import { AbstractConfig } from "../Abstracts/AbstractConfig.js";
 import * as AppCoreConstants from "./AppCoreConstants.js";
 
+/**
+ * @class SharedConfig
+ * @description SharedConfig
+ */
 export class SharedConfig extends AbstractConfig {
   static getAppNamespace() {
     return this.get(AppCoreConstants.APP_NAMESPACE);
@@ -14,7 +18,7 @@ export class SharedConfig extends AbstractConfig {
     return this.get(AppCoreConstants.REGISTERED_BUNDLES);
   }
 
-  static getHost() {
-    return window.location.href;
+  static getRegisteredComponents() {
+    return this.get(AppCoreConstants.COMPONENTS);
   }
 }

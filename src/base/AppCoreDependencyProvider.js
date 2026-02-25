@@ -9,6 +9,10 @@ import { PresentationControllerResolverPlugin } from "./Bundles/Presentation/Res
 import { ActionResolverPluginInterface } from "./Bundles/Presentation/Resolvers/ResolverPlugins/ActionResolverPlugin/ActionResolverPluginInterface.js";
 import { ActionResolverPlugin } from "./Bundles/Presentation/Resolvers/ResolverPlugins/ActionResolverPlugin/ActionResolverPlugin.js";
 
+/**
+ * @class AppCoreDependencyProvider
+ * @description AppCoreDependencyProvider
+ */
 export class AppCoreDependencyProvider extends AbstractDependencyProvider {
   static BUNDLE_RESOLVER_PLUGINS = "BUNDLE_RESOLVER_PLUGINS";
   static ACTION_RESOLVER_PLUGINS = "ACTION_RESOLVER_PLUGINS";

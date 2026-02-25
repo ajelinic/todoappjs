@@ -15,6 +15,10 @@ import { StorageQueryContainer } from "./Queries/StorageQueryContainer.js";
 import { TaskStorageManager } from "./Queries/TaskQueries/TaskStorageManager.js";
 import { TaskStorageRepository } from "./Queries/TaskQueries/TaskStorageRepository.js";
 
+/**
+ * @class StorageFactory
+ * @description StorageFactory
+ */
 export class StorageFactory {
   static createDBInitiator() {
     return new StorageDBInitiator(this.createStorage());

@@ -6,6 +6,10 @@
 import { DomElementCreator } from "../DomElementCreate/DomElementCreator.js";
 import { UtilsFactory } from "../UtilsFactory.js";
 
+/**
+ * @class DateTimeHandler
+ * @description DateTimeHandler
+ */
 export class DateTimeHandler {
   static createTimeTaskAdded() {
     let date = UtilsFactory.createDateTime();

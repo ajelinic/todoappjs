@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskForm
+ * @description TaskForm
+ */
 export class TaskForm {
   constructor(glossary, domElementCreator) {
     this.glossary = glossary;

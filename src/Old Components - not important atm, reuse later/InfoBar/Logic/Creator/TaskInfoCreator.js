@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskInfoCreator
+ * @description TaskInfoCreator
+ */
 export class TaskInfoCreator {
   constructor(
     taskInfoContainer,

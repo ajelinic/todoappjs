@@ -7,6 +7,10 @@ import { XmlParser } from "../../Utils/FileParsers/XmlParser.js";
 import { StorageConfig } from "../StorageConfig.js";
 import { StorageFactory } from "../StorageFactory.js";
 
+/**
+ * @class StorageCreator
+ * @description StorageCreator
+ */
 export class StorageCreator {
   async initStorage() {
     let request = await StorageFactory.createDBInitiator().initDatabase(

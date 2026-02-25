@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskSubmitListener
+ * @description TaskSubmitListener
+ */
 export class TaskSubmitListener {
   constructor(
     taskDataProvider,

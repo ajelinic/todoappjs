@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class XmlParser
+ * @description XmlParser
+ */
 export class XmlParser {
   static async parseDataFromXml(xml) {
     return await fetch(xml)

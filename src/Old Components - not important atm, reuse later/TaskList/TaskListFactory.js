@@ -13,6 +13,10 @@ import { TaskListListener } from "./Logic/TaskListListener/TaskListListener.js";
 import { TaskListConnector } from "./TaskListConnector.js";
 import { DateTimeHandler } from "../Utils/DateTimeHandle/DateTimeHandler.js";
 
+/**
+ * @class TaskListFactory
+ * @description TaskListFactory
+ */
 export class TaskListFactory {
   static createTaskList() {
     return new TaskListCreator(

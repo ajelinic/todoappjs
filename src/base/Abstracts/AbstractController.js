@@ -4,9 +4,13 @@
 
 import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Shared/AppCoreConstants.js";
 
+/**
+ * @class AbstractController
+ * @description AbstractController
+ */
 export class AbstractController {
   constructor() {
-    if (this.constructor === AbstractConfig) {
+    if (this.constructor === AbstractController) {
       throw new TypeError(ABSTRACT_CLASS_ERROR_MESSAGE);
     }
   }

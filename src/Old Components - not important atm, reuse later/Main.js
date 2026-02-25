@@ -7,6 +7,10 @@
 // import { TaskConnector } from "./Components/Task/TaskConnector.js";
 // import { TaskListConnector } from "./Components/TaskList/TaskListConnector.js";
 
+/**
+ * @class Main
+ * @description Main
+ */
 export class Main {
   static init() {
     StorageConnector.initStorage().then(() => {

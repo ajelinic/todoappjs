@@ -6,6 +6,10 @@
 import { StorageConfig } from "../StorageConfig.js";
 import { StorageFactory } from "../StorageFactory.js";
 
+/**
+ * @class StorageQueryContainer
+ * @description StorageQueryContainer
+ */
 export class StorageQueryContainer {
   static async openDatabase() {
     return new Promise((resolve, reject) => {

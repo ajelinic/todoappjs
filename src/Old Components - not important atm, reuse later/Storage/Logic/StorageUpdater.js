@@ -5,6 +5,10 @@
 
 import { StorageConnector } from "../StorageConnector.js";
 
+/**
+ * @class StorageUpdater
+ * @description StorageUpdater
+ */
 export class StorageUpdater {
   constructor(storageManager) {
     this.storageManager = storageManager;

@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskFormHandler
+ * @description TaskFormHandler
+ */
 export class TaskFormHandler {
   constructor(
     taskDataProvider,

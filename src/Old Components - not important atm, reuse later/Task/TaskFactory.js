@@ -20,6 +20,10 @@ import { TaskSubmitListener } from "./Logic/TaskSubmitListener/TaskSubmitListene
 import { UtilsConnector } from "../Utils/UtilsConnector.js";
 import { TaskDueTimeSubmitListener } from "./Logic/TaskSubmitListener/TaskDueTimeSubmitListener.js";
 
+/**
+ * @class TaskFactory
+ * @description TaskFactory
+ */
 export class TaskFactory {
   static createTaskCreator() {
     return new TaskCreator(

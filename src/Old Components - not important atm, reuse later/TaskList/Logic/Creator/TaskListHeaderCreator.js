@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskListHeaderCreator
+ * @description TaskListHeaderCreator
+ */
 export class TaskListHeaderCreator {
   constructor(dateHandler, domElementCreator, taskListDataProvider, glossary) {
     this.dateHandler = dateHandler;

@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class CsvParser
+ * @description CsvParser
+ */
 export class CsvParser {
   static async parseDataFromCsv(csv) {
     let parsedData = await this.getData(csv);

@@ -5,6 +5,10 @@
 
 import { InfoBarController } from "./InfoBarController";
 
+/**
+ * @class IndexController
+ * @description IndexController
+ */
 export class IndexController {
   static indexAction() {
     this.init();

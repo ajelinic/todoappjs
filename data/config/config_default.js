@@ -16,3 +16,6 @@ export const REGISTERED_BUNDLES = {
   UTILS_BUNDLES: ["Mock"],
   PERSISTENCE_BUNDLES: ["Mock"],
 };
+
+/* -------- Registered components -------- */
+export const COMPONENTS = ["header", "footer"];

@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskDueTimeSubmitListener
+ * @description TaskDueTimeSubmitListener
+ */
 export class TaskDueTimeSubmitListener {
   constructor(notification, taskConfig, taskHandler) {
     this.notification = notification;

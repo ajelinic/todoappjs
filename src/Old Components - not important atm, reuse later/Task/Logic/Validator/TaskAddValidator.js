@@ -3,6 +3,10 @@
  * @deprecated Will be removed/changed in future releases
  */
 
+/**
+ * @class TaskAddValidator
+ * @description TaskAddValidator
+ */
 export class TaskAddValidator {
   constructor(dateHandler, taskConfig) {
     this.dateHandler = dateHandler;
