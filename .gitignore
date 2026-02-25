@@ -3,3 +3,6 @@ readme.txt
 
 # Local-only collaboration context (do not commit)
 /.local-context/
+
+# Local draft docs (do not commit yet)
+/docs/todoappjs-baseline-extraction-plan.md

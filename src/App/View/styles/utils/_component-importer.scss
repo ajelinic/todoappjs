@@ -1,3 +1,7 @@
 @function view-component-style($layer, $component) {
   @return "../components/#{$layer}/#{$component}/#{$component}";
 }
+
+@function view-component-style-by-path($path) {
+  @return "../components/#{$path}";
+}
