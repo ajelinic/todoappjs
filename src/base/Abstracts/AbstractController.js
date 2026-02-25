@@ -9,13 +9,130 @@ import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Shared/AppCoreConstants.js";
  * @description AbstractController
  */
 export class AbstractController {
+  static LAYOUT_MAIN = "main";
+
   constructor() {
-    if (this.constructor === AbstractController) {
+    if (new.target === AbstractController) {
       throw new TypeError(ABSTRACT_CLASS_ERROR_MESSAGE);
     }
   }
 
-  static view(component, data, mountSelector) {
-    this.prototype.view(component, data, mountSelector);
+  async indexAction() {
+    throw new Error(
+      "Method 'indexAction' must be implemented by concrete controller classes."
+    );
+  }
+
+  async waitForDomReady() {
+    if (document.readyState === "loading") {
+      await new Promise((resolve) =>
+        document.addEventListener("DOMContentLoaded", resolve, { once: true })
+      );
+    }
+  }
+
+  async getMountPoint(selector = "#app") {
+    await this.waitForDomReady();
+    const mountPoint = document.querySelector(selector);
+
+    if (!mountPoint) {
+      throw new Error(`[AbstractController] Mount point not found: ${selector}`);
+    }
+
+    return mountPoint;
+  }
+
+  createView(tagName, data = null) {
+    const view = document.createElement(tagName);
+
+    if (data !== null && typeof data === "object") {
+      view.data = data;
+    }
+
+    return view;
+  }
+
+  getDefaultLayout() {
+    return this.constructor.LAYOUT_MAIN;
+  }
+
+  getMountSelector() {
+    return "#app";
+  }
+
+  createViewResponse(view, data = {}, options = {}) {
+    return {
+      view,
+      data,
+      ...options,
+    };
+  }
+
+  async renderResponse(response) {
+    const resolvedResponse = this.resolveResponse(response);
+    const mountPoint = await this.getMountPoint(resolvedResponse.mountSelector);
+    const layoutResult = await this.renderLayout(
+      mountPoint,
+      resolvedResponse.layout
+    );
+    const pageView = this.createView(resolvedResponse.view, resolvedResponse.data);
+    layoutResult.content.appendChild(pageView);
+
+    return {
+      mountPoint,
+      pageView,
+      layout: resolvedResponse.layout,
+    };
+  }
+
+  resolveResponse(response) {
+    if (!response || typeof response.view !== "string" || response.view.length === 0) {
+      throw new Error("[AbstractController] Invalid view response.");
+    }
+
+    return {
+      view: response.view,
+      data: response.data ?? {},
+      layout: response.layout ?? this.getDefaultLayout(),
+      mountSelector: response.mountSelector ?? this.getMountSelector(),
+    };
+  }
+
+  async renderLayout(mountPoint, layout) {
+    switch (layout) {
+      case this.constructor.LAYOUT_MAIN:
+        return this.renderMainLayout(mountPoint);
+      default:
+        throw new Error(`[AbstractController] Unsupported layout: ${layout}`);
+    }
+  }
+
+  async renderMainLayout(mountPoint) {
+    await this.ensureMainLayoutComponents();
+    mountPoint.classList.add("layout-main");
+    mountPoint.innerHTML = "";
+
+    const header = document.createElement("header");
+    header.appendChild(document.createElement("header-organism"));
+
+    const main = document.createElement("main");
+    main.className = "layout-main__content";
+
+    const footer = document.createElement("footer");
+    footer.appendChild(document.createElement("footer-organism"));
+
+    mountPoint.append(header, main, footer);
+
+    return {
+      root: mountPoint,
+      content: main,
+    };
+  }
+
+  async ensureMainLayoutComponents() {
+    await Promise.all([
+      import("/src/App/View/components/organisms/header/header.js"),
+      import("/src/App/View/components/organisms/footer/footer.js"),
+    ]);
   }
 }

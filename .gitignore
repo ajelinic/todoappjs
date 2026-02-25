@@ -1,2 +1,5 @@
 readme.txt
 /.vscode
+
+# Local-only collaboration context (do not commit)
+/.local-context/

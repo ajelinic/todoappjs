@@ -19,7 +19,6 @@ export class SharedConstants {
       bridge: "Bridge",
       queryContainer: "QueryContainer",
       plugin: "Plugin",
-      actionPlugin: "ActionPlugin",
       client: "Client",
       form: "Form",
     };

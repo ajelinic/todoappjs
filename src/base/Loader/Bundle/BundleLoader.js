@@ -2,6 +2,8 @@
  * @BundleLoader
  */
 
+import { AbstractController } from "../../Abstracts/AbstractController.js";
+
 /**
  * @class BundleLoader
  * @description BundleLoader
@@ -15,7 +17,7 @@ export class BundleLoader {
     this.bundleList = {};
   }
 
-  loadBundles() {
+  async loadBundles() {
     const bundles = this.sharedConfig.getRegisteredBundles();
     const bundleLayers = this.sharedConstants.getBundleLayers();
 
@@ -27,16 +29,81 @@ export class BundleLoader {
       }
     }
 
-    this.resolverPlugins.forEach((plugin) => {
-      let resolvedClasses = plugin.resolve(this.bundleList);
+    const imports = this.resolverPlugins.flatMap((plugin) => {
+      const resolvedClasses = plugin.resolve(this.bundleList);
+      const resolvedPaths = this.normalizeResolvedClasses(resolvedClasses);
 
-      resolvedClasses.forEach(async (value) => {
+      return resolvedPaths.map(async (value) => {
         try {
-          await import(value);
+          const importedModule = await import(value);
+          await this.executeControllerIndexAction(importedModule);
         } catch (e) {
           console.error("Error importing bundle:", value, e);
         }
       });
     });
+
+    await Promise.all(imports);
+  }
+
+  normalizeResolvedClasses(resolvedClasses) {
+    if (Array.isArray(resolvedClasses)) {
+      return [...new Set(resolvedClasses)].filter(
+        (value) => typeof value === "string" && value.length > 0
+      );
+    }
+
+    if (resolvedClasses instanceof Set) {
+      return [...resolvedClasses].filter(
+        (value) => typeof value === "string" && value.length > 0
+      );
+    }
+
+    if (resolvedClasses instanceof Map) {
+      const values = [...resolvedClasses.values()];
+      const flattened = values.flatMap((value) =>
+        Array.isArray(value) ? value : [value]
+      );
+      return [...new Set(flattened)].filter(
+        (value) => typeof value === "string" && value.length > 0
+      );
+    }
+
+    if (resolvedClasses == null) {
+      return [];
+    }
+
+    if (typeof resolvedClasses === "string" && resolvedClasses.length > 0) {
+      return [resolvedClasses];
+    }
+
+    return [];
+  }
+
+  async executeControllerIndexAction(importedModule) {
+    if (!importedModule) {
+      return;
+    }
+
+    const exportedClasses = [importedModule.default, ...Object.values(importedModule)]
+      .filter((exportedValue, index, array) => {
+        return (
+          typeof exportedValue === "function" &&
+          array.indexOf(exportedValue) === index
+        );
+      });
+
+    const controllerClass = exportedClasses.find((exportedClass) => {
+      return exportedClass.prototype instanceof AbstractController;
+    });
+
+    if (!controllerClass) {
+      return;
+    }
+
+    const controller = new controllerClass();
+    if (typeof controller.indexAction === "function") {
+      await controller.indexAction();
+    }
   }
 }

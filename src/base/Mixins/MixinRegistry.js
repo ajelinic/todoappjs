@@ -8,8 +8,6 @@ import { AbstractConfig } from "../Abstracts/AbstractConfig.js";
 import { AbstractFactory } from "../Abstracts/AbstractFactory.js";
 import { AbstractClassResolver } from "../Abstracts/AbstractClassResolver.js";
 import { AbstractDependencyProvider } from "../Abstracts/AbstractDependencyProvider.js";
-import { AbstractController } from "../Abstracts/AbstractController.js";
-import { createViewMixin } from "./Collection/createViewMixin.js";
 
 /**
  * @class MixinRegistry
@@ -22,7 +20,6 @@ export class MixinRegistry {
       AbstractFactory: AbstractFactory,
       AbstractClassResolver: AbstractClassResolver,
       AbstractDependencyProvider: AbstractDependencyProvider,
-      AbstractController: AbstractController,
     };
   }
 
@@ -32,7 +29,6 @@ export class MixinRegistry {
       AbstractFactory: [],
       AbstractClassResolver: [getAppNamespaceMixin],
       AbstractDependencyProvider: [],
-      AbstractController: [createViewMixin],
     };
   }
 

@@ -144,10 +144,91 @@ table {
   text-decoration: line-through;
 }
 
-app-header {
+.brand-atom {
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.footer-note-atom {
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+greeting-atom {
+  display: block;
+}
+
+.greeting-atom {
   display: block;
   font-family: sans-serif;
   padding: 1rem;
+  border-radius: 8px;
+  background: #f4f4f4;
+}
+
+.greeting-atom h1 {
+  margin: 0;
+}
+
+header-meta-molecule {
+  display: block;
+}
+
+.header-meta-molecule {
+  font-family: sans-serif;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+footer-meta-molecule {
+  display: block;
+}
+
+.footer-meta-molecule {
+  font-family: sans-serif;
+  font-size: 0.85rem;
+}
+
+header-organism {
+  display: block;
+}
+
+.header-organism {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
   background: rgb(165, 65, 65);
-  border-radius: 0.5rem;
-}/*# sourceMappingURL=style.css.map */
+  color: #fff;
+}
+
+footer-organism {
+  display: block;
+}
+
+.footer-organism {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #ededed;
+  color: #222;
+}
+
+.layout-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-main__content {
+  flex: 1;
+  margin: 0.75rem 0;
+}
+/*# sourceMappingURL=style.css.map */

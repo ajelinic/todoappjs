@@ -1,0 +1,13 @@
+@import "./utils/component-importer";
+
+@import "#{view-component-style('atoms', 'brand')}";
+@import "#{view-component-style('atoms', 'footer-note')}";
+@import "#{view-component-style('atoms', 'greeting')}";
+
+@import "#{view-component-style('molecules', 'header-meta')}";
+@import "#{view-component-style('molecules', 'footer-meta')}";
+
+@import "#{view-component-style('organisms', 'header')}";
+@import "#{view-component-style('organisms', 'footer')}";
+
+@import "#{view-component-style('layouts', 'main')}";
