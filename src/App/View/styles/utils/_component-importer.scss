@@ -1,0 +1,3 @@
+@function view-component-style($layer, $component) {
+  @return "../components/#{$layer}/#{$component}/#{$component}";
+}

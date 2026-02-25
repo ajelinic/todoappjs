@@ -1,0 +1,14 @@
+header-organism {
+  display: block;
+}
+
+.header-organism {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: rem(16px);
+  padding: rem(16px);
+  border-radius: rem(8px);
+  background: rgb(165, 65, 65);
+  color: #fff;
+}

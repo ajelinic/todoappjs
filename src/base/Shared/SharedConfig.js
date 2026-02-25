@@ -17,8 +17,4 @@ export class SharedConfig extends AbstractConfig {
   static getRegisteredBundles() {
     return this.get(AppCoreConstants.REGISTERED_BUNDLES);
   }
-
-  static getRegisteredComponents() {
-    return this.get(AppCoreConstants.COMPONENTS);
-  }
 }

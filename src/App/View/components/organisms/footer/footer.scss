@@ -1,0 +1,14 @@
+footer-organism {
+  display: block;
+}
+
+.footer-organism {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: rem(16px);
+  padding: rem(12px) rem(16px);
+  border-radius: rem(8px);
+  background: #ededed;
+  color: #222;
+}
