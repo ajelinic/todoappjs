@@ -87,6 +87,25 @@ export class TaskFacade extends AbstractFacade {
     return {};
   }
 
+  async deleteTask(payload) {
+    await this.bootstrap();
+
+    const id = Number.parseInt(payload?.id, 10);
+    if (!Number.isFinite(id)) {
+      return {};
+    }
+
+    const taskRepository = this.getFactory().createTaskRepository();
+    const task = await taskRepository.getTaskById(id);
+    if (!task || !Boolean(task.checked)) {
+      return {};
+    }
+
+    await taskRepository.deleteTaskById(id);
+
+    return {};
+  }
+
   async clearCompletedTasks() {
     await this.bootstrap();
 

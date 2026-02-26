@@ -25,6 +25,7 @@ export class TaskController extends AbstractController {
 
     this.handleAddTask = this.handleAddTask.bind(this);
     this.handleToggleTask = this.handleToggleTask.bind(this);
+    this.handleDeleteTask = this.handleDeleteTask.bind(this);
     this.handleClearCompleted = this.handleClearCompleted.bind(this);
     this.handleLocaleChanged = this.handleLocaleChanged.bind(this);
   }
@@ -63,6 +64,10 @@ export class TaskController extends AbstractController {
     return this.taskClient.toggleTask(payload);
   }
 
+  async deleteTask(payload) {
+    return this.taskClient.deleteTask(payload);
+  }
+
   async clearCompletedTasks() {
     return this.taskClient.clearCompletedTasks();
   }
@@ -83,6 +88,7 @@ export class TaskController extends AbstractController {
 
     this.pageView.addEventListener("todo:add", this.handleAddTask);
     this.pageView.addEventListener("todo:toggle", this.handleToggleTask);
+    this.pageView.addEventListener("todo:delete", this.handleDeleteTask);
     this.pageView.addEventListener("todo:clear-completed", this.handleClearCompleted);
     this.areEventsBound = true;
   }
@@ -103,6 +109,11 @@ export class TaskController extends AbstractController {
 
   async handleToggleTask(event) {
     await this.toggleTask(event.detail ?? {});
+    await this.refreshView();
+  }
+
+  async handleDeleteTask(event) {
+    await this.deleteTask(event.detail ?? {});
     await this.refreshView();
   }
 
@@ -175,6 +186,7 @@ export class TaskController extends AbstractController {
         due: glossary["todoapp.input.due"] ?? "+Due",
         clear: glossary["todoapp.clear.list"] ?? "Clear list",
         noDue: glossary["todoapp.task.nodue"] ?? "No due time",
+        delete: glossary["todoapp.task.delete"] ?? "Delete",
       },
       tasks,
       infoItems: this.buildTaskInfoItems(tasks, glossary),
@@ -188,6 +200,7 @@ export class TaskController extends AbstractController {
       { key: "todoapp.input.due", fallback: "+Due" },
       { key: "todoapp.clear.list", fallback: "Clear list" },
       { key: "todoapp.task.nodue", fallback: "No due time" },
+      { key: "todoapp.task.delete", fallback: "Delete" },
       { key: "task.info.id.text", fallback: "Task with id" },
       { key: "task.info.title.text", fallback: "with value" },
       { key: "task.info.duetime.text", fallback: "has to be done by" },

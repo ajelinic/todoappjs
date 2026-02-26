@@ -26,6 +26,10 @@ export class TaskClient extends AbstractClient {
     return this.getFactory().createTaskFacade().toggleTask(payload);
   }
 
+  async deleteTask(payload) {
+    return this.getFactory().createTaskFacade().deleteTask(payload);
+  }
+
   async clearCompletedTasks() {
     return this.getFactory().createTaskFacade().clearCompletedTasks();
   }
