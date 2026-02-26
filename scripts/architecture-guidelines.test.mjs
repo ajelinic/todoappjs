@@ -7,14 +7,20 @@ const read = async (relativePath) => {
   return readFile(resolve(process.cwd(), relativePath), "utf8");
 };
 
-test("presentation bundles exclude glossary and include index/task", async () => {
+test(
+  "presentation bundles exclude glossary and include index/languageSwitcher/task",
+  async () => {
   const config = await read("data/config/config_default.js");
   const presentationMatch = config.match(/PRESENTATION_BUNDLES:\s*\[([^\]]*)\]/);
 
   assert.ok(presentationMatch);
-  assert.match(config, /PRESENTATION_BUNDLES:\s*\["Index",\s*"Task"\]/);
+  assert.match(
+    config,
+    /PRESENTATION_BUNDLES:\s*\["Index",\s*"LanguageSwitcher",\s*"Task"\]/
+  );
   assert.doesNotMatch(presentationMatch[1], /"Glossary"/);
-});
+  }
+);
 
 test("index controller remains orchestration-only", async () => {
   const indexController = await read(
@@ -22,6 +28,7 @@ test("index controller remains orchestration-only", async () => {
   );
 
   assert.match(indexController, /renderFeatureSlots/);
+  assert.match(indexController, /id="language-switcher-feature"/);
   assert.match(indexController, /id="task-feature"/);
   assert.doesNotMatch(indexController, /Client\/Task\/TaskClient/);
   assert.doesNotMatch(indexController, /Client\/Glossary\/GlossaryClient/);
@@ -34,8 +41,26 @@ test("task controller owns task page rendering and feature clients", async () =>
 
   assert.match(taskController, /Client\/Task\/TaskClient/);
   assert.match(taskController, /Client\/Glossary\/GlossaryClient/);
-  assert.match(taskController, /createView\("mock-page"/);
+  assert.match(taskController, /Client\/LanguageSwitcher\/LanguageSwitcherClient/);
+  assert.match(taskController, /createView\("task-page"/);
   assert.match(taskController, /getMountSelector\(\)\s*{\s*return "#task-feature";/);
+});
+
+test("language switcher controller owns switcher rendering and locale events", async () => {
+  const languageSwitcherController = await read(
+    "src/App/Presentation/LanguageSwitcher/Controller/LanguageSwitcherController.js"
+  );
+
+  assert.match(
+    languageSwitcherController,
+    /Client\/LanguageSwitcher\/LanguageSwitcherClient/
+  );
+  assert.match(languageSwitcherController, /createView\("language-switcher-molecule"/);
+  assert.match(
+    languageSwitcherController,
+    /getMountSelector\(\)\s*{\s*return "#language-switcher-feature";/
+  );
+  assert.match(languageSwitcherController, /app:locale-changed/);
 });
 
 test("auto-start is explicit and gated in loader", async () => {

@@ -18,6 +18,9 @@ export class IndexController extends AbstractController {
   renderFeatureSlots(contentElement) {
     contentElement.innerHTML = `
       <section class="index-layout">
+        <section class="index-layout__toolbar">
+          <section id="language-switcher-feature"></section>
+        </section>
         <section id="task-feature"></section>
       </section>
     `;

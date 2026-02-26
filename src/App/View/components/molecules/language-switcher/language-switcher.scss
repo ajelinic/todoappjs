@@ -1,0 +1,28 @@
+language-switcher-molecule {
+  display: block;
+}
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: rem(8px);
+  border: rem(1px) solid $color-border;
+  border-radius: rem(8px);
+  background: $color-white;
+  box-shadow: 0 rem(2px) rem(4px) $shadow;
+  padding: rem(8px) rem(10px);
+}
+
+.language-switcher__label {
+  font-family: sans-serif;
+  font-size: rem(14px);
+  font-weight: 700;
+}
+
+.language-switcher__select {
+  border: rem(1px) solid $color-black;
+  border-radius: rem(6px);
+  padding: rem(6px) rem(8px);
+  font-family: sans-serif;
+}

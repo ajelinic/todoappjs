@@ -14,11 +14,13 @@ export class GlossaryClient extends AbstractClient {
     return this.getFactory().createGlossaryFacade().bootstrap();
   }
 
-  async getText(key, fallback = null) {
-    return this.getFactory().createGlossaryFacade().getText(key, fallback);
+  async getText(key, fallback = null, options = {}) {
+    return this.getFactory()
+      .createGlossaryFacade()
+      .getText(key, fallback, options);
   }
 
-  async getTexts(entries = []) {
-    return this.getFactory().createGlossaryFacade().getTexts(entries);
+  async getTexts(entries = [], options = {}) {
+    return this.getFactory().createGlossaryFacade().getTexts(entries, options);
   }
 }

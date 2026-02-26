@@ -1,8 +1,8 @@
 /**
- * @class GlossaryStorageGateway
- * @description GlossaryStorageGateway
+ * @class LanguageSwitcherStorageGateway
+ * @description LanguageSwitcherStorageGateway
  */
-export class GlossaryStorageGateway {
+export class LanguageSwitcherStorageGateway {
   constructor(storageClient, persistenceConfig) {
     this.storageClient = storageClient;
     this.persistenceConfig = persistenceConfig;
@@ -20,14 +20,9 @@ export class GlossaryStorageGateway {
     return this.storageClient.upsert(this.persistenceConfig.getStoreName(), entry);
   }
 
-  async getEntryById(id) {
+  async getEntryByKey(key) {
     await this.ensureStorageReady();
-    return this.storageClient.findOne(this.persistenceConfig.getStoreName(), id);
-  }
-
-  async countRows() {
-    await this.ensureStorageReady();
-    return this.storageClient.count(this.persistenceConfig.getStoreName());
+    return this.storageClient.findOne(this.persistenceConfig.getStoreName(), key);
   }
 
   async ensureStorageReady() {

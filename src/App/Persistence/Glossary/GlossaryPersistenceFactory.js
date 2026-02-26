@@ -45,7 +45,8 @@ export class GlossaryPersistenceFactory extends AbstractFactory {
   static createGlossaryRepository() {
     if (!this.glossaryRepository) {
       this.glossaryRepository = new GlossaryRepository(
-        this.createGlossaryStorageGateway()
+        this.createGlossaryStorageGateway(),
+        GlossaryPersistenceConfig
       );
     }
 

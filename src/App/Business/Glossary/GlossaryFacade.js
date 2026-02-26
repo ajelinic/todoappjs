@@ -26,15 +26,21 @@ export class GlossaryFacade extends AbstractFacade {
     this.isBootstrapped = true;
   }
 
-  async getText(key, fallback = null) {
+  async getText(key, fallback = null, options = {}) {
     await this.bootstrap();
     await this.ensureSeeded();
-    return this.getFactory().createGlossaryRepository().getText(key, fallback);
+
+    const locale = this.resolveLocale(options);
+
+    return this.getFactory()
+      .createGlossaryRepository()
+      .getText(key, fallback, locale);
   }
 
-  async getTexts(entries = []) {
+  async getTexts(entries = [], options = {}) {
     await this.bootstrap();
     await this.ensureSeeded();
+    const locale = this.resolveLocale(options);
 
     const normalizedEntries = entries.filter((entry) => {
       return (
@@ -48,7 +54,7 @@ export class GlossaryFacade extends AbstractFacade {
       normalizedEntries.map((entry) => {
         return this.getFactory()
           .createGlossaryRepository()
-          .getText(entry.key, entry.fallback);
+          .getText(entry.key, entry.fallback, locale);
       })
     );
 
@@ -91,5 +97,21 @@ export class GlossaryFacade extends AbstractFacade {
     const csvUrl = this.getFactory().createPersistenceConfig().getGlossaryCsvUrl();
     const rows = await this.getFactory().createCsvParser().parseFromUrl(csvUrl);
     await glossaryRepository.seedRows(rows);
+  }
+
+  resolveLocale(options = {}) {
+    if (!options || typeof options !== "object") {
+      return this.getDefaultLocale();
+    }
+
+    if (typeof options.locale === "string" && options.locale.trim().length > 0) {
+      return options.locale.trim();
+    }
+
+    return this.getDefaultLocale();
+  }
+
+  getDefaultLocale() {
+    return this.getFactory().createPersistenceConfig().getDefaultLocale();
   }
 }

@@ -3,8 +3,9 @@
  * @description GlossaryPersistenceConfig
  */
 export class GlossaryPersistenceConfig {
-  static STORE_NAME = "glossary";
-  static SCHEMA_VERSION = 3;
+  static STORE_NAME = "glossaryEntries";
+  static SCHEMA_VERSION = 4;
+  static DEFAULT_LOCALE = "en-US";
 
   static getStoreName() {
     return this.STORE_NAME;
@@ -16,6 +17,10 @@ export class GlossaryPersistenceConfig {
 
   static getSchemaVersion() {
     return this.SCHEMA_VERSION;
+  }
+
+  static getDefaultLocale() {
+    return this.DEFAULT_LOCALE;
   }
 
   static getGlossaryCsvUrl() {

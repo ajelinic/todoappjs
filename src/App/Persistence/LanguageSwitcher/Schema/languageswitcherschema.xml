@@ -1,0 +1,10 @@
+<dataTables>
+  <dataTable>
+    <dataTableName>languageSwitcher</dataTableName>
+    <keyPath>key</keyPath>
+    <indexes>
+      <index>key</index>
+      <index>value</index>
+    </indexes>
+  </dataTable>
+</dataTables>
