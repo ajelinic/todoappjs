@@ -6,9 +6,14 @@
 
 @import "#{view-component-style('molecules', 'header-meta')}";
 @import "#{view-component-style('molecules', 'footer-meta')}";
+@import "#{view-component-style('molecules', 'language-switcher')}";
+@import "#{view-component-style('molecules', 'task-form')}";
+@import "#{view-component-style('molecules', 'task-list')}";
+@import "#{view-component-style('molecules', 'task-info')}";
 
 @import "#{view-component-style('organisms', 'header')}";
 @import "#{view-component-style('organisms', 'footer')}";
 
 @import "#{view-component-style('layouts', 'main')}";
-@import "#{view-component-style-by-path('views/mock/mock-page/mock-page')}";
+@import "#{view-component-style-by-path('views/task/task-page/task-page')}";
+@import "#{view-component-style-by-path('views/index/index-layout')}";

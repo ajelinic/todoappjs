@@ -1,8 +1,10 @@
 <dataTables>
   <dataTable>
-    <dataTableName>glossary</dataTableName>
-    <keyPath>textKey</keyPath>
+    <dataTableName>glossaryEntries</dataTableName>
+    <keyPath>id</keyPath>
     <indexes>
+      <index>id</index>
+      <index>locale</index>
       <index>textKey</index>
     </indexes>
   </dataTable>

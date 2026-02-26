@@ -34,21 +34,22 @@ export class StorageQueryContainer extends AbstractQueryContainer {
     const existingSchema = this.schemaRegistry.get(normalizedSchemaUrl);
     const existingVersion = existingSchema?.version ?? 0;
     const nextVersion = Math.max(existingVersion, schemaVersion);
+    const shouldPromoteVersion =
+      this.databaseVersion !== null &&
+      !existingSchema &&
+      nextVersion <= this.databaseVersion;
+    const effectiveVersion = shouldPromoteVersion
+      ? this.databaseVersion + 1
+      : nextVersion;
 
     this.schemaRegistry.set(normalizedSchemaUrl, {
       key: this.getSchemaKey(normalizedSchemaUrl),
       url: normalizedSchemaUrl,
-      version: nextVersion,
+      version: effectiveVersion,
     });
 
     if (this.databaseVersion === null) {
       return;
-    }
-
-    if (!existingSchema && nextVersion <= this.databaseVersion) {
-      throw new Error(
-        `[StorageQueryContainer] Schema ${normalizedSchemaUrl} requires DB version greater than ${this.databaseVersion}. Bump schema version to add new stores/indexes.`
-      );
     }
 
     const targetVersion = this.getTargetDatabaseVersion();
@@ -82,10 +83,7 @@ export class StorageQueryContainer extends AbstractQueryContainer {
 
     this.pendingTargetVersion = targetVersion;
     this.databasePromise = new Promise((resolve, reject) => {
-      const request = window.indexedDB.open(
-        this.config.getDatabaseName(),
-        targetVersion
-      );
+      const request = window.indexedDB.open(this.config.getDatabaseName(), targetVersion);
 
       request.onupgradeneeded = (event) => {
         const database = event.target.result;
@@ -101,6 +99,15 @@ export class StorageQueryContainer extends AbstractQueryContainer {
 
       request.onsuccess = (event) => {
         const database = event.target.result;
+        const missingStores = this.getMissingStoreNames(database, stores);
+        if (missingStores.length > 0) {
+          database.close();
+          this.promoteAllSchemas(database.version + 1);
+          this.resetDatabaseConnection();
+          this.openDatabase().then(resolve).catch(reject);
+          return;
+        }
+
         this.databaseConnection = database;
         this.databaseVersion = database.version;
         this.pendingTargetVersion = null;
@@ -108,6 +115,17 @@ export class StorageQueryContainer extends AbstractQueryContainer {
       };
 
       request.onerror = () => {
+        if (
+          request.error?.name === "VersionError" &&
+          this.databaseVersion === null
+        ) {
+          this.resolveCurrentDatabaseVersion()
+            .then(() => this.openDatabase())
+            .then(resolve)
+            .catch(reject);
+          return;
+        }
+
         this.resetDatabaseConnection();
         reject(request.error);
       };
@@ -124,11 +142,14 @@ export class StorageQueryContainer extends AbstractQueryContainer {
 
   getTargetDatabaseVersion() {
     const baseVersion = this.config.getDatabaseVersion();
+    const currentVersion = Number.isInteger(this.databaseVersion)
+      ? this.databaseVersion
+      : 0;
     const schemaVersions = this.getSchemaDefinitions().map((schema) => {
       return schema.version;
     });
 
-    return Math.max(baseVersion, ...schemaVersions);
+    return Math.max(baseVersion, currentVersion, ...schemaVersions);
   }
 
   normalizeSchemaUrl(schemaUrl) {
@@ -321,6 +342,55 @@ export class StorageQueryContainer extends AbstractQueryContainer {
       if (!objectStore.indexNames.contains(indexName)) {
         objectStore.createIndex(indexName, index, { unique: false });
       }
+    });
+  }
+
+  getMissingStoreNames(database, stores = []) {
+    return stores
+      .map((store) => store?.name)
+      .filter((storeName) => {
+        return (
+          typeof storeName === "string" &&
+          storeName.length > 0 &&
+          !database.objectStoreNames.contains(storeName)
+        );
+      });
+  }
+
+  promoteAllSchemas(version) {
+    if (!Number.isInteger(version) || version < this.config.getDatabaseVersion()) {
+      return;
+    }
+
+    const entries = [...this.schemaRegistry.entries()];
+    entries.forEach(([schemaUrl, schema]) => {
+      this.schemaRegistry.set(schemaUrl, {
+        ...schema,
+        version: Math.max(schema.version, version),
+      });
+    });
+  }
+
+  async resolveCurrentDatabaseVersion() {
+    this.resetDatabaseConnection();
+
+    await new Promise((resolve, reject) => {
+      const request = window.indexedDB.open(this.config.getDatabaseName());
+
+      request.onsuccess = (event) => {
+        const database = event.target.result;
+        this.databaseVersion = database.version;
+        database.close();
+        this.databasePromise = null;
+        this.databaseConnection = null;
+        this.pendingTargetVersion = null;
+        resolve();
+      };
+
+      request.onerror = () => {
+        this.resetDatabaseConnection();
+        reject(request.error);
+      };
     });
   }
 

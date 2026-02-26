@@ -1,6 +1,7 @@
 import { AbstractController } from "../../../../base/Abstracts/AbstractController.js";
-import "../../../View/components/views/mock/mock-page/mock-page.js";
+import "../../../View/components/views/task/task-page/task-page.js";
 import { GlossaryClient } from "../../../Client/Glossary/GlossaryClient.js";
+import { LanguageSwitcherClient } from "../../../Client/LanguageSwitcher/LanguageSwitcherClient.js";
 import { TaskClient } from "../../../Client/Task/TaskClient.js";
 
 /**
@@ -16,13 +17,16 @@ export class TaskController extends AbstractController {
     super();
     this.taskClient = new TaskClient();
     this.glossaryClient = new GlossaryClient();
-    this.locale = "hr-HR";
+    this.languageSwitcherClient = new LanguageSwitcherClient();
+    this.locale = "en-US";
     this.pageView = null;
     this.areEventsBound = false;
+    this.areLocaleEventsBound = false;
 
     this.handleAddTask = this.handleAddTask.bind(this);
     this.handleToggleTask = this.handleToggleTask.bind(this);
     this.handleClearCompleted = this.handleClearCompleted.bind(this);
+    this.handleLocaleChanged = this.handleLocaleChanged.bind(this);
   }
 
   getMountSelector() {
@@ -31,14 +35,20 @@ export class TaskController extends AbstractController {
 
   async indexAction() {
     await this.bootstrap();
+    this.locale = await this.languageSwitcherClient.getCurrentLocale();
     const pageData = await this.getTodoPageData();
     const viewData = this.mapViewData(pageData, null, this.createDefaultFormState());
     await this.renderTaskPage(viewData);
     this.bindPageEvents();
+    this.bindLocaleEvents();
   }
 
   async bootstrap() {
-    await Promise.all([this.taskClient.bootstrap(), this.glossaryClient.bootstrap()]);
+    await Promise.all([
+      this.taskClient.bootstrap(),
+      this.glossaryClient.bootstrap(),
+      this.languageSwitcherClient.bootstrap(),
+    ]);
   }
 
   async getTasks() {
@@ -61,7 +71,7 @@ export class TaskController extends AbstractController {
     const mountPoint = await this.getMountPoint(this.getMountSelector());
     mountPoint.innerHTML = "";
 
-    const pageView = this.createView("mock-page", viewData);
+    const pageView = this.createView("task-page", viewData);
     mountPoint.appendChild(pageView);
     this.pageView = pageView;
   }
@@ -77,6 +87,15 @@ export class TaskController extends AbstractController {
     this.areEventsBound = true;
   }
 
+  bindLocaleEvents() {
+    if (this.areLocaleEventsBound) {
+      return;
+    }
+
+    document.addEventListener("app:locale-changed", this.handleLocaleChanged);
+    this.areLocaleEventsBound = true;
+  }
+
   async handleAddTask(event) {
     const actionResult = await this.addTask(event.detail ?? {});
     await this.refreshView(actionResult);
@@ -90,6 +109,16 @@ export class TaskController extends AbstractController {
   async handleClearCompleted() {
     const actionResult = await this.clearCompletedTasks();
     await this.refreshView(actionResult);
+  }
+
+  async handleLocaleChanged(event) {
+    const locale = event?.detail?.locale;
+    if (typeof locale !== "string" || locale.trim().length === 0) {
+      return;
+    }
+
+    this.locale = locale.trim();
+    await this.refreshView();
   }
 
   async refreshView(actionResult = {}) {
@@ -122,6 +151,7 @@ export class TaskController extends AbstractController {
       labels: pageData?.labels || {},
       tasks: pageData?.tasks || [],
       infoItems: pageData?.infoItems || [],
+      locale: this.locale,
       form: formState,
       notification: normalizedActionResult.notification ?? null,
     };
@@ -133,7 +163,9 @@ export class TaskController extends AbstractController {
     const glossaryEntries = this.createGlossaryEntries();
     const [tasks, glossary] = await Promise.all([
       this.getTasks(),
-      this.glossaryClient.getTexts(glossaryEntries),
+      this.glossaryClient.getTexts(glossaryEntries, {
+        locale: this.locale,
+      }),
     ]);
 
     return {
@@ -142,6 +174,7 @@ export class TaskController extends AbstractController {
         add: glossary["todoapp.input.add"] ?? "Add to list",
         due: glossary["todoapp.input.due"] ?? "+Due",
         clear: glossary["todoapp.clear.list"] ?? "Clear list",
+        noDue: glossary["todoapp.task.nodue"] ?? "No due time",
       },
       tasks,
       infoItems: this.buildTaskInfoItems(tasks, glossary),
@@ -154,6 +187,7 @@ export class TaskController extends AbstractController {
       { key: "todoapp.input.add", fallback: "Add to list" },
       { key: "todoapp.input.due", fallback: "+Due" },
       { key: "todoapp.clear.list", fallback: "Clear list" },
+      { key: "todoapp.task.nodue", fallback: "No due time" },
       { key: "task.info.id.text", fallback: "Task with id" },
       { key: "task.info.title.text", fallback: "with value" },
       { key: "task.info.duetime.text", fallback: "has to be done by" },
