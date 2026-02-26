@@ -1,0 +1,11 @@
+<dataTables>
+  <dataTable>
+    <dataTableName>tasks</dataTableName>
+    <keyPath>id</keyPath>
+    <indexes>
+      <index>id</index>
+      <index>dueTime</index>
+      <index>checked</index>
+    </indexes>
+  </dataTable>
+</dataTables>

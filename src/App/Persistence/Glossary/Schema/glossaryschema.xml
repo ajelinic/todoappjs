@@ -1,0 +1,9 @@
+<dataTables>
+  <dataTable>
+    <dataTableName>glossary</dataTableName>
+    <keyPath>textKey</keyPath>
+    <indexes>
+      <index>textKey</index>
+    </indexes>
+  </dataTable>
+</dataTables>
