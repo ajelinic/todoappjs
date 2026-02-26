@@ -87,16 +87,9 @@ export class GlossaryFacade extends AbstractFacade {
   }
 
   async seedGlossary() {
-    const glossaryRepository = this.getFactory().createGlossaryRepository();
-    const glossaryCount = await glossaryRepository.countRows();
-
-    if (glossaryCount > 0) {
-      return;
-    }
-
     const csvUrl = this.getFactory().createPersistenceConfig().getGlossaryCsvUrl();
     const rows = await this.getFactory().createCsvParser().parseFromUrl(csvUrl);
-    await glossaryRepository.seedRows(rows);
+    await this.getFactory().createGlossaryRepository().seedRows(rows);
   }
 
   resolveLocale(options = {}) {

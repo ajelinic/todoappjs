@@ -24,7 +24,7 @@ export class LanguageSwitcherMolecule extends Component {
   }
 
   buildTemplate() {
-    const label = this._data?.label ?? "Language";
+    const label = this._data?.label ?? "language.switcher.label";
     const currentLocale = this._data?.currentLocale ?? "en-US";
     const locales = Array.isArray(this._data?.locales) ? this._data.locales : [];
 

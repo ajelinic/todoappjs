@@ -3,8 +3,16 @@ en-US,todoapp.title,To-Do App
 en-US,todoapp.clear.list,Clear list
 en-US,todoapp.input.add,Add to list
 en-US,todoapp.input.due,+Due
+en-US,todoapp.input.placeholder,What needs to be done?
 en-US,todoapp.task.nodue,No due time
 en-US,todoapp.task.delete,Delete
+en-US,task.notification.empty,Can't add empty task!
+en-US,task.notification.onlynumbers,Task can't be only numbers!
+en-US,task.notification.pastdue,Tasks can't be set in past, please change due time!
+en-US,task.notification.added,Task successfully added!
+en-US,task.notification.clearsuccess,Cleared done tasks! Well done!
+en-US,task.notification.clearnoselection,Please select tasks that are done to delete them from the list!
+en-US,task.notification.clearempty,No tasks to clear. Please add some tasks!
 en-US,task.info.id.text,Task with id
 en-US,task.info.title.text,with value
 en-US,task.info.duetime.text,has to be done by
@@ -17,8 +25,16 @@ hr-HR,todoapp.title,To-Do Aplikacija
 hr-HR,todoapp.clear.list,Ocisti listu
 hr-HR,todoapp.input.add,Dodaj
 hr-HR,todoapp.input.due,+Rok
+hr-HR,todoapp.input.placeholder,Sto treba napraviti?
 hr-HR,todoapp.task.nodue,Bez roka
 hr-HR,todoapp.task.delete,Obrisi
+hr-HR,task.notification.empty,Nije moguce dodati prazan zadatak!
+hr-HR,task.notification.onlynumbers,Zadatak ne moze sadrzavati samo brojeve!
+hr-HR,task.notification.pastdue,Zadatak ne moze biti postavljen u proslost, promijeni rok!
+hr-HR,task.notification.added,Zadatak je uspjesno dodan!
+hr-HR,task.notification.clearsuccess,Zavrseni zadaci su obrisani!
+hr-HR,task.notification.clearnoselection,Odaberi zavrsene zadatke za brisanje s liste!
+hr-HR,task.notification.clearempty,Nema zadataka za brisanje. Dodaj zadatke!
 hr-HR,task.info.id.text,Zadatak s ID
 hr-HR,task.info.title.text,s vrijednoscu
 hr-HR,task.info.duetime.text,mora biti zavrsen do

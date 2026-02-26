@@ -9,12 +9,10 @@ export class LanguageSwitcherFacade extends AbstractFacade {
     {
       code: "en-US",
       labelKey: "language.locale.en-US",
-      fallbackLabel: "English US",
     },
     {
       code: "hr-HR",
       labelKey: "language.locale.hr-HR",
-      fallbackLabel: "Hrvatski",
     },
   ];
 
