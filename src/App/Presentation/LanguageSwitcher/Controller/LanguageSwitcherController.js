@@ -1,6 +1,6 @@
 import { AbstractController } from "../../../../base/Abstracts/AbstractController.js";
-import { GlossaryClient } from "../../../Client/Glossary/GlossaryClient.js";
 import { LanguageSwitcherClient } from "../../../Client/LanguageSwitcher/LanguageSwitcherClient.js";
+import { TranslationService } from "../../../Utils/Translation/TranslationService.js";
 import "../../../View/components/molecules/language-switcher/language-switcher.js";
 
 /**
@@ -14,8 +14,8 @@ export class LanguageSwitcherController extends AbstractController {
 
   constructor() {
     super();
-    this.glossaryClient = new GlossaryClient();
     this.languageSwitcherClient = new LanguageSwitcherClient();
+    this.translationService = new TranslationService();
     this.switcherView = null;
     this.areEventsBound = false;
 
@@ -39,8 +39,8 @@ export class LanguageSwitcherController extends AbstractController {
 
   async bootstrap() {
     await Promise.all([
-      this.glossaryClient.bootstrap(),
       this.languageSwitcherClient.bootstrap(),
+      this.translationService.bootstrap(),
     ]);
   }
 
@@ -96,34 +96,28 @@ export class LanguageSwitcherController extends AbstractController {
 
   async getViewData(locale) {
     const supportedLocales = this.languageSwitcherClient.getSupportedLocales();
-    const glossaryEntries = this.createGlossaryEntries(supportedLocales);
-    const glossary = await this.glossaryClient.getTexts(glossaryEntries, {
+    const translationKeys = this.createTranslationKeys(supportedLocales);
+    const glossary = await this.translationService.transList(translationKeys, {
       locale,
     });
 
     return {
-      label: glossary["language.switcher.label"] ?? "Language",
+      label: glossary["language.switcher.label"],
       currentLocale: locale,
       locales: supportedLocales.map((supportedLocale) => {
         return {
           value: supportedLocale.code,
-          label:
-            glossary[supportedLocale.labelKey] ??
-            supportedLocale.fallbackLabel ??
-            supportedLocale.code,
+          label: glossary[supportedLocale.labelKey],
         };
       }),
     };
   }
 
-  createGlossaryEntries(supportedLocales) {
+  createTranslationKeys(supportedLocales) {
     return [
-      { key: "language.switcher.label", fallback: "Language" },
+      "language.switcher.label",
       ...supportedLocales.map((supportedLocale) => {
-        return {
-          key: supportedLocale.labelKey,
-          fallback: supportedLocale.fallbackLabel,
-        };
+        return supportedLocale.labelKey;
       }),
     ];
   }

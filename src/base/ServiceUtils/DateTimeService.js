@@ -3,7 +3,7 @@
  * @description DateTimeService
  */
 export class DateTimeService {
-  constructor(locale = "hr-HR") {
+  constructor(locale = "en-US") {
     this.locale = locale;
   }
 

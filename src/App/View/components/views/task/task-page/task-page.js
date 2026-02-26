@@ -23,7 +23,7 @@ export class TaskPageView extends Component {
           <div class="todo-layout">
             <section class="todo-list-panel">
               <h1 class="todo-list-panel__title">${this.escapeHtml(
-                this._data?.title || "To-Do App"
+                this._data?.title || "todoapp.title"
               )}</h1>
 
               <task-form-molecule data-element="task-form"></task-form-molecule>

@@ -45,14 +45,16 @@ export class TaskFormMolecule extends Component {
           name="addTaskField"
           type="text"
           value="${this.escapeHtml(form.taskValue || "")}"
-          placeholder="What needs to be done?"
+          placeholder="${this.escapeHtml(
+            labels.placeholder || "todoapp.input.placeholder"
+          )}"
           autocomplete="off"
         />
         <button
           class="${dueButtonClass}"
           type="button"
           data-action="toggle-due"
-        >${this.escapeHtml(labels.due || "+Due")}</button>
+        >${this.escapeHtml(labels.due || "todoapp.input.due")}</button>
         <input
           class="${dueInputClass}"
           id="due-time-input"
@@ -64,12 +66,12 @@ export class TaskFormMolecule extends Component {
           class="button button--border button--todo"
           type="button"
           data-action="add-task"
-        >${this.escapeHtml(labels.add || "Add to list")}</button>
+        >${this.escapeHtml(labels.add || "todoapp.input.add")}</button>
         <button
           class="button button--border button--todo"
           type="button"
           data-action="clear-completed"
-        >${this.escapeHtml(labels.clear || "Clear list")}</button>
+        >${this.escapeHtml(labels.clear || "todoapp.clear.list")}</button>
       </form>
     `;
   }

@@ -40,8 +40,8 @@ test("task controller owns task page rendering and feature clients", async () =>
   );
 
   assert.match(taskController, /Client\/Task\/TaskClient/);
-  assert.match(taskController, /Client\/Glossary\/GlossaryClient/);
   assert.match(taskController, /Client\/LanguageSwitcher\/LanguageSwitcherClient/);
+  assert.match(taskController, /Utils\/Translation\/TranslationService/);
   assert.match(taskController, /createView\("task-page"/);
   assert.match(taskController, /getMountSelector\(\)\s*{\s*return "#task-feature";/);
 });
@@ -55,12 +55,56 @@ test("language switcher controller owns switcher rendering and locale events", a
     languageSwitcherController,
     /Client\/LanguageSwitcher\/LanguageSwitcherClient/
   );
+  assert.match(
+    languageSwitcherController,
+    /Utils\/Translation\/TranslationService/
+  );
   assert.match(languageSwitcherController, /createView\("language-switcher-molecule"/);
   assert.match(
     languageSwitcherController,
     /getMountSelector\(\)\s*{\s*return "#language-switcher-feature";/
   );
   assert.match(languageSwitcherController, /app:locale-changed/);
+});
+
+test("task notifications are glossary-key based (no hardcoded user-facing english)", async () => {
+  const todoMessageService = await read(
+    "src/App/Utils/Task/TodoMessageService.js"
+  );
+
+  assert.match(todoMessageService, /task\.notification\./);
+  assert.doesNotMatch(todoMessageService, /Can'?t add empty task/i);
+  assert.doesNotMatch(todoMessageService, /Task successfully added/i);
+  assert.doesNotMatch(todoMessageService, /No tasks to clear/i);
+});
+
+test("task controller avoids english fallback strings for glossary-backed labels", async () => {
+  const taskController = await read(
+    "src/App/Presentation/Task/Controller/TaskController.js"
+  );
+
+  assert.doesNotMatch(taskController, /\?\?\s*"To-Do App"/);
+  assert.doesNotMatch(taskController, /\?\?\s*"Add to list"/);
+  assert.doesNotMatch(taskController, /\?\?\s*"Clear list"/);
+  assert.doesNotMatch(taskController, /\?\?\s*"No due time"/);
+  assert.doesNotMatch(taskController, /\?\?\s*"Delete"/);
+});
+
+test("datetime service lives in base and task factory uses base service", async () => {
+  const taskBusinessFactory = await read(
+    "src/App/Business/Task/TaskBusinessFactory.js"
+  );
+  const dateTimeService = await read("src/base/ServiceUtils/DateTimeService.js");
+
+  assert.match(
+    taskBusinessFactory,
+    /base\/ServiceUtils\/DateTimeService\.js/
+  );
+  assert.doesNotMatch(
+    taskBusinessFactory,
+    /Business\/Task\/Service\/DateTimeService\.js/
+  );
+  assert.match(dateTimeService, /class DateTimeService/);
 });
 
 test("auto-start is explicit and gated in loader", async () => {

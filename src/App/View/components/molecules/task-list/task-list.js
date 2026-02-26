@@ -41,8 +41,8 @@ export class TaskListMolecule extends Component {
     const hasDueTime = Number.isFinite(task.dueTime);
     const dueText = hasDueTime
       ? new Date(task.dueTime).toLocaleString(this.getLocale())
-      : this._data?.labels?.noDue ?? "No due time";
-    const deleteLabel = this._data?.labels?.delete ?? "Delete";
+      : this._data?.labels?.noDue ?? "todoapp.task.nodue";
+    const deleteLabel = this._data?.labels?.delete ?? "todoapp.task.delete";
 
     return `
       <li class="todo-task">
