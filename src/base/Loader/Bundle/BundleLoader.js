@@ -15,6 +15,7 @@ export class BundleLoader {
     this.resolverPlugins = resolverPlugins;
     this.keySuffix = keySuffix;
     this.bundleList = {};
+    this.rootMountControllerExecuted = false;
   }
 
   async loadBundles() {
@@ -29,23 +30,26 @@ export class BundleLoader {
       }
     }
 
-    const imports = this.resolverPlugins.flatMap((plugin) => {
+    const resolvedPaths = this.resolveModulePaths();
+    for (const value of resolvedPaths) {
+      const moduleUrl = this.resolveModuleUrl(value);
+
+      try {
+        const importedModule = await import(moduleUrl);
+        await this.executeControllerIndexAction(importedModule, moduleUrl);
+      } catch (e) {
+        console.error("Error importing bundle:", moduleUrl, e);
+      }
+    }
+  }
+
+  resolveModulePaths() {
+    const orderedPaths = this.resolverPlugins.flatMap((plugin) => {
       const resolvedClasses = plugin.resolve(this.bundleList);
-      const resolvedPaths = this.normalizeResolvedClasses(resolvedClasses);
-
-      return resolvedPaths.map(async (value) => {
-        const moduleUrl = this.resolveModuleUrl(value);
-
-        try {
-          const importedModule = await import(moduleUrl);
-          await this.executeControllerIndexAction(importedModule);
-        } catch (e) {
-          console.error("Error importing bundle:", moduleUrl, e);
-        }
-      });
+      return this.normalizeResolvedClasses(resolvedClasses);
     });
 
-    await Promise.all(imports);
+    return [...new Set(orderedPaths)];
   }
 
   normalizeResolvedClasses(resolvedClasses) {
@@ -107,7 +111,7 @@ export class BundleLoader {
     return new URL("./", document.baseURI).href;
   }
 
-  async executeControllerIndexAction(importedModule) {
+  async executeControllerIndexAction(importedModule, moduleUrl = "") {
     if (!importedModule) {
       return;
     }
@@ -128,9 +132,56 @@ export class BundleLoader {
       return;
     }
 
+    if (!this.shouldAutoExecuteController(controllerClass)) {
+      return;
+    }
+
     const controller = new controllerClass();
+    const mountSelector = this.resolveMountSelector(controller);
+    const isRootMountController = mountSelector === "#app";
+
+    if (isRootMountController && this.rootMountControllerExecuted) {
+      console.warn(
+        `[BundleLoader] Skipping additional root presentation controller at ${moduleUrl}.`
+      );
+      return;
+    }
+
     if (typeof controller.indexAction === "function") {
       await controller.indexAction();
+      if (isRootMountController) {
+        this.rootMountControllerExecuted = true;
+      }
+    }
+  }
+
+  resolveMountSelector(controller) {
+    if (!controller || typeof controller.getMountSelector !== "function") {
+      return "#app";
+    }
+
+    try {
+      const selector = controller.getMountSelector();
+      return typeof selector === "string" && selector.length > 0
+        ? selector
+        : "#app";
+    } catch (error) {
+      return "#app";
+    }
+  }
+
+  shouldAutoExecuteController(controllerClass) {
+    if (
+      !controllerClass ||
+      typeof controllerClass.shouldAutoExecute !== "function"
+    ) {
+      return false;
+    }
+
+    try {
+      return controllerClass.shouldAutoExecute() === true;
+    } catch (error) {
+      return false;
     }
   }
 }

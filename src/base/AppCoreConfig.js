@@ -14,14 +14,10 @@ export class AppCoreConfig {
       return null;
     }
 
-    let props = Object.getOwnPropertyNames(obj).filter(
-      (prop) => prop !== "constructor" && typeof prop !== "function"
-    );
-
-    for (let i = 0; i < props.length; i++) {
-      if (props[i] === key) {
-        return obj[props[i]];
-      }
+    if (!Object.prototype.hasOwnProperty.call(obj, key)) {
+      return undefined;
     }
+
+    return obj[key];
   }
 }

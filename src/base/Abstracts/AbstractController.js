@@ -10,6 +10,7 @@ import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Shared/AppCoreConstants.js";
  */
 export class AbstractController {
   static LAYOUT_MAIN = "main";
+  static AUTO_EXECUTE = false;
 
   constructor() {
     if (new.target === AbstractController) {
@@ -21,6 +22,10 @@ export class AbstractController {
     throw new Error(
       "Method 'indexAction' must be implemented by concrete controller classes."
     );
+  }
+
+  static shouldAutoExecute() {
+    return this.AUTO_EXECUTE === true;
   }
 
   async waitForDomReady() {

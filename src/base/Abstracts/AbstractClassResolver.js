@@ -1,5 +1,6 @@
 import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Shared/AppCoreConstants.js";
-import { SharedConfig } from "../Shared/SharedConfig.js";
+import { AppCoreConfig } from "../AppCoreConfig.js";
+import { APP_NAMESPACE } from "../Shared/AppCoreConstants.js";
 
 /**
  * @class AbstractClassResolver
@@ -26,7 +27,7 @@ export class AbstractClassResolver {
   }
 
   getAppNamespace() {
-    return this.prototype.getAppNamespace();
+    return AppCoreConfig.get(APP_NAMESPACE) || "App";
   }
 
   createContainer() {
@@ -44,6 +45,10 @@ export class AbstractClassResolver {
   }
 
   getHost() {
-    return SharedConfig.getHost();
+    if (typeof document !== "undefined" && document.location) {
+      return document.location.origin;
+    }
+
+    return "";
   }
 }
