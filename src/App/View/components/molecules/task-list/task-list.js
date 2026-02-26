@@ -8,14 +8,17 @@ import { defineComponent } from "../../../../../base/View/Helpers/defineComponen
 export class TaskListMolecule extends Component {
   constructor() {
     super();
+    this.boundClickHandler = this.handleClick.bind(this);
     this.boundChangeHandler = this.handleChange.bind(this);
   }
 
   mapEvents() {
+    this.addEventListener("click", this.boundClickHandler);
     this.addEventListener("change", this.boundChangeHandler);
   }
 
   destroy() {
+    this.removeEventListener("click", this.boundClickHandler);
     this.removeEventListener("change", this.boundChangeHandler);
   }
 
@@ -39,9 +42,10 @@ export class TaskListMolecule extends Component {
     const dueText = hasDueTime
       ? new Date(task.dueTime).toLocaleString(this.getLocale())
       : this._data?.labels?.noDue ?? "No due time";
+    const deleteLabel = this._data?.labels?.delete ?? "Delete";
 
     return `
-      <li class="todo-task ${isChecked ? "cross" : ""}">
+      <li class="todo-task">
         <label class="todo-task__main">
           <input
             type="checkbox"
@@ -51,15 +55,50 @@ export class TaskListMolecule extends Component {
             data-task-id="${task.id}"
             ${isChecked ? "checked" : ""}
           />
-          <span class="todo-task__value">${this.escapeHtml(task.taskValue)}</span>
+          <span class="todo-task__value ${isChecked ? "cross" : ""}">${this.escapeHtml(
+            task.taskValue
+          )}</span>
         </label>
-        <div class="todo-task__meta">
-          <span class="todo-task__meta-item">#${task.id}</span>
-          <span class="todo-task__meta-item">${this.escapeHtml(task.timeAdded)}</span>
-          <span class="todo-task__meta-item">${this.escapeHtml(dueText)}</span>
+        <div class="todo-task__footer">
+          <div class="todo-task__meta">
+            <span class="todo-task__meta-item">#${task.id}</span>
+            <span class="todo-task__meta-item">${this.escapeHtml(task.timeAdded)}</span>
+            <span class="todo-task__meta-item">${this.escapeHtml(dueText)}</span>
+          </div>
+          ${
+            isChecked
+              ? `<button
+            class="button button--border todo-task__delete"
+            type="button"
+            data-action="delete-task"
+            data-task-id="${task.id}"
+          >${this.escapeHtml(deleteLabel)}</button>`
+              : ""
+          }
         </div>
       </li>
     `;
+  }
+
+  handleClick(event) {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    if (target.dataset.action !== "delete-task") {
+      return;
+    }
+
+    event.preventDefault();
+    this.dispatchEvent(
+      new CustomEvent("todo:delete", {
+        bubbles: true,
+        detail: {
+          id: target.dataset.taskId,
+        },
+      })
+    );
   }
 
   handleChange(event) {

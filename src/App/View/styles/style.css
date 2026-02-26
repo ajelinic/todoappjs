@@ -408,6 +408,18 @@ task-info-molecule {
   font-size: 0.75rem;
 }
 
+.todo-task__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.todo-task__delete {
+  background: #fff;
+  padding: 0.25rem 0.5rem;
+}
+
 .todo-info-panel {
   border: 0.0625rem solid #a3dcff;
   border-radius: 0.5rem;

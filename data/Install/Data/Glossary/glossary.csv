@@ -4,6 +4,7 @@ en-US,todoapp.clear.list,Clear list
 en-US,todoapp.input.add,Add to list
 en-US,todoapp.input.due,+Due
 en-US,todoapp.task.nodue,No due time
+en-US,todoapp.task.delete,Delete
 en-US,task.info.id.text,Task with id
 en-US,task.info.title.text,with value
 en-US,task.info.duetime.text,has to be done by
@@ -17,6 +18,7 @@ hr-HR,todoapp.clear.list,Ocisti listu
 hr-HR,todoapp.input.add,Dodaj
 hr-HR,todoapp.input.due,+Rok
 hr-HR,todoapp.task.nodue,Bez roka
+hr-HR,todoapp.task.delete,Obrisi
 hr-HR,task.info.id.text,Zadatak s ID
 hr-HR,task.info.title.text,s vrijednoscu
 hr-HR,task.info.duetime.text,mora biti zavrsen do

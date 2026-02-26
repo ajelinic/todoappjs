@@ -115,6 +115,18 @@ task-page {
   font-size: rem(12px);
 }
 
+.todo-task__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: rem(8px);
+}
+
+.todo-task__delete {
+  background: $color-white;
+  padding: rem(4px) rem(8px);
+}
+
 .todo-info-panel {
   border: rem(1px) solid $color-border;
   border-radius: rem(8px);
