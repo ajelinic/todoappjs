@@ -1,12 +1,16 @@
 import { AbstractClientFactory } from "../../../base/Abstracts/AbstractClientFactory.js";
-import { StorageBusinessFactory } from "../../Business/Storage/StorageBusinessFactory.js";
+import { StorageClientConfig } from "./StorageClientConfig.js";
+import { StorageClientDependencyProvider } from "./StorageClientDependencyProvider.js";
 
 /**
  * @class StorageClientFactory
  * @description StorageClientFactory
  */
 export class StorageClientFactory extends AbstractClientFactory {
+  static CONFIG_CLASS = StorageClientConfig;
+  static DEPENDENCY_PROVIDER_CLASS = StorageClientDependencyProvider;
+
   static createStorageFacade() {
-    return StorageBusinessFactory.createStorageFacade();
+    return this.getProvidedDependency(StorageClientDependencyProvider.STORAGE_FACADE);
   }
 }

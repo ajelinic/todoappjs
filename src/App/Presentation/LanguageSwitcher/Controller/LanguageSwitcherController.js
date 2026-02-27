@@ -1,57 +1,65 @@
-import { AbstractController } from "../../../../base/Abstracts/AbstractController.js";
-import { LanguageSwitcherClient } from "../../../Client/LanguageSwitcher/LanguageSwitcherClient.js";
-import { TranslationService } from "../../../Utils/Translation/TranslationService.js";
+import { AbstractPresentationController } from "../../../../base/Abstracts/AbstractPresentationController.js";
+import { LanguageSwitcherPresentationFactory } from "../LanguageSwitcherPresentationFactory.js";
 import "../../../View/components/molecules/language-switcher/language-switcher.js";
 
 /**
  * @class LanguageSwitcherController
  * @description LanguageSwitcherController
  */
-export class LanguageSwitcherController extends AbstractController {
+export class LanguageSwitcherController extends AbstractPresentationController {
+  static FACTORY_CLASS = LanguageSwitcherPresentationFactory;
+
   static shouldAutoExecute() {
     return true;
   }
 
-  constructor() {
-    super();
-    this.languageSwitcherClient = new LanguageSwitcherClient();
-    this.translationService = new TranslationService();
-    this.switcherView = null;
-    this.areEventsBound = false;
-
-    this.handleLanguageChange = this.handleLanguageChange.bind(this);
-  }
-
   getMountSelector() {
-    return "#language-switcher-feature";
+    return this.getConfig().getMountSelector();
   }
 
   async indexAction() {
+    this.initializeControllerState();
     await this.bootstrap();
 
-    const currentLocale = await this.languageSwitcherClient.getCurrentLocale();
-    const viewData = await this.getViewData(currentLocale);
+    const currentLocale = await this.getFactory()
+      .createLanguageSwitcherClient()
+      .getCurrentLocale();
+    const viewData = await this.getFactory()
+      .createLanguageSwitcherViewDataResolver()
+      .resolve(currentLocale);
 
-    await this.renderSwitcher(viewData);
+    this.switcherView = await this.renderViewAtMount(
+      "language-switcher-molecule",
+      viewData,
+      this.getMountSelector()
+    );
     this.bindEvents();
     this.announceLocaleChanged(currentLocale);
   }
 
-  async bootstrap() {
-    await Promise.all([
-      this.languageSwitcherClient.bootstrap(),
-      this.translationService.bootstrap(),
-    ]);
+  initializeControllerState() {
+    if (this.isInitialized) {
+      return;
+    }
+
+    this.switcherView = null;
+    this.areEventsBound = false;
+    this.isBootstrapped = false;
+    this.handleLanguageChange = this.handleLanguageChange.bind(this);
+    this.isInitialized = true;
   }
 
-  async renderSwitcher(viewData) {
-    const mountPoint = await this.getMountPoint(this.getMountSelector());
-    mountPoint.innerHTML = "";
+  async bootstrap() {
+    if (this.isBootstrapped) {
+      return;
+    }
 
-    const switcherView = this.createView("language-switcher-molecule", viewData);
-    mountPoint.appendChild(switcherView);
-
-    this.switcherView = switcherView;
+    const factory = this.getFactory();
+    await Promise.all([
+      factory.createLanguageSwitcherClient().bootstrap(),
+      factory.createGlossaryClient().bootstrap(),
+    ]);
+    this.isBootstrapped = true;
   }
 
   bindEvents() {
@@ -64,9 +72,9 @@ export class LanguageSwitcherController extends AbstractController {
   }
 
   async handleLanguageChange(event) {
-    const nextLocale = await this.languageSwitcherClient.setCurrentLocale(
-      event?.detail?.locale
-    );
+    const nextLocale = await this.getFactory()
+      .createLanguageSwitcherEventHandler()
+      .changeLocale(event?.detail?.locale);
 
     await this.refreshView(nextLocale);
     this.announceLocaleChanged(nextLocale);
@@ -77,49 +85,21 @@ export class LanguageSwitcherController extends AbstractController {
       return;
     }
 
-    const currentLocale =
-      locale ?? (await this.languageSwitcherClient.getCurrentLocale());
-    const viewData = await this.getViewData(currentLocale);
+    const viewData = await this.getFactory()
+      .createLanguageSwitcherViewDataResolver()
+      .resolve(locale);
 
     this.switcherView.data = viewData;
   }
 
   announceLocaleChanged(locale) {
     document.dispatchEvent(
-      new CustomEvent("app:locale-changed", {
+      new CustomEvent(this.getConfig().getLocaleChangedEventName(), {
         detail: {
           locale,
         },
       })
     );
-  }
-
-  async getViewData(locale) {
-    const supportedLocales = this.languageSwitcherClient.getSupportedLocales();
-    const translationKeys = this.createTranslationKeys(supportedLocales);
-    const glossary = await this.translationService.transList(translationKeys, {
-      locale,
-    });
-
-    return {
-      label: glossary["language.switcher.label"],
-      currentLocale: locale,
-      locales: supportedLocales.map((supportedLocale) => {
-        return {
-          value: supportedLocale.code,
-          label: glossary[supportedLocale.labelKey],
-        };
-      }),
-    };
-  }
-
-  createTranslationKeys(supportedLocales) {
-    return [
-      "language.switcher.label",
-      ...supportedLocales.map((supportedLocale) => {
-        return supportedLocale.labelKey;
-      }),
-    ];
   }
 }
 

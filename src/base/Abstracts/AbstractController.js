@@ -57,6 +57,19 @@ export class AbstractController {
     return view;
   }
 
+  async renderViewAtMount(tagName, data = null, selector = null) {
+    const mountSelector = typeof selector === "string" && selector.length > 0
+      ? selector
+      : this.getMountSelector();
+    const mountPoint = await this.getMountPoint(mountSelector);
+    mountPoint.innerHTML = "";
+
+    const view = this.createView(tagName, data);
+    mountPoint.appendChild(view);
+
+    return view;
+  }
+
   getDefaultLayout() {
     return this.constructor.LAYOUT_MAIN;
   }

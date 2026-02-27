@@ -31,10 +31,11 @@ export class GlossaryFacade extends AbstractFacade {
     await this.ensureSeeded();
 
     const locale = this.resolveLocale(options);
-
-    return this.getFactory()
+    const text = await this.getFactory()
       .createGlossaryRepository()
       .getText(key, fallback, locale);
+
+    return this.interpolateText(text, this.resolveParameters(options));
   }
 
   async getTexts(entries = [], options = {}) {
@@ -60,7 +61,10 @@ export class GlossaryFacade extends AbstractFacade {
 
     const result = {};
     normalizedEntries.forEach((entry, index) => {
-      result[entry.key] = texts[index];
+      result[entry.key] = this.interpolateText(
+        texts[index],
+        this.resolveEntryParameters(entry, options)
+      );
     });
 
     return result;
@@ -106,5 +110,58 @@ export class GlossaryFacade extends AbstractFacade {
 
   getDefaultLocale() {
     return this.getFactory().createPersistenceConfig().getDefaultLocale();
+  }
+
+  resolveParameters(options = {}) {
+    if (!options || typeof options !== "object") {
+      return {};
+    }
+
+    if (!options.parameters || typeof options.parameters !== "object") {
+      return {};
+    }
+
+    return options.parameters;
+  }
+
+  resolveEntryParameters(entry = {}, options = {}) {
+    const globalParameters = this.resolveParameters(options);
+    const entryParameters =
+      entry && typeof entry.parameters === "object" ? entry.parameters : {};
+
+    return {
+      ...globalParameters,
+      ...entryParameters,
+    };
+  }
+
+  interpolateText(text, parameters = {}) {
+    if (typeof text !== "string") {
+      return text;
+    }
+
+    if (!parameters || typeof parameters !== "object") {
+      return text;
+    }
+
+    return text.replace(/%([^%]+)%/g, (match, token) => {
+      if (Object.prototype.hasOwnProperty.call(parameters, token)) {
+        return this.stringifyParameterValue(parameters[token]);
+      }
+
+      if (Object.prototype.hasOwnProperty.call(parameters, match)) {
+        return this.stringifyParameterValue(parameters[match]);
+      }
+
+      return match;
+    });
+  }
+
+  stringifyParameterValue(value) {
+    if (value === null || value === undefined) {
+      return "";
+    }
+
+    return String(value);
   }
 }
