@@ -68,7 +68,7 @@ export class TaskListMolecule extends Component {
           ${
             isChecked
               ? `<button
-            class="button button--border todo-task__delete"
+            class="todo-task__delete-button"
             type="button"
             data-action="delete-task"
             data-task-id="${task.id}"

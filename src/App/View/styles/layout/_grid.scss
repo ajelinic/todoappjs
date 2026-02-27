@@ -1,0 +1,116 @@
+@import "./variables";
+@import "./mixins";
+
+:root {
+  --layout-gutter-x: #{$layout-gutter-width};
+  --layout-gutter-y: 0;
+}
+
+.container,
+.container-fluid {
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: $layout-container-padding-x;
+  padding-left: $layout-container-padding-x;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container {
+  @each $breakpoint, $container-max-width in $layout-container-max-widths {
+    @include layout-breakpoint-up($breakpoint) {
+      max-width: $container-max-width;
+    }
+  }
+}
+
+.row {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: calc(var(--layout-gutter-x) * -0.5);
+  margin-left: calc(var(--layout-gutter-x) * -0.5);
+  row-gap: var(--layout-gutter-y);
+}
+
+.row > * {
+  @include make-col-ready();
+}
+
+.row--no-gutters {
+  --layout-gutter-x: 0;
+  --layout-gutter-y: 0;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+@each $breakpoint, $value in $layout-breakpoints {
+  $infix: layout-breakpoint-infix($breakpoint);
+
+  @include layout-breakpoint-up($breakpoint) {
+    .col#{$infix} {
+      flex: 1 0 0%;
+      max-width: 100%;
+    }
+
+    .col#{$infix}-auto {
+      flex: 0 0 auto;
+      width: auto;
+      max-width: none;
+    }
+
+    @for $i from 1 through $layout-columns {
+      .col#{$infix}-#{$i} {
+        @include make-col($i, $layout-columns);
+      }
+    }
+
+    .offset#{$infix}-0 {
+      margin-left: 0;
+    }
+
+    @for $i from 1 through ($layout-columns - 1) {
+      .offset#{$infix}-#{$i} {
+        @include make-col-offset($i, $layout-columns);
+      }
+    }
+
+    @for $i from 1 through $layout-columns {
+      .row-cols#{$infix}-#{$i} > * {
+        flex: 0 0 percentage(1 / $i);
+        max-width: percentage(1 / $i);
+      }
+    }
+
+    .order#{$infix}-first {
+      order: -1;
+    }
+
+    .order#{$infix}-last {
+      order: $layout-columns + 1;
+    }
+
+    @for $i from 0 through $layout-columns {
+      .order#{$infix}-#{$i} {
+        order: $i;
+      }
+    }
+  }
+}
+
+@each $name, $size in $layout-gutters {
+  .g-#{$name} {
+    --layout-gutter-x: #{$size};
+    --layout-gutter-y: #{$size};
+  }
+
+  .gx-#{$name} {
+    --layout-gutter-x: #{$size};
+  }
+
+  .gy-#{$name} {
+    --layout-gutter-y: #{$size};
+  }
+}

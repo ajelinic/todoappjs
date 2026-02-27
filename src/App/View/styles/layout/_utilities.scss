@@ -1,0 +1,62 @@
+@import "./variables";
+@import "./mixins";
+
+.justify-content-start {
+  justify-content: flex-start;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.align-items-start {
+  align-items: flex-start;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-items-end {
+  align-items: flex-end;
+}
+
+.align-items-stretch {
+  align-items: stretch;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+@each $display in $layout-display-values {
+  .d-#{$display} {
+    display: $display !important;
+  }
+}
+
+@each $breakpoint, $value in $layout-breakpoints {
+  $infix: layout-breakpoint-infix($breakpoint);
+
+  @if $infix != "" {
+    @include layout-breakpoint-up($breakpoint) {
+      @each $display in $layout-display-values {
+        .d#{$infix}-#{$display} {
+          display: $display !important;
+        }
+      }
+    }
+  }
+}

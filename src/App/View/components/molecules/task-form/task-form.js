@@ -30,48 +30,58 @@ export class TaskFormMolecule extends Component {
     const labels = this._data?.labels ?? {};
     const form = this._data?.form ?? {};
     const isDueInputVisible = Boolean(form.showDueInput);
-    const dueInputClass = isDueInputVisible
-      ? "todo-form__due-input"
-      : "todo-form__due-input is--hidden";
-    const dueButtonClass = isDueInputVisible
-      ? "button button--border button--todo is--hidden"
-      : "button button--border button--todo";
+    const dueInputContainerClass = isDueInputVisible
+      ? "col-12 col-sm-8 col-lg-3"
+      : "col-12 col-sm-8 col-lg-3 is--hidden";
+    const dueButtonContainerClass = isDueInputVisible
+      ? "col-6 col-sm-4 col-lg-2 is--hidden"
+      : "col-6 col-sm-4 col-lg-2";
 
     return `
-      <form class="todo-form" id="todo-form">
-        <input
-          class="input input__add-task"
-          id="addTaskField"
-          name="addTaskField"
-          type="text"
-          value="${this.escapeHtml(form.taskValue || "")}"
-          placeholder="${this.escapeHtml(
-            labels.placeholder || "todoapp.input.placeholder"
-          )}"
-          autocomplete="off"
-        />
-        <button
-          class="${dueButtonClass}"
-          type="button"
-          data-action="toggle-due"
-        >${this.escapeHtml(labels.due || "todoapp.input.due")}</button>
-        <input
-          class="${dueInputClass}"
-          id="due-time-input"
-          name="due-time-input"
-          type="datetime-local"
-          value="${this.escapeHtml(form.dueTimeInput || "")}"
-        />
-        <button
-          class="button button--border button--todo"
-          type="button"
-          data-action="add-task"
-        >${this.escapeHtml(labels.add || "todoapp.input.add")}</button>
-        <button
-          class="button button--border button--todo"
-          type="button"
-          data-action="clear-completed"
-        >${this.escapeHtml(labels.clear || "todoapp.clear.list")}</button>
+      <form class="todo-form row g-2" id="todo-form">
+        <div class="col-12 col-lg-5">
+          <input
+            class="todo-form__input todo-form__input--task"
+            id="addTaskField"
+            name="addTaskField"
+            type="text"
+            value="${this.escapeHtml(form.taskValue || "")}"
+            placeholder="${this.escapeHtml(
+              labels.placeholder || "todoapp.input.placeholder"
+            )}"
+            autocomplete="off"
+          />
+        </div>
+        <div class="${dueButtonContainerClass}" data-element="due-toggle-container">
+          <button
+            class="todo-form__action-button todo-form__action-button--due"
+            type="button"
+            data-action="toggle-due"
+          >${this.escapeHtml(labels.due || "todoapp.input.due")}</button>
+        </div>
+        <div class="${dueInputContainerClass}" data-element="due-input-container">
+          <input
+            class="todo-form__input todo-form__input--due"
+            id="due-time-input"
+            name="due-time-input"
+            type="datetime-local"
+            value="${this.escapeHtml(form.dueTimeInput || "")}"
+          />
+        </div>
+        <div class="col-6 col-sm-4 col-lg-2">
+          <button
+            class="todo-form__action-button todo-form__action-button--add"
+            type="button"
+            data-action="add-task"
+          >${this.escapeHtml(labels.add || "todoapp.input.add")}</button>
+        </div>
+        <div class="col-12 col-sm-8 col-lg-2">
+          <button
+            class="todo-form__action-button todo-form__action-button--clear"
+            type="button"
+            data-action="clear-completed"
+          >${this.escapeHtml(labels.clear || "todoapp.clear.list")}</button>
+        </div>
       </form>
     `;
   }
@@ -128,14 +138,14 @@ export class TaskFormMolecule extends Component {
   }
 
   toggleDueInputVisibility() {
-    const dueInput = this.getDueInputElement();
-    const dueButton = this.querySelector("[data-action='toggle-due']");
-    if (!dueInput || !dueButton) {
+    const dueInputContainer = this.querySelector("[data-element='due-input-container']");
+    const dueToggleContainer = this.querySelector("[data-element='due-toggle-container']");
+    if (!dueInputContainer || !dueToggleContainer) {
       return;
     }
 
-    dueInput.classList.toggle("is--hidden");
-    dueButton.classList.toggle("is--hidden");
+    dueInputContainer.classList.toggle("is--hidden");
+    dueToggleContainer.classList.toggle("is--hidden");
   }
 
   getTaskInputElement() {
