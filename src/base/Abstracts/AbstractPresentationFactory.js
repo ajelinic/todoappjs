@@ -1,19 +1,13 @@
-import { ABSTRACT_CLASS_ERROR_MESSAGE } from "../Shared/AppCoreConstants.js";
+import { AbstractFactory } from "./AbstractFactory.js";
 
 /**
- * @class AbstractClientFactory
- * @description AbstractClientFactory
+ * @class AbstractPresentationFactory
+ * @description Base factory for presentation-layer bundles.
  */
-export class AbstractClientFactory {
-  constructor() {
-    if (new.target === AbstractClientFactory) {
-      throw new TypeError(ABSTRACT_CLASS_ERROR_MESSAGE);
-    }
-  }
-
+export class AbstractPresentationFactory extends AbstractFactory {
   static getConfig() {
     if (!this.CONFIG_CLASS) {
-      throw new Error("[AbstractClientFactory] CONFIG_CLASS is not defined.");
+      throw new Error("[AbstractPresentationFactory] CONFIG_CLASS is not defined.");
     }
 
     return this.CONFIG_CLASS;
@@ -21,24 +15,25 @@ export class AbstractClientFactory {
 
   static getDependencyProvider() {
     if (!this.DEPENDENCY_PROVIDER_CLASS) {
-      throw new Error("[AbstractClientFactory] DEPENDENCY_PROVIDER_CLASS is not defined.");
+      throw new Error(
+        "[AbstractPresentationFactory] DEPENDENCY_PROVIDER_CLASS is not defined."
+      );
     }
 
     return this.DEPENDENCY_PROVIDER_CLASS;
   }
 
   static getProvidedDependency(key) {
-    const dependencyCache = this.getDependencyCache();
-
-    if (dependencyCache.has(key)) {
-      return dependencyCache.get(key);
+    const cache = this.getDependencyCache();
+    if (cache.has(key)) {
+      return cache.get(key);
     }
 
     const dependency = this.getDependencyProvider().getProvidedDependency(key);
     const resolvedDependency =
       typeof dependency === "function" ? dependency() : dependency;
 
-    dependencyCache.set(key, resolvedDependency);
+    cache.set(key, resolvedDependency);
     return resolvedDependency;
   }
 
@@ -50,3 +45,5 @@ export class AbstractClientFactory {
     return this.resolvedDependencies;
   }
 }
+
+export default AbstractPresentationFactory;

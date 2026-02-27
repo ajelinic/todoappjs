@@ -1,7 +1,7 @@
 import { AbstractBusinessFactory } from "../../../base/Abstracts/AbstractBusinessFactory.js";
-import { DateTimeService } from "../../../base/ServiceUtils/DateTimeService.js";
-import { TaskPersistenceFactory } from "../../Persistence/Task/TaskPersistenceFactory.js";
 import { TaskFacade } from "./TaskFacade.js";
+import { TaskBusinessConfig } from "./TaskBusinessConfig.js";
+import { TaskBusinessDependencyProvider } from "./TaskBusinessDependencyProvider.js";
 import { TodoValidator } from "./Model/TodoValidator.js";
 
 /**
@@ -9,11 +9,17 @@ import { TodoValidator } from "./Model/TodoValidator.js";
  * @description TaskBusinessFactory
  */
 export class TaskBusinessFactory extends AbstractBusinessFactory {
+  static CONFIG_CLASS = TaskBusinessConfig;
+  static DEPENDENCY_PROVIDER_CLASS = TaskBusinessDependencyProvider;
+
   static facade = null;
-  static dateTimeService = null;
   static todoValidator = null;
 
   static createTaskFacade() {
+    if (!this.getConfig().useFacadeSingleton()) {
+      return new TaskFacade(this);
+    }
+
     if (!this.facade) {
       this.facade = new TaskFacade(this);
     }
@@ -22,19 +28,15 @@ export class TaskBusinessFactory extends AbstractBusinessFactory {
   }
 
   static createTaskRepository() {
-    return TaskPersistenceFactory.createTaskRepository();
+    return this.getProvidedDependency(TaskBusinessDependencyProvider.TASK_REPOSITORY);
   }
 
   static createTaskStorageGateway() {
-    return TaskPersistenceFactory.createTaskStorageGateway();
+    return this.getProvidedDependency(TaskBusinessDependencyProvider.TASK_STORAGE_GATEWAY);
   }
 
   static createDateTimeService() {
-    if (!this.dateTimeService) {
-      this.dateTimeService = new DateTimeService();
-    }
-
-    return this.dateTimeService;
+    return this.getProvidedDependency(TaskBusinessDependencyProvider.DATE_TIME_SERVICE);
   }
 
   static createTodoValidator() {

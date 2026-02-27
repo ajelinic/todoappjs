@@ -13,10 +13,11 @@ en-US,task.notification.added,Task successfully added!
 en-US,task.notification.clearsuccess,Cleared done tasks! Well done!
 en-US,task.notification.clearnoselection,Please select tasks that are done to delete them from the list!
 en-US,task.notification.clearempty,No tasks to clear. Please add some tasks!
+en-US,task.info.template,Task with id %task_id% with value %task_value% %due_text% added at %added_at%
 en-US,task.info.id.text,Task with id
 en-US,task.info.title.text,with value
 en-US,task.info.duetime.text,has to be done by
-en-US,task.info.noduetime.text,.
+en-US,task.info.noduetime.text,has no due time
 en-US,task.info.addedat.text,added at
 en-US,language.switcher.label,Language
 en-US,language.locale.en-US,English US
@@ -35,10 +36,11 @@ hr-HR,task.notification.added,Zadatak je uspjesno dodan!
 hr-HR,task.notification.clearsuccess,Zavrseni zadaci su obrisani!
 hr-HR,task.notification.clearnoselection,Odaberi zavrsene zadatke za brisanje s liste!
 hr-HR,task.notification.clearempty,Nema zadataka za brisanje. Dodaj zadatke!
+hr-HR,task.info.template,Zadatak s ID %task_id% s vrijednoscu %task_value% %due_text% dodan u %added_at%
 hr-HR,task.info.id.text,Zadatak s ID
 hr-HR,task.info.title.text,s vrijednoscu
 hr-HR,task.info.duetime.text,mora biti zavrsen do
-hr-HR,task.info.noduetime.text,.
+hr-HR,task.info.noduetime.text,nema rok
 hr-HR,task.info.addedat.text,dodan u
 hr-HR,language.switcher.label,Jezik
 hr-HR,language.locale.en-US,Engleski US

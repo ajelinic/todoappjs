@@ -1,5 +1,6 @@
 import { AbstractBusinessFactory } from "../../../base/Abstracts/AbstractBusinessFactory.js";
-import { GlossaryPersistenceFactory } from "../../Persistence/Glossary/GlossaryPersistenceFactory.js";
+import { GlossaryBusinessConfig } from "./GlossaryBusinessConfig.js";
+import { GlossaryBusinessDependencyProvider } from "./GlossaryBusinessDependencyProvider.js";
 import { GlossaryFacade } from "./GlossaryFacade.js";
 
 /**
@@ -7,9 +8,16 @@ import { GlossaryFacade } from "./GlossaryFacade.js";
  * @description GlossaryBusinessFactory
  */
 export class GlossaryBusinessFactory extends AbstractBusinessFactory {
+  static CONFIG_CLASS = GlossaryBusinessConfig;
+  static DEPENDENCY_PROVIDER_CLASS = GlossaryBusinessDependencyProvider;
+
   static facade = null;
 
   static createGlossaryFacade() {
+    if (!this.getConfig().useFacadeSingleton()) {
+      return new GlossaryFacade(this);
+    }
+
     if (!this.facade) {
       this.facade = new GlossaryFacade(this);
     }
@@ -18,18 +26,20 @@ export class GlossaryBusinessFactory extends AbstractBusinessFactory {
   }
 
   static createGlossaryRepository() {
-    return GlossaryPersistenceFactory.createGlossaryRepository();
+    return this.getProvidedDependency(GlossaryBusinessDependencyProvider.GLOSSARY_REPOSITORY);
   }
 
   static createGlossaryStorageGateway() {
-    return GlossaryPersistenceFactory.createGlossaryStorageGateway();
+    return this.getProvidedDependency(
+      GlossaryBusinessDependencyProvider.GLOSSARY_STORAGE_GATEWAY
+    );
   }
 
   static createCsvParser() {
-    return GlossaryPersistenceFactory.createCsvParser();
+    return this.getProvidedDependency(GlossaryBusinessDependencyProvider.CSV_PARSER);
   }
 
   static createPersistenceConfig() {
-    return GlossaryPersistenceFactory.getPersistenceConfig();
+    return this.getProvidedDependency(GlossaryBusinessDependencyProvider.PERSISTENCE_CONFIG);
   }
 }

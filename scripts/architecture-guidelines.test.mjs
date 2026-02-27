@@ -38,34 +38,180 @@ test("task controller owns task page rendering and feature clients", async () =>
   const taskController = await read(
     "src/App/Presentation/Task/Controller/TaskController.js"
   );
+  const taskPresentationFactory = await read(
+    "src/App/Presentation/Task/TaskPresentationFactory.js"
+  );
+  const taskPresentationDependencyProvider = await read(
+    "src/App/Presentation/Task/TaskPresentationDependencyProvider.js"
+  );
+  const taskPresentationConfig = await read(
+    "src/App/Presentation/Task/TaskPresentationConfig.js"
+  );
 
-  assert.match(taskController, /Client\/Task\/TaskClient/);
-  assert.match(taskController, /Client\/LanguageSwitcher\/LanguageSwitcherClient/);
-  assert.match(taskController, /Utils\/Translation\/TranslationService/);
-  assert.match(taskController, /createView\("task-page"/);
-  assert.match(taskController, /getMountSelector\(\)\s*{\s*return "#task-feature";/);
+  assert.match(taskController, /AbstractPresentationController/);
+  assert.match(taskController, /TaskPresentationFactory/);
+  assert.match(taskController, /static FACTORY_CLASS = TaskPresentationFactory/);
+  assert.doesNotMatch(taskController, /constructor\(/);
+  assert.match(taskController, /renderViewAtMount\("task-page"/);
+  assert.match(taskController, /getMountSelector\(\)\s*{\s*return this\.getConfig\(\)/);
+  assert.match(taskController, /createTaskClient\(\)/);
+  assert.match(taskController, /createLanguageSwitcherClient\(\)/);
+  assert.match(taskController, /createGlossaryClient\(\)/);
+  assert.match(taskPresentationFactory, /AbstractPresentationFactory/);
+  assert.match(taskPresentationFactory, /TaskPresentationDependencyProvider/);
+  assert.match(taskPresentationFactory, /createTaskPageViewDataResolver/);
+  assert.match(taskPresentationDependencyProvider, /AbstractDependencyProvider/);
+  assert.match(taskPresentationDependencyProvider, /TASK_CLIENT/);
+  assert.match(taskPresentationDependencyProvider, /LANGUAGE_SWITCHER_CLIENT/);
+  assert.match(taskPresentationDependencyProvider, /GLOSSARY_CLIENT/);
+  assert.match(taskPresentationConfig, /class TaskPresentationConfig/);
+  assert.match(taskPresentationConfig, /#task-feature/);
 });
+
+test(
+  "task controller delegates form/action/view-data responsibilities to dedicated classes",
+  async () => {
+  const taskController = await read(
+    "src/App/Presentation/Task/Controller/TaskController.js"
+  );
+  const taskPageForm = await read("src/App/Presentation/Task/Form/TaskPageForm.js");
+  const taskPageActionHandler = await read(
+    "src/App/Presentation/Task/Handler/TaskPageActionHandler.js"
+  );
+  const taskViewDataResolver = await read(
+    "src/App/Presentation/Task/Resolver/TaskPageViewDataResolver.js"
+  );
+  const taskViewDataService = await read(
+    "src/App/Presentation/Task/Service/TaskPageViewDataService.js"
+  );
+  const abstractForm = await read("src/base/Abstracts/AbstractForm.js");
+  const taskGlossaryKeys = await read(
+    "src/App/Shared/Glossary/TaskGlossaryKeyConstants.js"
+  );
+
+  assert.match(taskController, /createTaskPageForm\(\)/);
+  assert.match(taskController, /createTaskPageActionHandler\(\)/);
+  assert.match(taskController, /createTaskPageViewDataResolver\(\)/);
+  assert.doesNotMatch(taskController, /taskClient\.addTask/);
+  assert.doesNotMatch(taskController, /taskClient\.toggleTask/);
+  assert.doesNotMatch(taskController, /taskClient\.deleteTask/);
+  assert.doesNotMatch(taskController, /taskClient\.clearCompletedTasks/);
+  assert.match(abstractForm, /class AbstractForm/);
+  assert.match(abstractForm, /submit\(rawData = \{\}\)/);
+  assert.match(taskPageForm, /class TaskPageForm extends AbstractForm/);
+  assert.match(taskPageForm, /createDefaultState/);
+  assert.match(taskPageForm, /resolveState/);
+  assert.match(taskPageForm, /this\.submit\(/);
+  assert.match(taskPageActionHandler, /class TaskPageActionHandler/);
+  assert.match(taskPageActionHandler, /addTask/);
+  assert.match(taskPageActionHandler, /toggleTask/);
+  assert.match(taskPageActionHandler, /deleteTask/);
+  assert.match(taskPageActionHandler, /clearCompleted/);
+  assert.match(taskViewDataResolver, /class TaskPageViewDataResolver/);
+  assert.match(taskViewDataResolver, /taskPageViewDataService/);
+  assert.match(taskViewDataResolver, /taskPageForm/);
+  assert.match(taskViewDataResolver, /resolve\(\{/);
+  assert.match(taskViewDataService, /class TaskPageViewDataService/);
+  assert.match(taskViewDataService, /getPageData/);
+  assert.match(taskViewDataService, /localizeActionResult/);
+  assert.doesNotMatch(taskViewDataService, /createDefaultFormState/);
+  assert.doesNotMatch(taskViewDataService, /getTranslationKeys/);
+  assert.match(taskGlossaryKeys, /class TaskGlossaryKeyConstants/);
+  assert.match(taskViewDataService, /TaskGlossaryKeyConstants\.INFO_TEMPLATE/);
+  assert.match(taskViewDataService, /task_id/);
+  assert.match(taskViewDataService, /task_value/);
+  }
+);
 
 test("language switcher controller owns switcher rendering and locale events", async () => {
   const languageSwitcherController = await read(
     "src/App/Presentation/LanguageSwitcher/Controller/LanguageSwitcherController.js"
   );
+  const languageSwitcherPresentationFactory = await read(
+    "src/App/Presentation/LanguageSwitcher/LanguageSwitcherPresentationFactory.js"
+  );
+  const languageSwitcherPresentationDependencyProvider = await read(
+    "src/App/Presentation/LanguageSwitcher/LanguageSwitcherPresentationDependencyProvider.js"
+  );
+  const languageSwitcherPresentationConfig = await read(
+    "src/App/Presentation/LanguageSwitcher/LanguageSwitcherPresentationConfig.js"
+  );
 
+  assert.match(languageSwitcherController, /AbstractPresentationController/);
+  assert.match(languageSwitcherController, /LanguageSwitcherPresentationFactory/);
   assert.match(
     languageSwitcherController,
-    /Client\/LanguageSwitcher\/LanguageSwitcherClient/
+    /static FACTORY_CLASS = LanguageSwitcherPresentationFactory/
   );
+  assert.doesNotMatch(languageSwitcherController, /constructor\(/);
+  assert.match(languageSwitcherController, /renderViewAtMount\(/);
   assert.match(
     languageSwitcherController,
-    /Utils\/Translation\/TranslationService/
+    /getMountSelector\(\)\s*{\s*return this\.getConfig\(\)/
   );
-  assert.match(languageSwitcherController, /createView\("language-switcher-molecule"/);
+  assert.match(languageSwitcherController, /createLanguageSwitcherClient\(\)/);
+  assert.match(languageSwitcherController, /createGlossaryClient\(\)/);
+  assert.match(languageSwitcherController, /getLocaleChangedEventName/);
+  assert.match(languageSwitcherPresentationFactory, /AbstractPresentationFactory/);
   assert.match(
-    languageSwitcherController,
-    /getMountSelector\(\)\s*{\s*return "#language-switcher-feature";/
+    languageSwitcherPresentationFactory,
+    /LanguageSwitcherPresentationDependencyProvider/
   );
-  assert.match(languageSwitcherController, /app:locale-changed/);
+  assert.match(
+    languageSwitcherPresentationDependencyProvider,
+    /AbstractDependencyProvider/
+  );
+  assert.match(
+    languageSwitcherPresentationDependencyProvider,
+    /LANGUAGE_SWITCHER_CLIENT/
+  );
+  assert.match(languageSwitcherPresentationDependencyProvider, /GLOSSARY_CLIENT/);
+  assert.match(
+    languageSwitcherPresentationConfig,
+    /class LanguageSwitcherPresentationConfig/
+  );
+  assert.match(languageSwitcherPresentationConfig, /#language-switcher-feature/);
 });
+
+test(
+  "language switcher controller delegates event/view-data responsibilities to dedicated classes",
+  async () => {
+  const languageSwitcherController = await read(
+    "src/App/Presentation/LanguageSwitcher/Controller/LanguageSwitcherController.js"
+  );
+  const languageSwitcherEventHandler = await read(
+    "src/App/Presentation/LanguageSwitcher/Handler/LanguageSwitcherEventHandler.js"
+  );
+  const languageSwitcherViewDataResolver = await read(
+    "src/App/Presentation/LanguageSwitcher/Resolver/LanguageSwitcherViewDataResolver.js"
+  );
+  const languageSwitcherViewDataService = await read(
+    "src/App/Presentation/LanguageSwitcher/Service/LanguageSwitcherViewDataService.js"
+  );
+  const languageSwitcherGlossaryKeys = await read(
+    "src/App/Shared/Glossary/LanguageSwitcherGlossaryKeyConstants.js"
+  );
+
+  assert.match(languageSwitcherController, /createLanguageSwitcherEventHandler\(\)/);
+  assert.match(languageSwitcherController, /createLanguageSwitcherViewDataResolver\(\)/);
+  assert.doesNotMatch(languageSwitcherController, /setCurrentLocale\(/);
+  assert.match(languageSwitcherEventHandler, /class LanguageSwitcherEventHandler/);
+  assert.match(languageSwitcherEventHandler, /changeLocale/);
+  assert.match(
+    languageSwitcherViewDataResolver,
+    /class LanguageSwitcherViewDataResolver/
+  );
+  assert.match(languageSwitcherViewDataResolver, /languageSwitcherViewDataService/);
+  assert.match(languageSwitcherViewDataResolver, /resolve\(/);
+  assert.match(languageSwitcherViewDataService, /class LanguageSwitcherViewDataService/);
+  assert.match(languageSwitcherViewDataService, /getViewData/);
+  assert.doesNotMatch(languageSwitcherViewDataService, /getTranslationKeys/);
+  assert.match(
+    languageSwitcherGlossaryKeys,
+    /getLanguageSwitcherKeys/
+  );
+  }
+);
 
 test("task notifications are glossary-key based (no hardcoded user-facing english)", async () => {
   const todoMessageService = await read(
@@ -76,6 +222,16 @@ test("task notifications are glossary-key based (no hardcoded user-facing englis
   assert.doesNotMatch(todoMessageService, /Can'?t add empty task/i);
   assert.doesNotMatch(todoMessageService, /Task successfully added/i);
   assert.doesNotMatch(todoMessageService, /No tasks to clear/i);
+});
+
+test("glossary facade supports placeholder interpolation with parameters", async () => {
+  const glossaryFacade = await read("src/App/Business/Glossary/GlossaryFacade.js");
+
+  assert.match(glossaryFacade, /resolveParameters/);
+  assert.match(glossaryFacade, /resolveEntryParameters/);
+  assert.match(glossaryFacade, /interpolateText/);
+  assert.match(glossaryFacade, /replace\(\/%\(\[\^%\]\+\)%\/g/);
+  assert.match(glossaryFacade, /options\.parameters/);
 });
 
 test("task controller avoids english fallback strings for glossary-backed labels", async () => {
@@ -94,16 +250,20 @@ test("datetime service lives in base and task factory uses base service", async 
   const taskBusinessFactory = await read(
     "src/App/Business/Task/TaskBusinessFactory.js"
   );
+  const taskBusinessDependencyProvider = await read(
+    "src/App/Business/Task/TaskBusinessDependencyProvider.js"
+  );
   const dateTimeService = await read("src/base/ServiceUtils/DateTimeService.js");
 
   assert.match(
-    taskBusinessFactory,
+    taskBusinessDependencyProvider,
     /base\/ServiceUtils\/DateTimeService\.js/
   );
   assert.doesNotMatch(
     taskBusinessFactory,
     /Business\/Task\/Service\/DateTimeService\.js/
   );
+  assert.match(taskBusinessFactory, /createDateTimeService/);
   assert.match(dateTimeService, /class DateTimeService/);
 });
 
@@ -117,4 +277,63 @@ test("auto-start is explicit and gated in loader", async () => {
   assert.match(abstractController, /static shouldAutoExecute\(\)/);
   assert.match(bundleLoader, /shouldAutoExecuteController/);
   assert.match(bundleLoader, /if \(!this\.shouldAutoExecuteController\(controllerClass\)\)/);
+});
+
+test("abstract controller provides shared mount rendering helper", async () => {
+  const abstractController = await read(
+    "src/base/Abstracts/AbstractController.js"
+  );
+
+  assert.match(abstractController, /renderViewAtMount/);
+  assert.match(abstractController, /mountPoint\.innerHTML = ""/);
+  assert.match(abstractController, /mountPoint\.appendChild\(view\)/);
+});
+
+test("client factories use config and dependency-provider classes", async () => {
+  const taskClientFactory = await read("src/App/Client/Task/TaskClientFactory.js");
+  const languageSwitcherClientFactory = await read(
+    "src/App/Client/LanguageSwitcher/LanguageSwitcherClientFactory.js"
+  );
+  const glossaryClientFactory = await read(
+    "src/App/Client/Glossary/GlossaryClientFactory.js"
+  );
+  const storageClientFactory = await read(
+    "src/App/Client/Storage/StorageClientFactory.js"
+  );
+
+  assert.match(taskClientFactory, /TaskClientConfig/);
+  assert.match(taskClientFactory, /TaskClientDependencyProvider/);
+  assert.match(taskClientFactory, /getProvidedDependency/);
+  assert.match(languageSwitcherClientFactory, /LanguageSwitcherClientConfig/);
+  assert.match(languageSwitcherClientFactory, /LanguageSwitcherClientDependencyProvider/);
+  assert.match(glossaryClientFactory, /GlossaryClientConfig/);
+  assert.match(glossaryClientFactory, /GlossaryClientDependencyProvider/);
+  assert.match(storageClientFactory, /StorageClientConfig/);
+  assert.match(storageClientFactory, /StorageClientDependencyProvider/);
+});
+
+test("business factories use config and dependency-provider classes", async () => {
+  const taskBusinessFactory = await read("src/App/Business/Task/TaskBusinessFactory.js");
+  const languageSwitcherBusinessFactory = await read(
+    "src/App/Business/LanguageSwitcher/LanguageSwitcherBusinessFactory.js"
+  );
+  const glossaryBusinessFactory = await read(
+    "src/App/Business/Glossary/GlossaryBusinessFactory.js"
+  );
+  const storageBusinessFactory = await read(
+    "src/App/Business/Storage/StorageBusinessFactory.js"
+  );
+
+  assert.match(taskBusinessFactory, /TaskBusinessConfig/);
+  assert.match(taskBusinessFactory, /TaskBusinessDependencyProvider/);
+  assert.match(taskBusinessFactory, /getProvidedDependency/);
+  assert.match(languageSwitcherBusinessFactory, /LanguageSwitcherBusinessConfig/);
+  assert.match(
+    languageSwitcherBusinessFactory,
+    /LanguageSwitcherBusinessDependencyProvider/
+  );
+  assert.match(glossaryBusinessFactory, /GlossaryBusinessConfig/);
+  assert.match(glossaryBusinessFactory, /GlossaryBusinessDependencyProvider/);
+  assert.match(storageBusinessFactory, /StorageBusinessConfig/);
+  assert.match(storageBusinessFactory, /StorageBusinessDependencyProvider/);
 });
