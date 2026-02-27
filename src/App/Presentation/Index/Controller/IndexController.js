@@ -17,11 +17,15 @@ export class IndexController extends AbstractController {
 
   renderFeatureSlots(contentElement) {
     contentElement.innerHTML = `
-      <section class="index-layout">
-        <section class="index-layout__toolbar">
-          <section id="language-switcher-feature"></section>
+      <section class="index-layout container">
+        <section class="index-layout__toolbar row justify-content-end">
+          <section class="col-12 col-md-4 col-lg-3">
+            <section id="language-switcher-feature"></section>
+          </section>
         </section>
-        <section id="task-feature"></section>
+        <section class="row">
+          <section class="col-12" id="task-feature"></section>
+        </section>
       </section>
     `;
   }

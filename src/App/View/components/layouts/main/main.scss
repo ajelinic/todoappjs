@@ -5,6 +5,10 @@
 }
 
 .layout-main__content {
-  flex: 1;
+  flex: 1 0 auto;
   margin: rem(12px) 0;
+}
+
+.layout-main > footer {
+  margin-top: auto;
 }

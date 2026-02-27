@@ -1,0 +1,31 @@
+$layout-columns: 12;
+$layout-gutter-width: rem(24px);
+$layout-container-padding-x: rem(16px);
+
+$layout-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1440px,
+);
+
+$layout-container-max-widths: (
+  sm: rem(540px),
+  md: rem(720px),
+  lg: rem(960px),
+  xl: rem(1140px),
+  xxl: rem(1320px),
+);
+
+$layout-gutters: (
+  0: 0,
+  1: rem(4px),
+  2: rem(8px),
+  3: rem(16px),
+  4: rem(24px),
+  5: rem(32px),
+);
+
+$layout-display-values: none, block, inline-block, flex;
