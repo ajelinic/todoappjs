@@ -8,7 +8,7 @@ const read = async (relativePath) => {
 };
 
 test(
-  "presentation bundles exclude glossary and include index/languageSwitcher/task",
+  "presentation bundles exclude glossary and include index/languageSwitcher/task/taskInfoBoard",
   async () => {
   const config = await read("data/config/config_default.js");
   const presentationMatch = config.match(/PRESENTATION_BUNDLES:\s*\[([^\]]*)\]/);
@@ -16,13 +16,13 @@ test(
   assert.ok(presentationMatch);
   assert.match(
     config,
-    /PRESENTATION_BUNDLES:\s*\["Index",\s*"LanguageSwitcher",\s*"Task"\]/
+    /PRESENTATION_BUNDLES:\s*\["Index",\s*"LanguageSwitcher",\s*"Task",\s*"TaskInfoBoard"\]/
   );
   assert.doesNotMatch(presentationMatch[1], /"Glossary"/);
   }
 );
 
-test("shared bundles include task/language switcher and core registers shared resolver", async () => {
+test("shared bundles include task/language switcher/taskInfoBoard and core registers shared resolver", async () => {
   const config = await read("data/config/config_default.js");
   const appCoreDependencyProvider = await read("src/base/AppCoreDependencyProvider.js");
   const sharedTaskConstants = await read(
@@ -31,19 +31,26 @@ test("shared bundles include task/language switcher and core registers shared re
   const sharedLanguageSwitcherConstants = await read(
     "src/App/Shared/LanguageSwitcher/LanguageSwitcherGlossaryKeyConstants.js"
   );
+  const sharedTaskInfoBoardConstants = await read(
+    "src/App/Shared/TaskInfoBoard/TaskInfoBoardGlossaryKeyConstants.js"
+  );
   const sharedEntryResolver = await read(
     "src/base/Bundles/Shared/Resolvers/ClassResolvers/SharedEntryResolver.js"
   );
 
   assert.match(
     config,
-    /SHARED_BUNDLES:\s*\["Task",\s*"LanguageSwitcher"\]/
+    /SHARED_BUNDLES:\s*\["Task",\s*"LanguageSwitcher",\s*"TaskInfoBoard"\]/
   );
   assert.match(appCoreDependencyProvider, /SharedEntryResolverPlugin/);
   assert.match(sharedTaskConstants, /TaskGlossaryKeyConstants/);
   assert.match(
     sharedLanguageSwitcherConstants,
     /LanguageSwitcherGlossaryKeyConstants/
+  );
+  assert.match(
+    sharedTaskInfoBoardConstants,
+    /TaskInfoBoardGlossaryKeyConstants/
   );
   assert.match(sharedEntryResolver, /Shared\/\$\{layerBundle\}\/\$\{layerBundle\}GlossaryKeyConstants\.js/);
 });
@@ -56,6 +63,7 @@ test("index controller remains orchestration-only", async () => {
   assert.match(indexController, /renderFeatureSlots/);
   assert.match(indexController, /id="language-switcher-feature"/);
   assert.match(indexController, /id="task-feature"/);
+  assert.match(indexController, /id="task-info-board-feature"/);
   assert.doesNotMatch(indexController, /Client\/Task\/TaskClient/);
   assert.doesNotMatch(indexController, /Client\/Glossary\/GlossaryClient/);
 });
@@ -143,11 +151,91 @@ test(
   assert.doesNotMatch(taskViewDataBuilder, /createDefaultFormState/);
   assert.doesNotMatch(taskViewDataBuilder, /getTranslationKeys/);
   assert.match(taskGlossaryKeys, /class TaskGlossaryKeyConstants/);
-  assert.match(taskViewDataBuilder, /TaskGlossaryKeyConstants\.INFO_TEMPLATE/);
-  assert.match(taskViewDataBuilder, /task_id/);
-  assert.match(taskViewDataBuilder, /task_value/);
+  assert.doesNotMatch(taskViewDataBuilder, /TaskGlossaryKeyConstants\.INFO_TEMPLATE/);
+  assert.doesNotMatch(taskGlossaryKeys, /INFO_TEMPLATE/);
   }
 );
+
+test("task info board owns info-item localization and dedicated info-board rendering", async () => {
+  const taskInfoBoardController = await read(
+    "src/App/Presentation/TaskInfoBoard/Controller/TaskInfoBoardController.js"
+  );
+  const taskInfoBoardPresentationFactory = await read(
+    "src/App/Presentation/TaskInfoBoard/TaskInfoBoardPresentationFactory.js"
+  );
+  const taskInfoBoardPresentationDependencyProvider = await read(
+    "src/App/Presentation/TaskInfoBoard/TaskInfoBoardPresentationDependencyProvider.js"
+  );
+  const taskInfoBoardPresentationConfig = await read(
+    "src/App/Presentation/TaskInfoBoard/TaskInfoBoardPresentationConfig.js"
+  );
+  const taskInfoBoardViewDataResolver = await read(
+    "src/App/Presentation/TaskInfoBoard/Resolver/TaskInfoBoardViewDataResolver.js"
+  );
+  const taskInfoBoardViewDataBuilder = await read(
+    "src/App/Presentation/TaskInfoBoard/Builder/TaskInfoBoardViewDataBuilder.js"
+  );
+  const taskInfoBoardGlossaryKeys = await read(
+    "src/App/Shared/TaskInfoBoard/TaskInfoBoardGlossaryKeyConstants.js"
+  );
+  const taskController = await read(
+    "src/App/Presentation/Task/Controller/TaskController.js"
+  );
+  const taskPageViewDataBuilder = await read(
+    "src/App/Presentation/Task/Builder/TaskPageViewDataBuilder.js"
+  );
+  const taskPageView = await read(
+    "src/App/View/components/views/task/task-page/task-page.js"
+  );
+  const taskInfoBoardView = await read(
+    "src/App/View/components/views/task-info-board/task-info-board.js"
+  );
+
+  assert.match(taskInfoBoardController, /AbstractPresentationController/);
+  assert.match(taskInfoBoardController, /TaskInfoBoardPresentationFactory/);
+  assert.match(
+    taskInfoBoardController,
+    /static FACTORY_CLASS = TaskInfoBoardPresentationFactory/
+  );
+  assert.match(taskInfoBoardController, /renderViewAtMount\(\s*"task-info-board-view"/);
+  assert.match(taskInfoBoardController, /getTaskDataChangedEventName/);
+  assert.match(taskInfoBoardController, /this\.pageView\.data = viewData/);
+  assert.match(taskInfoBoardPresentationFactory, /AbstractPresentationFactory/);
+  assert.match(
+    taskInfoBoardPresentationFactory,
+    /TaskInfoBoardPresentationDependencyProvider/
+  );
+  assert.match(
+    taskInfoBoardPresentationDependencyProvider,
+    /class TaskInfoBoardPresentationDependencyProvider/
+  );
+  assert.match(taskInfoBoardPresentationDependencyProvider, /TASK_CLIENT/);
+  assert.match(
+    taskInfoBoardPresentationDependencyProvider,
+    /LANGUAGE_SWITCHER_CLIENT/
+  );
+  assert.match(taskInfoBoardPresentationDependencyProvider, /GLOSSARY_CLIENT/);
+  assert.match(taskInfoBoardPresentationConfig, /class TaskInfoBoardPresentationConfig/);
+  assert.match(taskInfoBoardPresentationConfig, /#task-info-board-feature/);
+  assert.match(taskInfoBoardViewDataResolver, /class TaskInfoBoardViewDataResolver/);
+  assert.match(taskInfoBoardViewDataResolver, /TaskCollectionTransfer/);
+  assert.match(taskInfoBoardViewDataBuilder, /class TaskInfoBoardViewDataBuilder/);
+  assert.match(taskInfoBoardViewDataBuilder, /TaskInfoBoardGlossaryKeyConstants\.INFO_TEMPLATE/);
+  assert.match(taskInfoBoardViewDataBuilder, /task_id/);
+  assert.match(taskInfoBoardViewDataBuilder, /task_value/);
+  assert.match(taskInfoBoardGlossaryKeys, /class TaskInfoBoardGlossaryKeyConstants/);
+  assert.match(taskInfoBoardView, /defineComponent\("task-info-board-view"/);
+  assert.match(taskInfoBoardView, /todo-info-drawer/);
+  assert.match(taskInfoBoardView, /task-info-molecule/);
+  assert.match(taskInfoBoardView, /open-info-drawer/);
+  assert.match(taskInfoBoardView, /close-info-drawer/);
+  assert.match(taskController, /announceTaskDataChanged/);
+  assert.match(taskController, /getTaskDataChangedEventName/);
+  assert.doesNotMatch(taskPageViewDataBuilder, /buildTaskInfoItems/);
+  assert.doesNotMatch(taskPageView, /task-info-molecule/);
+  assert.doesNotMatch(taskPageView, /todo-info-drawer/);
+  assert.doesNotMatch(taskPageView, /open-info-drawer/);
+});
 
 test(
   "task flow uses transfer contracts across presentation, client, and business layers",

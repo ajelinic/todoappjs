@@ -16,6 +16,10 @@ export class TaskPresentationConfig extends AbstractConfig {
   static getLocaleChangedEventName() {
     return "app:locale-changed";
   }
+
+  static getTaskDataChangedEventName() {
+    return "app:task-data-changed";
+  }
 }
 
 export default TaskPresentationConfig;

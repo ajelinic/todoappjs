@@ -18,7 +18,6 @@ export class TaskPageViewDataBuilder {
       title: pageData.title,
       labels: pageData.labels,
       tasks: pageData.tasks,
-      infoItems: pageData.infoItems,
       locale,
       form: formState,
       notification: normalizedActionResult.notification ?? null,
@@ -39,7 +38,6 @@ export class TaskPageViewDataBuilder {
         placeholder: glossary[TaskGlossaryKeyConstants.PLACEHOLDER],
       },
       tasks,
-      infoItems: await this.buildTaskInfoItems(tasks, glossary, locale),
     };
   }
 
@@ -53,36 +51,6 @@ export class TaskPageViewDataBuilder {
         locale
       ),
     };
-  }
-
-  async buildTaskInfoItems(tasks, glossary, locale) {
-    const sortedTasks = [...tasks].sort((left, right) => right.id - left.id);
-
-    return Promise.all(
-      sortedTasks.map(async (task) => {
-        return {
-          id: task.id,
-          text: await this.formatTaskInfo(task, glossary, locale),
-        };
-      })
-    );
-  }
-
-  async formatTaskInfo(task, glossary, locale) {
-    const taskTemplate = TaskGlossaryKeyConstants.INFO_TEMPLATE;
-    const taskDueText = glossary[TaskGlossaryKeyConstants.INFO_DUE_TIME];
-    const taskNoDueText = glossary[TaskGlossaryKeyConstants.INFO_NO_DUE_TIME];
-
-    const dueText = Number.isFinite(task.dueTime)
-      ? `${taskDueText} ${new Date(task.dueTime).toLocaleString(locale)}`
-      : taskNoDueText;
-
-    return this.trans(taskTemplate, locale, {
-      task_id: task.id,
-      task_value: task.taskValue,
-      due_text: dueText,
-      added_at: task.timeAdded,
-    });
   }
 
   async localizeNotification(notification, locale) {

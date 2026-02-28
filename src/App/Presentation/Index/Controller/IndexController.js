@@ -23,8 +23,9 @@ export class IndexController extends AbstractController {
             <section id="language-switcher-feature"></section>
           </section>
         </section>
-        <section class="row">
-          <section class="col-12" id="task-feature"></section>
+        <section class="row g-3">
+          <section class="col-12 col-lg-8" id="task-feature"></section>
+          <section class="col-12 col-lg-4" id="task-info-board-feature"></section>
         </section>
       </section>
     `;
