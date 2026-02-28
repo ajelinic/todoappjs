@@ -3,7 +3,7 @@ import { TaskPresentationConfig } from "./TaskPresentationConfig.js";
 import { TaskPageForm } from "./Form/TaskPageForm.js";
 import { TaskPageActionHandler } from "./Handler/TaskPageActionHandler.js";
 import { TaskPageViewDataResolver } from "./Resolver/TaskPageViewDataResolver.js";
-import { TaskPageViewDataService } from "./Service/TaskPageViewDataService.js";
+import { TaskPageViewDataBuilder } from "./Builder/TaskPageViewDataBuilder.js";
 import { TaskPresentationDependencyProvider } from "./TaskPresentationDependencyProvider.js";
 
 /**
@@ -44,19 +44,19 @@ export class TaskPresentationFactory extends AbstractPresentationFactory {
     return this.taskPageActionHandler;
   }
 
-  static createTaskPageViewDataService() {
-    if (!this.taskPageViewDataService) {
-      this.taskPageViewDataService = new TaskPageViewDataService(this.createGlossaryClient());
+  static createTaskPageViewDataBuilder() {
+    if (!this.taskPageViewDataBuilder) {
+      this.taskPageViewDataBuilder = new TaskPageViewDataBuilder(this.createGlossaryClient());
     }
 
-    return this.taskPageViewDataService;
+    return this.taskPageViewDataBuilder;
   }
 
   static createTaskPageViewDataResolver() {
     if (!this.taskPageViewDataResolver) {
       this.taskPageViewDataResolver = new TaskPageViewDataResolver(
         this.createTaskClient(),
-        this.createTaskPageViewDataService(),
+        this.createTaskPageViewDataBuilder(),
         this.createTaskPageForm()
       );
     }

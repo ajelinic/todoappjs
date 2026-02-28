@@ -5,6 +5,7 @@
 import { AbstractDependencyProvider } from "./Abstracts/AbstractDependencyProvider.js";
 import { BundleResolverPluginInterface } from "./Bundles/Presentation/Resolvers/ResolverPlugins/ClassResolverPlugins/BundleResolverPluginInterface.js";
 import { PresentationControllerResolverPlugin } from "./Bundles/Presentation/Resolvers/ResolverPlugins/ClassResolverPlugins/PresentationControllerResolverPlugin.js";
+import { SharedEntryResolverPlugin } from "./Bundles/Shared/Resolvers/ResolverPlugins/ClassResolverPlugins/SharedEntryResolverPlugin.js";
 
 /**
  * @class AppCoreDependencyProvider
@@ -29,7 +30,10 @@ export class AppCoreDependencyProvider extends AbstractDependencyProvider {
   }
 
   static getBundleResolverPlugins() {
-    let resolverPlugins = [new PresentationControllerResolverPlugin()];
+    let resolverPlugins = [
+      new SharedEntryResolverPlugin(),
+      new PresentationControllerResolverPlugin(),
+    ];
 
     resolverPlugins.forEach((plugin) => {
       BundleResolverPluginInterface(plugin);

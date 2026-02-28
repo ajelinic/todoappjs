@@ -26,11 +26,11 @@ export class SharedConstants {
 
   static getBundleLayers() {
     return {
-      logic: "Logic",
+      business: "Business",
       presentation: "Presentation",
       client: "Client",
       shared: "Shared",
-      utils: "Utils",
+      service: "Service",
       persistence: "Persistence",
     };
   }

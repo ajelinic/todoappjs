@@ -1,12 +1,12 @@
 import {
   LanguageSwitcherGlossaryKeyConstants,
-} from "../../../Shared/Glossary/LanguageSwitcherGlossaryKeyConstants.js";
+} from "../../../Shared/LanguageSwitcher/LanguageSwitcherGlossaryKeyConstants.js";
 
 /**
- * @class LanguageSwitcherViewDataService
+ * @class LanguageSwitcherViewDataBuilder
  * @description Builds language switcher view data.
  */
-export class LanguageSwitcherViewDataService {
+export class LanguageSwitcherViewDataBuilder {
   constructor(glossaryClient) {
     this.glossaryClient = glossaryClient;
   }
@@ -41,4 +41,4 @@ export class LanguageSwitcherViewDataService {
   }
 }
 
-export default LanguageSwitcherViewDataService;
+export default LanguageSwitcherViewDataBuilder;

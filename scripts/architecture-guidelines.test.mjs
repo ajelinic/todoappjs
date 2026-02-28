@@ -22,6 +22,32 @@ test(
   }
 );
 
+test("shared bundles include task/language switcher and core registers shared resolver", async () => {
+  const config = await read("data/config/config_default.js");
+  const appCoreDependencyProvider = await read("src/base/AppCoreDependencyProvider.js");
+  const sharedTaskConstants = await read(
+    "src/App/Shared/Task/TaskGlossaryKeyConstants.js"
+  );
+  const sharedLanguageSwitcherConstants = await read(
+    "src/App/Shared/LanguageSwitcher/LanguageSwitcherGlossaryKeyConstants.js"
+  );
+  const sharedEntryResolver = await read(
+    "src/base/Bundles/Shared/Resolvers/ClassResolvers/SharedEntryResolver.js"
+  );
+
+  assert.match(
+    config,
+    /SHARED_BUNDLES:\s*\["Task",\s*"LanguageSwitcher"\]/
+  );
+  assert.match(appCoreDependencyProvider, /SharedEntryResolverPlugin/);
+  assert.match(sharedTaskConstants, /TaskGlossaryKeyConstants/);
+  assert.match(
+    sharedLanguageSwitcherConstants,
+    /LanguageSwitcherGlossaryKeyConstants/
+  );
+  assert.match(sharedEntryResolver, /Shared\/\$\{layerBundle\}\/\$\{layerBundle\}GlossaryKeyConstants\.js/);
+});
+
 test("index controller remains orchestration-only", async () => {
   const indexController = await read(
     "src/App/Presentation/Index/Controller/IndexController.js"
@@ -81,12 +107,12 @@ test(
   const taskViewDataResolver = await read(
     "src/App/Presentation/Task/Resolver/TaskPageViewDataResolver.js"
   );
-  const taskViewDataService = await read(
-    "src/App/Presentation/Task/Service/TaskPageViewDataService.js"
+  const taskViewDataBuilder = await read(
+    "src/App/Presentation/Task/Builder/TaskPageViewDataBuilder.js"
   );
   const abstractForm = await read("src/base/Abstracts/AbstractForm.js");
   const taskGlossaryKeys = await read(
-    "src/App/Shared/Glossary/TaskGlossaryKeyConstants.js"
+    "src/App/Shared/Task/TaskGlossaryKeyConstants.js"
   );
 
   assert.match(taskController, /createTaskPageForm\(\)/);
@@ -108,18 +134,66 @@ test(
   assert.match(taskPageActionHandler, /deleteTask/);
   assert.match(taskPageActionHandler, /clearCompleted/);
   assert.match(taskViewDataResolver, /class TaskPageViewDataResolver/);
-  assert.match(taskViewDataResolver, /taskPageViewDataService/);
+  assert.match(taskViewDataResolver, /taskPageViewDataBuilder/);
   assert.match(taskViewDataResolver, /taskPageForm/);
   assert.match(taskViewDataResolver, /resolve\(\{/);
-  assert.match(taskViewDataService, /class TaskPageViewDataService/);
-  assert.match(taskViewDataService, /getPageData/);
-  assert.match(taskViewDataService, /localizeActionResult/);
-  assert.doesNotMatch(taskViewDataService, /createDefaultFormState/);
-  assert.doesNotMatch(taskViewDataService, /getTranslationKeys/);
+  assert.match(taskViewDataBuilder, /class TaskPageViewDataBuilder/);
+  assert.match(taskViewDataBuilder, /getPageData/);
+  assert.match(taskViewDataBuilder, /localizeActionResult/);
+  assert.doesNotMatch(taskViewDataBuilder, /createDefaultFormState/);
+  assert.doesNotMatch(taskViewDataBuilder, /getTranslationKeys/);
   assert.match(taskGlossaryKeys, /class TaskGlossaryKeyConstants/);
-  assert.match(taskViewDataService, /TaskGlossaryKeyConstants\.INFO_TEMPLATE/);
-  assert.match(taskViewDataService, /task_id/);
-  assert.match(taskViewDataService, /task_value/);
+  assert.match(taskViewDataBuilder, /TaskGlossaryKeyConstants\.INFO_TEMPLATE/);
+  assert.match(taskViewDataBuilder, /task_id/);
+  assert.match(taskViewDataBuilder, /task_value/);
+  }
+);
+
+test(
+  "task flow uses transfer contracts across presentation, client, and business layers",
+  async () => {
+    const taskPageActionHandler = await read(
+      "src/App/Presentation/Task/Handler/TaskPageActionHandler.js"
+    );
+    const taskViewDataResolver = await read(
+      "src/App/Presentation/Task/Resolver/TaskPageViewDataResolver.js"
+    );
+    const taskClient = await read("src/App/Client/Task/TaskClient.js");
+    const taskFacade = await read("src/App/Business/Task/TaskFacade.js");
+    const taskCollectionTransfer = await read(
+      "src/App/Shared/Task/Transfer/TaskCollectionTransfer.js"
+    );
+    const taskActionResultTransfer = await read(
+      "src/App/Shared/Task/Transfer/TaskActionResultTransfer.js"
+    );
+    const addTaskRequestTransfer = await read(
+      "src/App/Shared/Task/Transfer/AddTaskRequestTransfer.js"
+    );
+    const toggleTaskRequestTransfer = await read(
+      "src/App/Shared/Task/Transfer/ToggleTaskRequestTransfer.js"
+    );
+    const deleteTaskRequestTransfer = await read(
+      "src/App/Shared/Task/Transfer/DeleteTaskRequestTransfer.js"
+    );
+
+    assert.match(taskPageActionHandler, /AddTaskRequestTransfer/);
+    assert.match(taskPageActionHandler, /ToggleTaskRequestTransfer/);
+    assert.match(taskPageActionHandler, /DeleteTaskRequestTransfer/);
+    assert.match(taskPageActionHandler, /TaskActionResultTransfer/);
+    assert.match(taskViewDataResolver, /TaskCollectionTransfer/);
+    assert.match(taskViewDataResolver, /TaskActionResultTransfer/);
+    assert.match(taskClient, /TaskCollectionTransfer/);
+    assert.match(taskClient, /TaskActionResultTransfer/);
+    assert.match(taskFacade, /TaskCollectionTransfer/);
+    assert.match(taskFacade, /TaskActionResultTransfer/);
+    assert.match(taskFacade, /AddTaskRequestTransfer/);
+    assert.match(taskFacade, /ToggleTaskRequestTransfer/);
+    assert.match(taskFacade, /DeleteTaskRequestTransfer/);
+    assert.match(taskCollectionTransfer, /class TaskCollectionTransfer/);
+    assert.match(taskActionResultTransfer, /class TaskActionResultTransfer/);
+    assert.match(addTaskRequestTransfer, /class AddTaskRequestTransfer/);
+    assert.match(toggleTaskRequestTransfer, /class ToggleTaskRequestTransfer/);
+    assert.match(deleteTaskRequestTransfer, /class DeleteTaskRequestTransfer/);
   }
 );
 
@@ -185,11 +259,11 @@ test(
   const languageSwitcherViewDataResolver = await read(
     "src/App/Presentation/LanguageSwitcher/Resolver/LanguageSwitcherViewDataResolver.js"
   );
-  const languageSwitcherViewDataService = await read(
-    "src/App/Presentation/LanguageSwitcher/Service/LanguageSwitcherViewDataService.js"
+  const languageSwitcherViewDataBuilder = await read(
+    "src/App/Presentation/LanguageSwitcher/Builder/LanguageSwitcherViewDataBuilder.js"
   );
   const languageSwitcherGlossaryKeys = await read(
-    "src/App/Shared/Glossary/LanguageSwitcherGlossaryKeyConstants.js"
+    "src/App/Shared/LanguageSwitcher/LanguageSwitcherGlossaryKeyConstants.js"
   );
 
   assert.match(languageSwitcherController, /createLanguageSwitcherEventHandler\(\)/);
@@ -201,11 +275,11 @@ test(
     languageSwitcherViewDataResolver,
     /class LanguageSwitcherViewDataResolver/
   );
-  assert.match(languageSwitcherViewDataResolver, /languageSwitcherViewDataService/);
+  assert.match(languageSwitcherViewDataResolver, /languageSwitcherViewDataBuilder/);
   assert.match(languageSwitcherViewDataResolver, /resolve\(/);
-  assert.match(languageSwitcherViewDataService, /class LanguageSwitcherViewDataService/);
-  assert.match(languageSwitcherViewDataService, /getViewData/);
-  assert.doesNotMatch(languageSwitcherViewDataService, /getTranslationKeys/);
+  assert.match(languageSwitcherViewDataBuilder, /class LanguageSwitcherViewDataBuilder/);
+  assert.match(languageSwitcherViewDataBuilder, /getViewData/);
+  assert.doesNotMatch(languageSwitcherViewDataBuilder, /getTranslationKeys/);
   assert.match(
     languageSwitcherGlossaryKeys,
     /getLanguageSwitcherKeys/

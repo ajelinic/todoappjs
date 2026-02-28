@@ -6,3 +6,6 @@ readme.txt
 
 # Local draft docs (do not commit yet)
 /docs/todoappjs-baseline-extraction-plan.md
+
+# Local Codex skills (do not commit)
+/.codex/

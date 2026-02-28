@@ -2,7 +2,7 @@ import { AbstractPresentationFactory } from "../../../base/Abstracts/AbstractPre
 import { LanguageSwitcherPresentationConfig } from "./LanguageSwitcherPresentationConfig.js";
 import { LanguageSwitcherEventHandler } from "./Handler/LanguageSwitcherEventHandler.js";
 import { LanguageSwitcherViewDataResolver } from "./Resolver/LanguageSwitcherViewDataResolver.js";
-import { LanguageSwitcherViewDataService } from "./Service/LanguageSwitcherViewDataService.js";
+import { LanguageSwitcherViewDataBuilder } from "./Builder/LanguageSwitcherViewDataBuilder.js";
 import { LanguageSwitcherPresentationDependencyProvider } from "./LanguageSwitcherPresentationDependencyProvider.js";
 
 /**
@@ -35,21 +35,21 @@ export class LanguageSwitcherPresentationFactory extends AbstractPresentationFac
     return this.languageSwitcherEventHandler;
   }
 
-  static createLanguageSwitcherViewDataService() {
-    if (!this.languageSwitcherViewDataService) {
-      this.languageSwitcherViewDataService = new LanguageSwitcherViewDataService(
+  static createLanguageSwitcherViewDataBuilder() {
+    if (!this.languageSwitcherViewDataBuilder) {
+      this.languageSwitcherViewDataBuilder = new LanguageSwitcherViewDataBuilder(
         this.createGlossaryClient()
       );
     }
 
-    return this.languageSwitcherViewDataService;
+    return this.languageSwitcherViewDataBuilder;
   }
 
   static createLanguageSwitcherViewDataResolver() {
     if (!this.languageSwitcherViewDataResolver) {
       this.languageSwitcherViewDataResolver = new LanguageSwitcherViewDataResolver(
         this.createLanguageSwitcherClient(),
-        this.createLanguageSwitcherViewDataService()
+        this.createLanguageSwitcherViewDataBuilder()
       );
     }
 
