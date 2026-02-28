@@ -28,6 +28,7 @@ export class TaskController extends AbstractPresentationController {
     this.pageView = await this.renderViewAtMount("task-page", viewData, this.getMountSelector());
     this.bindPageEvents();
     this.bindLocaleEvents();
+    this.announceTaskDataChanged(viewData);
   }
 
   initializeControllerState() {
@@ -130,7 +131,9 @@ export class TaskController extends AbstractPresentationController {
     await this.bootstrap();
     const preservedForm =
       this.pageView.data?.form ?? this.getFactory().createTaskPageForm().createDefaultState();
-    this.pageView.data = await this.buildViewData(actionResult, preservedForm);
+    const viewData = await this.buildViewData(actionResult, preservedForm);
+    this.pageView.data = viewData;
+    this.announceTaskDataChanged(viewData);
   }
 
   async buildViewData(actionResult = null, fallbackForm = null) {
@@ -139,6 +142,19 @@ export class TaskController extends AbstractPresentationController {
       fallbackForm,
       locale: this.locale,
     });
+  }
+
+  announceTaskDataChanged(viewData) {
+    const tasks = Array.isArray(viewData?.tasks) ? viewData.tasks : [];
+
+    document.dispatchEvent(
+      new CustomEvent(this.getConfig().getTaskDataChangedEventName(), {
+        detail: {
+          tasks,
+          locale: this.locale,
+        },
+      })
+    );
   }
 }
 

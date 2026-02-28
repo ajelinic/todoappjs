@@ -9,10 +9,10 @@ export const INDEX_DB_NAME = "ToDoApp";
 
 /* -------- Registered bundles -------- */
 export const REGISTERED_BUNDLES = {
-  PRESENTATION_BUNDLES: ["Index", "LanguageSwitcher", "Task"],
+  PRESENTATION_BUNDLES: ["Index", "LanguageSwitcher", "Task", "TaskInfoBoard"],
   CLIENT_BUNDLES: ["Storage", "Task", "Glossary", "LanguageSwitcher"],
   BUSINESS_BUNDLES: ["Storage", "Task", "Glossary", "LanguageSwitcher"],
-  SHARED_BUNDLES: ["Task", "LanguageSwitcher"],
+  SHARED_BUNDLES: ["Task", "LanguageSwitcher", "TaskInfoBoard"],
   SERVICE_BUNDLES: [],
   PERSISTENCE_BUNDLES: ["Storage", "Task", "Glossary", "LanguageSwitcher"],
 };
