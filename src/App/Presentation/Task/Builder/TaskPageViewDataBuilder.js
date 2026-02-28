@@ -1,12 +1,12 @@
 import {
   TaskGlossaryKeyConstants,
-} from "../../../Shared/Glossary/TaskGlossaryKeyConstants.js";
+} from "../../../Shared/Task/TaskGlossaryKeyConstants.js";
 
 /**
- * @class TaskPageViewDataService
+ * @class TaskPageViewDataBuilder
  * @description Builds task page view data and localized notifications.
  */
-export class TaskPageViewDataService {
+export class TaskPageViewDataBuilder {
   constructor(glossaryClient) {
     this.glossaryClient = glossaryClient;
   }
@@ -123,4 +123,4 @@ export class TaskPageViewDataService {
   }
 }
 
-export default TaskPageViewDataService;
+export default TaskPageViewDataBuilder;

@@ -5,9 +5,9 @@ import { LanguageSwitcherPresentationConfig } from "../LanguageSwitcherPresentat
  * @description Resolves language switcher view data from locale + supported locales.
  */
 export class LanguageSwitcherViewDataResolver {
-  constructor(languageSwitcherClient, languageSwitcherViewDataService) {
+  constructor(languageSwitcherClient, languageSwitcherViewDataBuilder) {
     this.languageSwitcherClient = languageSwitcherClient;
-    this.languageSwitcherViewDataService = languageSwitcherViewDataService;
+    this.languageSwitcherViewDataBuilder = languageSwitcherViewDataBuilder;
   }
 
   async resolve(locale = null) {
@@ -18,7 +18,7 @@ export class LanguageSwitcherViewDataResolver {
       LanguageSwitcherPresentationConfig.getDefaultLocale();
     const supportedLocales = this.languageSwitcherClient.getSupportedLocales();
 
-    return this.languageSwitcherViewDataService.getViewData({
+    return this.languageSwitcherViewDataBuilder.getViewData({
       locale: resolvedLocale,
       supportedLocales,
     });
